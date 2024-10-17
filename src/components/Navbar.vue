@@ -3,7 +3,7 @@ export default {
   name: 'Navbar',
   computed: {
     currentRoute() {
-      return this.$route.path; // Ottieni il percorso attuale
+      return this.$route.path;
     }
   }
 }
@@ -24,11 +24,11 @@ export default {
     <!-- Middle Section (Navigation Links) -->
     <nav class="navbar-center">
       <router-link class="nav-link" :class="{ active: currentRoute === '/' }" to="/">Home</router-link>
-      <router-link class="nav-link" :class="{ active: currentRoute === '/AdvancedReserch' }" to="/AdvancedReserch">Advanced Reserch</router-link>
+      <router-link class="nav-link" :class="{ active: currentRoute === '/AdvancedResearch' }" to="/AdvancedResearch">Advanced Research</router-link>
     </nav>
 
     <!-- Right Section (Button) -->
-    <button class="btn btn-primary">became a villain</button>
+    <button class="btn btn-secondary">became a villain</button>
   </nav>
 </template>
 
