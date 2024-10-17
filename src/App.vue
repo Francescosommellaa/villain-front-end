@@ -1,24 +1,25 @@
 <script>
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
+import Jumbotron from './components/Jumbotron.vue';
 
 export default {
   components: {
     Navbar,
-    Footer
+    Footer,
+    Jumbotron
   }
 }
 </script>
 
 <template>
-<div id="spp">
+  <div id="app">
 
-  <Navbar/>
-  <RouterView />
-  <Footer/>
+    <Navbar />
+    <Jumbotron />
+    <Footer />
 
-</div>
+  </div>
 </template>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
