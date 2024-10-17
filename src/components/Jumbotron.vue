@@ -8,10 +8,10 @@ export default {
     <section class="jumbo">
         <div class="cont-jumbo">
             <h1 class="main-title">FIND YOUR VILLAIN</h1>
-            <a href="#">Hire a Villain</a>
+            <a href="#" class="btn btn-primary">Hire a Villain</a>
         </div>
         <div class="cont-what">
-            <h4>WHAT?</h4>
+            <h4>WHAT ?</h4>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.<br>
                 Sint quae molestias optio id ea dolorum sit et
@@ -23,10 +23,13 @@ export default {
 </template>
 
 <style scoped lang="scss">
+@use '../assets/style/generals/variables' as *;
+@import '../assets/style/main.scss';
+
 .jumbo {
-    height: 400px;
+    height: 450px;
     width: 100%;
-    background-image: url('../assets/img/jumbo.webp');
+    background-image: url('../assets/images/main/jumbo.webp');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 10%;
@@ -47,14 +50,15 @@ export default {
         .main-title,
         a {
             color: white;
+            font-weight: bold;
         }
 
         a {
-            font-size: 20px;
+            font-size: 18px;
             text-decoration: none;
             padding: 10px 25px;
             border-radius: 5px;
-            background-color: purple;
+            background-color: $primary;
         }
     }
 
@@ -70,7 +74,8 @@ export default {
 
         h4 {
             font-size: 30px;
-            color: purple;
+            font-weight: bold;
+            color: $primary;
             font-weight: 600;
             margin-bottom: 20px;
         }
