@@ -1,26 +1,49 @@
 @use '../variables' as *;
+
 // Base Button Styling
 .btn {
     padding: $btn-padding-y $btn-padding-x;
     font-size: $btn-font-size;
     border-radius: $btn-border-radius;
     font-weight: $btn-font-weight;
-    transition: $btn-transition;
-    border-width: none;
+    transition: $btn-transition, box-shadow 0.4s ease-in-out;
+    border: none;
     text-transform: uppercase;
     cursor: pointer;
     display: inline-block;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15); 
+    }
 }
-
-
 
 // Primary Button with Gradient Hover Animation
 .btn-primary {
     background-color: $primary;
     color: $light;
+    position: relative;
+    z-index: 1;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(45deg, $secondary, $accent);
+        z-index: -1;
+        transition: all 0.6s ease-in-out;
+    }
 
     &:hover {
-        background: linear-gradient(45deg, $secondary, $accent);
+        color: $light;
+    }
+
+    &:hover:before {
+        left: 0;
     }
 }
 
@@ -28,11 +51,13 @@
 .btn-secondary {
     background-color: $secondary;
     color: $light;
-    border-color: $secondary;
+    border: 2px solid $secondary;
+    position: relative;
+    z-index: 1;
 
     &:hover {
-        background-color: $light;
         color: $secondary;
+        background-color: #6a0dad20;
         border-color: $secondary;
     }
 }
