@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import AdvancedReserch from '../views/AdvancedResearch.vue'
+import AdvancedResearch from '../views/AdvancedResearch.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,9 +11,9 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/AdvancedReserch',
-      name: 'AdvancedReserch',
-      component: AdvancedReserch
+      path: '/AdvancedResearch',
+      name: 'AdvancedResearch',
+      component: AdvancedResearch
     }
   ]
 })
