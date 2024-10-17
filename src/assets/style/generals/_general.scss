@@ -1,4 +1,4 @@
-@use './partrials/button' ;
+@use './partrials/button' as *;
 @use './variables' as *;
 @use './mixins' as *;
 
@@ -36,36 +36,11 @@ a {
 }
 
 .bg-white {
-    scrollbar-color: $primary $white;
+    scrollbar-color: $primary;
 }
 
 .bg-dark {
     scrollbar-color: $gray-600 $dark;
-}
-
-
-.app-admin {
-    .page-center {
-        min-height: 0;
-
-        .link-text {
-            width: 8em;
-            white-space: nowrap;
-        }
-
-        .text-fade {
-            background: linear-gradient(to right, #00000000 0%, $dark 100%);
-        }
-    }
-
-    main {
-        border-radius: $border-radius-sm 0 0 0;
-        background-image: url('~resources/images/logos/logos-dk/logo-dk-mark-50.png');
-        background-repeat: no-repeat;
-        background-size: 40%;
-        background-position: center;
-        background-attachment: scroll;
-    }
 }
 
 .rating {

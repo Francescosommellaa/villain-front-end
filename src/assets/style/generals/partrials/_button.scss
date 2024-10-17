@@ -1,3 +1,4 @@
+@use '../variables' as *;
 // Base Button Styling
 .btn {
     padding: $btn-padding-y $btn-padding-x;

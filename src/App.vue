@@ -13,9 +13,9 @@ export default {
 <template>
 <div id="spp">
 
-  <Navbar/>
+  <Navbar />
   <RouterView />
-  <Footer/>
+  <Footer />
 
 </div>
 </template>
