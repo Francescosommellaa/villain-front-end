@@ -1,0 +1,46 @@
+// Base Button Styling
+.btn {
+    padding: $btn-padding-y $btn-padding-x;
+    font-size: $btn-font-size;
+    border-radius: $btn-border-radius;
+    font-weight: $btn-font-weight;
+    transition: $btn-transition;
+    border-width: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+
+// Primary Button with Gradient Hover Animation
+.btn-primary {
+    background-color: $primary;
+    color: $light;
+
+    &:hover {
+        background: linear-gradient(45deg, $secondary, $accent);
+    }
+}
+
+// Secondary Button with Color Inversion Animation
+.btn-secondary {
+    background-color: $secondary;
+    color: $light;
+    border-color: $secondary;
+
+    &:hover {
+        background-color: $light;
+        color: $secondary;
+        border-color: $secondary;
+    }
+}
+
+// Disabled Button (No animation, no pointer)
+.btn-disabled {
+    background-color: $gray-600;
+    color: $light;
+    border-color: $gray-600;
+    cursor: not-allowed;
+    pointer-events: none;
+}

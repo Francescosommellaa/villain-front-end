@@ -1,0 +1,73 @@
+@use './partrials/button' ;
+@use './variables' as *;
+@use './mixins' as *;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+}
+
+menu,
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.bg-white {
+    scrollbar-color: $primary $white;
+}
+
+.bg-dark {
+    scrollbar-color: $gray-600 $dark;
+}
+
+
+.app-admin {
+    .page-center {
+        min-height: 0;
+
+        .link-text {
+            width: 8em;
+            white-space: nowrap;
+        }
+
+        .text-fade {
+            background: linear-gradient(to right, #00000000 0%, $dark 100%);
+        }
+    }
+
+    main {
+        border-radius: $border-radius-sm 0 0 0;
+        background-image: url('~resources/images/logos/logos-dk/logo-dk-mark-50.png');
+        background-repeat: no-repeat;
+        background-size: 40%;
+        background-position: center;
+        background-attachment: scroll;
+    }
+}
+
+.rating {
+    color: $clr-rating-stars;
+}
