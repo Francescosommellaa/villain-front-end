@@ -13,7 +13,7 @@ export default {
   <nav class="navbar">
     <!-- Left Section (Logo) -->
     <div class="navbar-left">
-      <router-link class="nav-link" :class="{ active: currentRoute === '/' }" to="/">
+      <router-link :class="{ active: currentRoute === '/' }" to="/">
         <picture class="logo-container">
           <!-- Logo piccolo per schermi piccoli -->
           <source media="(max-width: 768px)" srcset="../assets/images/logo/logo-dk/logo-dk-mark.png">
