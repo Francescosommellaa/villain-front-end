@@ -19,7 +19,7 @@ export default {
     <div class="villain-info">
       <h3 class="villain-name">{{ villain.name }}</h3>
       <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
-      <div class="villain-reviews" v-if="villain.ratings.length !== 0">
+      <div class="villain-reviews" v-if="villain.ratings">
         <span v-for="star in 5" :key="star" class="star">
           {{ star <= villain.ratings[0].value ? '★' : '☆' }} </span>
       </div>
