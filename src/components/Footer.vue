@@ -58,12 +58,12 @@ footer {
   max-width: 1140px;
   margin: 0 auto;
   padding: 0 1rem;
-  text-align: center; /* Center all text */
+  text-align: center; 
 }
 
 .footer-row {
   display: flex;
-  justify-content: center; /* Center content horizontally */
+  justify-content: center;
   flex-wrap: wrap;
 }
 
