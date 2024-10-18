@@ -24,24 +24,24 @@ export default {
       villainsPerPage: 10,
     };
   },
-  computed: {
-    paginatedVillains() {
-      // Se villains non è un array o è vuoto, ritorna un array vuoto
-      if (this.isLoading === true) {
-        return [];
-      }
-      const start = (this.currentPage - 1) * this.villainsPerPage;
-      const end = this.currentPage * this.villainsPerPage;
-      return this.villains.slice(start, end);
-    },
-    totalPages() {
-      // Stesso controllo su villains per calcolare le pagine totali
-      if (this.isLoading === true) {
-        return 1;
-      }
-      return Math.ceil(this.villains.length / this.villainsPerPage);
-    },
-  },
+  // computed: {
+  //   paginatedVillains() {
+  //     // Se villains non è un array o è vuoto, ritorna un array vuoto
+  //     if (this.isLoading === true) {
+  //       return [];
+  //     }
+  //     const start = (this.currentPage - 1) * this.villainsPerPage;
+  //     const end = this.currentPage * this.villainsPerPage;
+  //     return this.villains.slice(start, end);
+  //   },
+  //   totalPages() {
+  //     // Stesso controllo su villains per calcolare le pagine totali
+  //     if (this.isLoading === true) {
+  //       return 1;
+  //     }
+  //     return Math.ceil(this.villains.length / this.villainsPerPage);
+  //   },
+  // },
 
   watch: {
     search(newSearch) {
@@ -50,16 +50,16 @@ export default {
   },
 
   methods: {
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
-    prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
+    // nextPage() {
+    //   if (this.currentPage < this.totalPages) {
+    //     this.currentPage++;
+    //   }
+    // },
+    // prevPage() {
+    //   if (this.currentPage > 1) {
+    //     this.currentPage--;
+    //   }
+    // },
     // Chiamta alle api
     getApi(urlApi, type = 'villains', search = '') {
       this.isLoading = true;
@@ -72,9 +72,9 @@ export default {
           if (type === 'villains') {
             this.isLoading = false;
             this.villains = response.data.villains.data
-            console.log(this.villains)
+            // console.log(this.villains)
             this.paginatorLink = response.data.villains.links
-            console.log(this.paginatorLink)
+            // console.log(this.paginatorLink)
           } else {
             this[type] = response.data
             console.log(this[type])
@@ -87,13 +87,13 @@ export default {
   },
   mounted() {
     // 15 Fake Card
-    this.villains = Array.from({ length: 15 }, (v, i) => ({
-      img: `/src/assets/images/placeholders/frieza.webp`,
-      name: `Villain ${i + 1}`,
-      service: `Servizio diabolico ${i + 1}`,
-      rating: Math.floor(Math.random() * 5) + 1,
-    }));
-    console.log(this.villains);
+    // this.villains = Array.from({ length: 15 }, (v, i) => ({
+    //   img: `/src/assets/images/placeholders/frieza.webp`,
+    //   name: `Villain ${i + 1}`,
+    //   service: `Servizio diabolico ${i + 1}`,
+    //   rating: Math.floor(Math.random() * 5) + 1,
+    // }));
+    // console.log(this.villains);
     // Chiamte axios
     this.getApi(store.urlApi + 'villains', 'villains');
     // this.getApi(store.urlApi + 'universes', 'universes');
@@ -109,18 +109,14 @@ export default {
   <main>
     <!-- card printing  -->
     <div class="villains-flex">
-      <VillainCard v-for="(villain, index) in paginatedVillains" :key="index" :villain="villain" />
+      <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
     </div>
 
     <!-- pagination -->
     <div class="pagination">
-      <a v-if="currentPage > 1" @click="prevPage">
-        <i class="fa-solid fa-chevron-left"></i>
-      </a>
-      <span>Pagina {{ currentPage }} di {{ totalPages }}</span>
-      <a v-if="currentPage < totalPages" @click="nextPage">
-        <i class="fa-solid fa-chevron-right"></i>
-      </a>
+      <div v-if="villains.length" class="paginator_btn">
+          <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url"></button>
+      </div>
     </div>
   </main>
 </template>

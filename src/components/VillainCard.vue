@@ -13,13 +13,13 @@ export default {
 
 <template>
    <div v-if="villain" class="villain-card">
-    <img :src="villain.image" alt="Villain Image" class="villain-img" />
+    <img :src="'http://localhost:8000' + villain.image" alt="Villain Image" class="villain-img" />
     <div class="over"></div>
     <h3 class="villain-name : ">{{ villain.name }}</h3>
     <div class="villain-info">
       <h3 class="villain-name">{{ villain.name }}</h3>
       <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
-      <div class="villain-reviews">
+      <div class="villain-reviews" v-if="villain.ratings.length !== 0">
         <span v-for="star in 5" :key="star" class="star">
           {{ star <= villain.ratings[0].value ? '★' : '☆' }} </span>
       </div>
@@ -45,6 +45,10 @@ export default {
   position: relative;
   overflow: hidden;
   transition: transform 0.3s ease;
+
+  img{
+    object-position: top; 
+  }
 
   &:hover {
     transform: translateY(-5px);
