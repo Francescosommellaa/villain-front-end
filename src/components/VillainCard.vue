@@ -12,10 +12,11 @@ export default {
 </script>
 
 <template>
- <div v-if="villain" class="villain-card">
+  <div v-if="villain" class="villain-card">
     <img :src="villain.img" alt="Villain Image" class="villain-img" />
+    <div class="over"></div>
+    <h3 class="villain-name : ">{{ villain.name }}</h3>
     <div class="villain-info">
-      <h3 class="villain-name">{{ villain.name }}</h3>
       <p class="villain-service">{{ villain.service }}</p>
       <div class="villain-reviews">
         <span v-for="star in 5" :key="star" class="star">
@@ -41,33 +42,59 @@ export default {
   flex-direction: column;
   align-items: center;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
   transition: transform 0.3s ease;
 
   &:hover {
     transform: translateY(-5px);
+    
+    .over{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(53, 0, 95, 0.6);
+      transition: filter 0.3s ease;
+      z-index: 1;
+
+    }
+
+    .villain-name {
+      opacity: 1;
+    }
   }
 
   .villain-img {
     width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5; 
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  overflow: hidden
+    height: auto;
+    aspect-ratio: 4 / 5; 
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+  }
+
+
+  .villain-name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $light;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
   }
 
   .villain-info {
     text-align: center;
     margin-bottom: 15px;
-
-    .villain-name {
-      font-size: 1.2rem;
-      font-weight: $font-weight-bold;
-      color: $primary-text-emphasis;
-      margin-bottom: 5px;
-    }
-
+    position: relative;
+    z-index: 2;
+    
     .villain-service {
       font-size: 1rem;
       color: $secondary-text-emphasis;
@@ -79,10 +106,11 @@ export default {
     }
   }
 
-  .btn{
-      width: 100%;
-      margin: 0.2em;
-    }
+  .btn {
+    width: 100%;
+    margin: 0.2em;
+  }
 }
+
 
 </style>

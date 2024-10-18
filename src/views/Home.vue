@@ -41,7 +41,7 @@ export default {
   mounted() {
     // 15 Fake Card
     this.villains = Array.from({ length: 15 }, (v, i) => ({
-      img: `https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png`,
+      img: `/src/assets/images/placeholders/frieza.webp`,
       name: `Villain ${i + 1}`,
       service: `Servizio diabolico ${i + 1}`,
       rating: Math.floor(Math.random() * 5) + 1,
