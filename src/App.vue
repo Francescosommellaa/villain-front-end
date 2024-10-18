@@ -15,6 +15,7 @@ export default {
     };
   },
   mounted() {
+    this.handleScroll();
     window.addEventListener('scroll', this.handleScroll);
   },
   beforeDestroy() {
@@ -61,7 +62,7 @@ export default {
 
   &.navbar-sticky {
     position: fixed;
-    top: 0; 
+    top: 0;
     left: 0;
     z-index: 1000; 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
