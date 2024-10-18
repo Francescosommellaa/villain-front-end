@@ -52,7 +52,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 0.8em 2em;
   background-color: $body-bg;
 }
 
@@ -105,9 +105,6 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    padding: 10px;
-  }
 
   .navbar-right .btn-mobile {
     display: inline-block;
