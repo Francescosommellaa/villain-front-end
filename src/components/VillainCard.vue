@@ -49,9 +49,12 @@ export default {
 
   .villain-img {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 15px;
+  height: auto;
+  aspect-ratio: 4 / 5; 
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden
   }
 
   .villain-info {
