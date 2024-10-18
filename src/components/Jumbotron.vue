@@ -34,7 +34,6 @@ export default {
     background-repeat: no-repeat;
     background-position: 10%;
     position: relative;
-    margin: 4em 0;
 
     .cont-jumbo {
         display: flex;
