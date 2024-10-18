@@ -1,5 +1,7 @@
 <script>
 import VillainCard from "../components/VillainCard.vue";
+import { store } from '@/store/store';
+import axios from 'axios';
 import Jumbotron from '../components/Jumbotron.vue';
 
 export default {
@@ -11,19 +13,40 @@ export default {
   data() {
     return {
       villains: [],
+      skills: [],
+      services: [],
+      universes: [],
+      paginatorLink: [],
+      search: '',
+      isLoading: true,
+
       currentPage: 1,
-      villainsPerPage: 12,
+      villainsPerPage: 10,
     };
   },
   computed: {
     paginatedVillains() {
+      // Se villains non è un array o è vuoto, ritorna un array vuoto
+      if (this.isLoading === true) {
+        return [];
+      }
       const start = (this.currentPage - 1) * this.villainsPerPage;
       const end = this.currentPage * this.villainsPerPage;
       return this.villains.slice(start, end);
     },
     totalPages() {
+      // Stesso controllo su villains per calcolare le pagine totali
+      if (this.isLoading === true) {
+        return 1;
+      }
       return Math.ceil(this.villains.length / this.villainsPerPage);
     },
+  },
+
+  watch: {
+    search(newSearch) {
+      this.getApi(store.urlApi + 'villains', 'villains', newSearch);
+    }
   },
 
   methods: {
@@ -37,6 +60,30 @@ export default {
         this.currentPage--;
       }
     },
+    // Chiamta alle api
+    getApi(urlApi, type = 'villains', search = '') {
+      this.isLoading = true;
+      if (search) {
+        urlApi += `?search=${search}`;
+      }
+      axios.get(urlApi)
+        .then(response => {
+          console.log('chiamta:', urlApi)
+          if (type === 'villains') {
+            this.isLoading = false;
+            this.villains = response.data.villains.data
+            console.log(this.villains)
+            this.paginatorLink = response.data.villains.links
+            console.log(this.paginatorLink)
+          } else {
+            this[type] = response.data
+            console.log(this[type])
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
   },
   mounted() {
     // 15 Fake Card
@@ -47,6 +94,11 @@ export default {
       rating: Math.floor(Math.random() * 5) + 1,
     }));
     console.log(this.villains);
+    // Chiamte axios
+    this.getApi(store.urlApi + 'villains', 'villains');
+    // this.getApi(store.urlApi + 'universes', 'universes');
+    // this.getApi(store.urlApi + 'skills', 'skills');
+    // this.getApi(store.urlApi + 'services', 'services');
   },
 };
 
@@ -56,24 +108,20 @@ export default {
   <Jumbotron />
   <main>
     <!-- card printing  -->
-      <div class="villains-flex">
-        <VillainCard
-          v-for="(villain, index) in paginatedVillains"
-          :key="index"
-          :villain="villain"
-        />
-      </div>
+    <div class="villains-flex">
+      <VillainCard v-for="(villain, index) in paginatedVillains" :key="index" :villain="villain" />
+    </div>
 
-      <!-- pagination -->
-      <div class="pagination">
-        <a v-if="currentPage > 1" @click="prevPage">
-          <i class="fa-solid fa-chevron-left"></i>
-        </a>
-        <span>Pagina {{ currentPage }} di {{ totalPages }}</span>
-        <a v-if="currentPage < totalPages" @click="nextPage">
-          <i class="fa-solid fa-chevron-right"></i>
-        </a>
-      </div>
+    <!-- pagination -->
+    <div class="pagination">
+      <a v-if="currentPage > 1" @click="prevPage">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <span>Pagina {{ currentPage }} di {{ totalPages }}</span>
+      <a v-if="currentPage < totalPages" @click="nextPage">
+        <i class="fa-solid fa-chevron-right"></i>
+      </a>
+    </div>
   </main>
 </template>
 
@@ -115,5 +163,4 @@ main{
   text-align: center;
   margin-top: 20px;
 }
-
 </style>

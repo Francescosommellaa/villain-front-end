@@ -12,16 +12,16 @@ export default {
 </script>
 
 <template>
-  <div v-if="villain" class="villain-card">
-    <img :src="villain.img" alt="Villain Image" class="villain-img" />
+   <div v-if="villain" class="villain-card">
+    <img :src="villain.image" alt="Villain Image" class="villain-img" />
     <div class="over"></div>
     <h3 class="villain-name : ">{{ villain.name }}</h3>
     <div class="villain-info">
-      <p class="villain-service">{{ villain.service }}</p>
+      <h3 class="villain-name">{{ villain.name }}</h3>
+      <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
       <div class="villain-reviews">
         <span v-for="star in 5" :key="star" class="star">
-          {{ star <= villain.rating ? '★' : '☆' }}
-        </span>
+          {{ star <= villain.ratings[0].value ? '★' : '☆' }} </span>
       </div>
     </div>
     <button class="btn btn-primary">Contact Now</button>
@@ -111,6 +111,5 @@ export default {
     margin: 0.2em;
   }
 }
-
 
 </style>
