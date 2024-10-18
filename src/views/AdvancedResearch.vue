@@ -133,11 +133,9 @@ export default {
 
     li {
       padding: 10px;
-      background-color: $gray-100;
       margin-bottom: 10px;
       border-radius: 5px;
       transition: background-color 0.3s ease, transform 0.3s ease;
-      font-size: 1rem;
       color: $gray-800;
       display: flex;
       align-items: center;
@@ -154,6 +152,7 @@ export default {
 
 main {
   display: flex;
+  margin-top: 6em;
 
   .left{
     flex: 0 1 calc(20%);
@@ -180,9 +179,12 @@ main {
   flex: 0 1 calc(50% - 2em); 
 }
 
-  // Schermi tablet
 @media (max-width: 900px) {
   flex: 0 1 calc(100% - 2em); 
+}
+
+@media (max-width: 700px) {
+  flex: 0 1 100%; 
 }
 }
 

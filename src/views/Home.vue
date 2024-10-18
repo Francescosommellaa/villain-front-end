@@ -82,10 +82,13 @@ export default {
 @use '../assets/style/generals/view-style/views-style';
 @import '../assets/style/main.scss';
 
+main{
+  padding-top: 4em;
+}
 .villain-card {
     flex: 0 1 calc(25% - 2em);
     box-sizing: border-box;
-    margin-bottom: 20px;
+    margin-bottom: 1em;
     cursor: pointer;
     transition: all 0.3s ease;
 
@@ -94,12 +97,16 @@ export default {
     flex: 0 1 calc(33.33% - 2em); 
 }
 
-  @media (max-width: 1120px) {
+  @media (max-width: 1260px) {
     flex: 0 1 calc(50% - 2em); 
   }
 
-  // Schermi tablet
-  @media (max-width: 780px) {
+  @media (max-width: 880px) {
+  flex: 0 1 calc(100% - 4em); 
+  }
+
+
+  @media (max-width: 700px) {
     flex: 0 1 calc(100% - 2em); 
   }
 }
