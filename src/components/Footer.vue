@@ -1,46 +1,43 @@
 <template>
-  <footer class="bg-dark text-white py-4 mt-auto">
-    <div class="container">
-        <div class="row text-center text-md-start">
-            <div class="col-md-4 mb-4">
-                <h5 class="text-uppercase mb-3">VillainConnect</h5>
-                <p class="footer-text">
-                    Trova il tuo villain ideale per qualsiasi missione malvagia. Connettiti con i migliori villain in circolazione!
-                </p>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-row">
+          <div class="footer-column">
+            <h5 class="footer-title">VillainConnect</h5>
+            <p class="footer-text">
+              Find your ideal villain for any evil mission. Connect with the best villains around!
+            </p>
+          </div>
+          <div class="footer-column">
+            <h5 class="footer-title">Useful Links</h5>
+            <ul class="footer-list">
+              <li><a href="#" class="footer-link">About Us</a></li>
+              <li><a href="#" class="footer-link">Services</a></li>
+              <li><a href="#" class="footer-link">Contact</a></li>
+              <li><a href="#" class="footer-link">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h5 class="footer-title">Follow Us</h5>
+            <div class="footer-social">
+              <a href="#" class="social-icon">
+                <i class="fa-brands fa-facebook fa-lg"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fa-brands fa-twitter fa-lg"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fa-brands fa-instagram fa-lg"></i>
+              </a>
             </div>
-            <div class="col-md-4 mb-4">
-                <h5 class="text-uppercase mb-3">Link utili</h5>
-                <ul class="list-unstyled footer-text">
-                    <li><a href="#" class="text-white link-custom">Chi siamo</a></li>
-                    <li><a href="#" class="text-white link-custom">Servizi</a></li>
-                    <li><a href="#" class="text-white link-custom">Contatti</a></li>
-                    <li><a href="#" class="text-white link-custom">FAQ</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4 mb-4 text-center text-md-start">
-                <h5 class="text-uppercase mb-3">Seguici</h5>
-                <div class="d-flex justify-content-center justify-content-md-start">
-                    <a href="#" class="text-white me-3 social-icon">
-                        <i class="fa-brands fa-facebook fa-lg"></i>
-                    </a>
-                    <a href="#" class="text-white me-3 social-icon">
-                        <i class="fa-brands fa-twitter fa-lg"></i>
-                    </a>
-                    <a href="#" class="text-white me-3 social-icon">
-                        <i class="fa-brands fa-instagram fa-lg"></i>
-                    </a>
-                </div>
-            </div>
+          </div>
         </div>
-        <hr class="border-light">
-        <div class="row">
-            <div class="col-12 text-center">
-                <p class="footer-text mb-0">&copy; 2024 VillainConnect. Tutti i diritti riservati.</p>
-            </div>
+        <hr class="footer-divider">
+        <div class="footer-row center">
+          <p class="footer-text">&copy; 2024 VillainConnect. All rights reserved.</p>
         </div>
-    </div>
-</footer>
-
+      </div>
+    </footer>
 </template>
 
 <script>
@@ -50,64 +47,96 @@ export default {
 </script>
 
 <style>
-    footer a {
-        text-decoration: none;
-        position: relative;
-        transition: all 0.3s ease;
-    }
+footer {
+  background-color: black;
+  color: white;
+  padding: 2rem 0;
+  width: 100%;
+}
 
-    footer a::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: -2px;
-        left: 0;
-        background-color: #0d6efd;
-        transition: width 0.3s ease;
-    }
+.footer-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center; 
+}
 
-    footer a:hover::after {
-        width: 100%;
-    }
+.footer-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-    footer a:hover {
-        color: #0d6efd;
-    }
+.footer-column {
+  flex: 1;
+  margin-bottom: 1rem;
+  min-width: 200px;
+}
 
-    .social-icon {
-        transition: transform 0.3s ease, color 0.3s ease;
-    }
+.footer-title {
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
 
-    .social-icon:hover {
-        transform: scale(1.3);
-        color: #0d6efd;
-    }
+.footer-list {
+  padding: 0;
+}
 
-    footer hr {
-        opacity: 0.2;
-    }
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s;
+}
 
-    footer .container {
-        max-width: 1140px;
-    }
+.footer-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: violet;
+  transition: width 0.3s ease;
+}
 
-    footer {
-        position: relative;
-        bottom: 0;
-        width: 100%;
-    }
+.footer-link:hover::after {
+  width: 100%;
+}
 
-    .footer-text {
-        color: #cccccc !important;
-    }
+.footer-link:hover {
+  color: violet;
+}
 
-    @media (max-width: 768px) {
-        footer .row {
-            text-align: center;
-        }
-        footer .d-flex {
-            justify-content: center;
-        }
-    }
+.social-icon {
+  color: #fff;
+  margin-right: 1rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.3);
+  color: violet;
+}
+
+.footer-divider {
+  border: none;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 1.5rem 0;
+}
+
+.center {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .footer-row {
+    flex-direction: column;
+  }
+
+  .social-icon {
+    margin: 0.5rem;
+  }
+}
 </style>
