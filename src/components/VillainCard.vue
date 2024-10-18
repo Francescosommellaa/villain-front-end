@@ -23,10 +23,7 @@ export default {
         </span>
       </div>
     </div>
-    <div class="villain-actions">
-      <button class="btn btn-primary">Contact Now</button>
-      <button class="btn btn-secondary">Details</button>
-    </div>
+    <button class="btn btn-primary">Contact Now</button>
   </div>
 
 </template>
@@ -79,10 +76,10 @@ export default {
     }
   }
 
-  .villain-actions {
-    display: flex;
-    gap: 10px;
-  }
+  .btn{
+      width: 100%;
+      margin: 0.2em;
+    }
 }
 
 </style>

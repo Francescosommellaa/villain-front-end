@@ -83,7 +83,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 2em;
-  justify-content: start;
+  justify-content: center;
   margin: 0 4em;
 }
 
@@ -91,6 +91,7 @@ export default {
   flex: 0 1 calc(25% - 2em);
   box-sizing: border-box;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .fa-solid {
