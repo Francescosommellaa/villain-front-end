@@ -1,10 +1,12 @@
 <script>
 import VillainCard from "../components/VillainCard.vue";
+import Jumbotron from '../components/Jumbotron.vue';
 
 export default {
   name: 'Home',
   components: {
     VillainCard,
+    Jumbotron
   },
   data() {
     return {
@@ -51,6 +53,7 @@ export default {
 </script>
 
 <template>
+  <Jumbotron />
   <main>
     <!-- card printing  -->
       <div class="villains-flex">
@@ -79,23 +82,25 @@ export default {
 @use '../assets/style/generals/view-style/views-style';
 @import '../assets/style/main.scss';
 
+.villain-card {
+    flex: 0 1 calc(25% - 2em);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
 // Responsive for smaller screens
-@media (max-width: 1024px) {
-  .villain-card {
-    flex: 0 1 calc(33.33% - 20px);
-  }
+@media (max-width: 1400px) {
+    flex: 0 1 calc(33.33% - 2em); 
 }
 
-@media (max-width: 768px) {
-  .villain-card {
-    flex: 0 1 calc(50% - 20px);
+  @media (max-width: 1120px) {
+    flex: 0 1 calc(50% - 2em); 
   }
-}
 
-@media (max-width: 480px) {
-  .villain-card {
-    flex: 0 1 100%;
+  // Schermi tablet
+  @media (max-width: 780px) {
+    flex: 0 1 calc(100% - 2em); 
   }
 }
 

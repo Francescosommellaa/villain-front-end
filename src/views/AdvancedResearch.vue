@@ -50,10 +50,10 @@ export default {
 <template>
 <main>
   <div id="advanced-filter" class="left">
-    <h3>Filtra i nostri Villain</h3>
+    <h2>Filtra i nostri Villain</h2>
 
     <div class="filter-section">
-      <h6>Filtro tipo 1</h6>
+      <h4>Filtro tipo 1</h4>
       <ul>
         <li>Filtro 1</li>
         <li>Filtro 2</li>
@@ -63,7 +63,7 @@ export default {
     </div>
 
     <div class="filter-section">
-      <h6>Filtro tipo 2</h6>
+      <h4>Filtro tipo 2</h4>
       <ul>
         <li>Filtro 1</li>
         <li>Filtro 2</li>
@@ -73,7 +73,7 @@ export default {
     </div>
 
     <div class="filter-section">
-      <h6>Filtro tipo 3</h6>
+      <h4>Filtro tipo 3</h4>
       <ul>
         <li>Filtro 1</li>
         <li>Filtro 2</li>
@@ -111,6 +111,47 @@ export default {
 @use '../assets/style/generals/view-style/views-style';
 @import '../assets/style/main.scss';
 
+#advanced-filter {
+  padding: 1em;      
+  max-width: 300px;
+  margin: 20px auto;
+
+  h2 {
+    color: $primary;   
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .filter-section {
+    margin-bottom: 20px;
+    
+    h4 {
+      color: $secondary;              
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    li {
+      padding: 10px;
+      background-color: $gray-100;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      font-size: 1rem;
+      color: $gray-800;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background-color: $primary;
+        color: $light;              
+        transform: translateX(5px); 
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 main {
   display: flex;
 
@@ -124,28 +165,25 @@ main {
 }
 
 .villain-card {
-    flex: 0 1 calc(25% - 2em);
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    cursor: pointer;
-  }
+  flex: 0 1 calc(25% - 2em);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 
-@media (max-width: 1024px) {
-  .villain-card {
-    flex: 0 1 calc(40% - 2em);
-  }
+// Responsive for smaller screens
+@media (max-width: 1500px) {
+  flex: 0 1 calc(33.33% - 2em); 
 }
 
-@media (max-width: 768px) {
-  .villain-card {
-    flex: 0 1 calc(60% - 2em);
-  }
+@media (max-width: 1280px) {
+  flex: 0 1 calc(50% - 2em); 
 }
 
-@media (max-width: 480px) {
-  .villain-card {
-    flex: 0 1 100%;
-  }
+  // Schermi tablet
+@media (max-width: 900px) {
+  flex: 0 1 calc(100% - 2em); 
+}
 }
 
 .pagination {
