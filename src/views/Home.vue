@@ -94,12 +94,16 @@ export default {
     flex: 0 1 calc(33.33% - 2em); 
 }
 
-  @media (max-width: 1120px) {
+  @media (max-width: 1260px) {
     flex: 0 1 calc(50% - 2em); 
   }
 
-  // Schermi tablet
-  @media (max-width: 780px) {
+  @media (max-width: 880px) {
+  flex: 0 1 calc(100% - 4em); 
+  }
+
+
+  @media (max-width: 700px) {
     flex: 0 1 calc(100% - 2em); 
   }
 }

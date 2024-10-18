@@ -13,12 +13,14 @@ export default {
   <nav class="navbar">
     <!-- Left Section (Logo) -->
     <div class="navbar-left">
-      <picture>
-        <!-- Image for small screens -->
-        <source media="(max-width: 768px)" srcset="../assets/images/logo/logo-dk/logo-dk-mark.png">
-        <!-- Image for big screens -->
-        <img src="../assets/images/logo/logo-dk/logo-dk-horizontal.png" alt="Logo" class="logo">
-      </picture>
+      <router-link class="nav-link" :class="{ active: currentRoute === '/' }" to="/">
+        <picture class="logo-container">
+          <!-- Logo piccolo per schermi piccoli -->
+          <source media="(max-width: 768px)" srcset="../assets/images/logo/logo-dk/logo-dk-mark.png">
+          <!-- Logo per schermi più grandi -->
+          <img src="../assets/images/logo/logo-dk/logo-dk-horizontal.png" alt="Logo" class="logo">
+        </picture>
+      </router-link>
     </div>
 
     <!-- Middle Section (Navigation Links) -->
@@ -28,7 +30,17 @@ export default {
     </nav>
 
     <!-- Right Section (Button) -->
-    <button class="btn btn-secondary">became a villain</button>
+    <div class="navbar-right">
+      <!-- Bottone per desktop -->
+      <button class="btn btn-secondary btn-desktop">
+        Become a Villain
+      </button>
+
+      <!-- Bottone per mobile con icona Font Awesome -->
+      <button class="btn btn-secondary btn-mobile">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+      </button>
+    </div>
   </nav>
 </template>
 
@@ -44,10 +56,15 @@ export default {
   background-color: $body-bg;
 }
 
-.navbar-left .logo {
-  width: 150px;
-  height: auto;
-  transition: width 0.3s ease;
+/* Logo con animazione più fluida */
+.logo-container img {
+  width: auto;
+  height: 35px;
+  transition: height 0.4s ease-in-out; // Animazione più fluida
+
+  @media (max-width: 768px) {
+    height: 30px;
+  }
 }
 
 .navbar-center {
@@ -56,12 +73,10 @@ export default {
 }
 
 .nav-link {
-  text-decoration: none;
-  list-style: none;
   color: $gray-800;
   font-size: $font-size-base;
   position: relative;
-  transition: color 0.4s;
+  transition: color 0.4s, transform 0.3s ease;
 
   &:hover {
     color: $navbar-dark-hover-color;
@@ -82,24 +97,28 @@ export default {
   height: 2px;
   background-color: $dark;
 }
+.navbar-right .btn-mobile {
+  display: none;
+}
+.navbar-right .btn-desktop {
+  display: inline-block;
+}
 
-/* Media Queries for mobile */
-@media (max-width: 780px) {
+@media (max-width: 768px) {
   .navbar {
     padding: 10px;
   }
 
-  .navbar-left .logo {
-    width: 40px; // Riduci la larghezza del logo sui dispositivi mobili
+  .navbar-right .btn-mobile {
+    display: inline-block;
   }
 
-  .navbar-center {
-    gap: 1em; // Riduci lo spazio tra i link di navigazione
+  .navbar-right .btn-desktop {
+    display: none;
   }
 
-  .btn.btn-primary {
-    font-size: 0.9rem; // Riduci leggermente la dimensione del testo del pulsante
-    padding: 0.4rem 0.8rem; // Riduci padding del pulsante per mobile
+  .btn.btn-secondary {
+    padding: 0.4rem 0.6rem;
   }
 }
 </style>

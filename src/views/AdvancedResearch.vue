@@ -179,9 +179,12 @@ main {
   flex: 0 1 calc(50% - 2em); 
 }
 
-  // Schermi tablet
 @media (max-width: 900px) {
   flex: 0 1 calc(100% - 2em); 
+}
+
+@media (max-width: 700px) {
+  flex: 0 1 100%; 
 }
 }
 
