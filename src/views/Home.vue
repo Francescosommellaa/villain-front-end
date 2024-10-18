@@ -116,9 +116,9 @@ export default {
     // }));
     // console.log(this.villains);
     // Chiamte axios
-    this.getApi(store.urlApi + 'villains', 'villains');
+    this.getApi('/api/villains' + 'villains', 'villains');
     // this.getApi(store.urlApi + 'universes', 'universes');
-    this.getApi(store.urlApi + 'skills', 'skills');
+    this.getApi('/api/skills', 'skills', 'skills');
     // this.getApi(store.urlApi + 'services', 'services');
   },
 };

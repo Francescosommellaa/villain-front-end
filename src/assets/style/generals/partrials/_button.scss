@@ -6,7 +6,7 @@
     font-size: $btn-font-size;
     border-radius: $btn-border-radius;
     font-weight: $btn-font-weight;
-    transition: $btn-transition, box-shadow 0.4s ease-in-out;
+    transition: box-shadow 0.4s ease-in-out;
     border: none;
     text-transform: uppercase;
     cursor: pointer;
@@ -22,9 +22,10 @@
 // Primary Button with Gradient Hover Animation
 .btn-primary {
     color: $light;
-    background-clip: text;
+
     position: relative;
     z-index: 1;
+    background: linear-gradient(45deg, $primary, $secondary,$accent);
 
     &:before {
         content: '';
@@ -33,19 +34,21 @@
         left: -100%;
         width: 200%;
         height: 100%;
-        background: linear-gradient(45deg, $primary, $primary, $secondary,$accent);
         z-index: -1;
-        transition: all 0.6s ease-in-out;
+        transition: 0.3s ease-in-out;
     }
 
     &:hover {
-        background: $light;
+        background: linear-gradient(45deg, $primary, $secondary,$accent);
+        background-clip: text;
+        color: transparent;
     }
 
     &:hover:before {
         left: 0;
     }
 }
+
 
 // Secondary Button with Color Inversion Animation
 .btn-secondary {
