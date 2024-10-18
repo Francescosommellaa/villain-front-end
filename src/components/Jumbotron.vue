@@ -7,8 +7,10 @@ export default {
 <template>
     <section class="jumbo">
         <div class="cont-jumbo">
-            <h1 class="main-title">FIND YOUR VILLAIN</h1>
-            <a href="#" class="btn btn-primary">Hire a Villain</a>
+            <div>
+                <h1 class="main-title">FIND YOUR VILLAIN</h1>
+                <a href="#" class="btn btn-primary">Hire a Villain</a>
+            </div>
         </div>
         <div class="cont-what">
             <h4>WHAT ?</h4>
@@ -29,7 +31,7 @@ export default {
 .jumbo {
     height: 450px;
     width: 100%;
-    background-image: url('../assets/images/main/jumbo.webp');
+    background-image: url('../assets/images/main/jumbo.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 10%;
@@ -52,6 +54,7 @@ export default {
         a {
             color: white;
             font-weight: bold;
+            text-shadow: 1px 1px 10px $primary;
         }
 
         a {
