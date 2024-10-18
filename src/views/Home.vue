@@ -52,7 +52,6 @@ export default {
 
 <template>
   <main>
-
     <!-- card printing  -->
       <div class="villains-flex">
         <VillainCard
@@ -77,33 +76,9 @@ export default {
 
 <style scoped lang="scss">
 @use '../assets/style/generals/variables' as *;
+@use '../assets/style/generals/view-style/views-style';
 @import '../assets/style/main.scss';
 
-.villains-flex {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2em;
-  justify-content: center;
-  margin: 0 4em;
-}
-
-.villain-card {
-  flex: 0 1 calc(25% - 2em);
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-
-.fa-solid {
-  margin: 0 1em;
-  cursor: pointer;
-  padding: 0.3em 0.5em;
-  border-radius: 200px;
-
-  &:hover{
-    border: 1px solid $gray-600;
-  }
-}
 
 // Responsive for smaller screens
 @media (max-width: 1024px) {

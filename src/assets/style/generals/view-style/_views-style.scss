@@ -1,0 +1,20 @@
+@use '../variables' as *;
+
+.villains-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    justify-content: center;
+    margin: 0 4em;
+  }
+  
+  .fa-solid {
+    margin: 0 1em;
+    cursor: pointer;
+    padding: 0.3em 0.5em;
+    border-radius: 200px;
+  
+    &:hover{
+      border: 1px solid $gray-600;
+    }
+  }
