@@ -29,7 +29,7 @@ export default {
 @import '../assets/style/main.scss';
 
 .jumbo {
-    height: 450px;
+    height: 600px;
     width: 100%;
     background-image: url('../assets/images/main/jumbo.png');
     background-size: cover;
