@@ -82,10 +82,13 @@ export default {
 @use '../assets/style/generals/view-style/views-style';
 @import '../assets/style/main.scss';
 
+main{
+  padding-top: 4em;
+}
 .villain-card {
     flex: 0 1 calc(25% - 2em);
     box-sizing: border-box;
-    margin-bottom: 20px;
+    margin-bottom: 1em;
     cursor: pointer;
     transition: all 0.3s ease;
 

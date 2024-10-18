@@ -152,7 +152,7 @@ export default {
 
 main {
   display: flex;
-  margin-top: 2em;
+  margin-top: 6em;
 
   .left{
     flex: 0 1 calc(20%);

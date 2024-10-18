@@ -34,7 +34,7 @@ export default {
     background-repeat: no-repeat;
     background-position: 10%;
     position: relative;
-    margin-bottom: 150px;
+    margin: 4em 0;
 
     .cont-jumbo {
         display: flex;
@@ -70,7 +70,7 @@ export default {
         border-radius: 15px;
         color: black;
         position: absolute;
-        bottom: -25%;
+        bottom: -20%;
         left: 10%;
 
         h4 {
