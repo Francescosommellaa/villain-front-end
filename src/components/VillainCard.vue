@@ -17,14 +17,16 @@ export default {
     <div class="over"></div>
     <h3 class="villain-name : ">{{ villain.name }}</h3>
     <div class="villain-info">
-      <h3 class="villain-name">{{ villain.name }}</h3>
       <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
-      <div class="villain-reviews" v-if="villain.ratings.length !== 0">
+      <div class="villain-reviews" v-if="villain.ratings">
         <span v-for="star in 5" :key="star" class="star">
           {{ star <= villain.ratings[0].value ? '★' : '☆' }} </span>
       </div>
     </div>
-    <button class="btn btn-primary">Contact Now</button>
+    <div class="under">
+      <button class="btn btn-primary ">Contact Now</button>
+    </div>
+    
   </div>
 
 </template>
@@ -36,7 +38,7 @@ export default {
 .villain-card {
   background-color: $light;
   padding: 20px;
-  border: 1px solid $divider-color;
+  border: 1px solid $primary;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -87,9 +89,9 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     color: $light;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 2s ease;
     z-index: 2;
   }
 
@@ -112,7 +114,17 @@ export default {
 
   .btn {
     width: 100%;
-    margin: 0.2em;
+  }
+  .under {
+    width: 100%;
+    z-index: 100;
+    font-size: $btn-font-size;
+    border-radius: $btn-border-radius;
+    border: none;
+    transition: 0.8s ease-in-out;
+    &:hover{
+      background-color: white;
+    }
   }
 }
 

@@ -17,6 +17,8 @@ export default {
       services: [],
       universes: [],
       paginatorLink: [],
+      villanPerSkill: [],
+      reserched: false,
       search: '',
       isLoading: true,
 
@@ -45,7 +47,7 @@ export default {
 
   watch: {
     search(newSearch) {
-      this.getApi(store.urlApi + 'villains', 'villains', newSearch);
+      this.getApiResearch(store.urlApi + 'list-by-skills', newSearch);
     }
   },
 
@@ -77,10 +79,29 @@ export default {
             // console.log(this.paginatorLink)
           } else {
             this[type] = response.data
+            this.isLoading = false;
             console.log(this[type])
           }
         })
         .catch(error => {
+          console.log(error)
+        })
+    },
+    getApiResearch(urlApi, search = '') {
+      this.isLoading = true;
+      if (search) {
+        urlApi += `?search=${search}`;
+      }
+      axios.get(urlApi)
+        .then(response => {
+          this.isLoading = false;
+          this.reserched = true;
+          console.log(response.data.services.data)
+          this.villanPerSkill = response.data.services.data
+        })
+        .catch(error => {
+          this.isLoading = false;
+
           console.log(error)
         })
     },
@@ -95,9 +116,9 @@ export default {
     // }));
     // console.log(this.villains);
     // Chiamte axios
-    this.getApi(store.urlApi + 'villains', 'villains');
+    this.getApi('/api/villains' + 'villains', 'villains');
     // this.getApi(store.urlApi + 'universes', 'universes');
-    // this.getApi(store.urlApi + 'skills', 'skills');
+    this.getApi('/api/skills', 'skills', 'skills');
     // this.getApi(store.urlApi + 'services', 'services');
   },
 };
@@ -107,9 +128,26 @@ export default {
 <template>
   <Jumbotron />
   <main>
+    <!-- Search bar -->
+     <div class="search_bar">
+      <label for="search">Search here:</label>
+      <input type="search" name="search" id="search" v-model="search">
+     </div>
     <!-- card printing  -->
     <div class="villains-flex">
-      <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
+      <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched">
+  <div>
+    <span>{{ console.log(skill) }}</span>
+    <h2>Skill: {{ skill.name }}</h2>
+    <VillainCard 
+      v-for="(villain, index) in skill.villains" 
+      :key="index" 
+      :villain="villain" 
+    />
+  </div>
+</div>
+
+      <VillainCard v-else v-for="(villain, index) in villains" :key="index" :villain="villain" />
     </div>
 
     <!-- pagination -->
@@ -128,6 +166,14 @@ export default {
 
 main{
   padding-top: 4em;
+}
+
+.search_bar{
+  margin: 140px auto;
+  input{
+    width: 80%;
+    padding: 5px;
+  }
 }
 .villain-card {
     flex: 0 1 calc(25% - 2em);
