@@ -1,142 +1,190 @@
 <template>
     <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-row">
-          <div class="footer-column">
-            <h5 class="footer-title">VillainConnect</h5>
-            <p class="footer-text">
-              Find your ideal villain for any evil mission. Connect with the best villains around!
-            </p>
-          </div>
-          <div class="footer-column">
-            <h5 class="footer-title">Useful Links</h5>
-            <ul class="footer-list">
-              <li><a href="#" class="footer-link">About Us</a></li>
-              <li><a href="#" class="footer-link">Services</a></li>
-              <li><a href="#" class="footer-link">Contact</a></li>
-              <li><a href="#" class="footer-link">FAQ</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h5 class="footer-title">Follow Us</h5>
-            <div class="footer-social">
-              <a href="#" class="social-icon">
-                <i class="fa-brands fa-facebook fa-lg"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fa-brands fa-twitter fa-lg"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fa-brands fa-instagram fa-lg"></i>
-              </a>
+        <section class="connections">
+            <div class="mission">
+                <h5 class="footer-title">Villfind</h5>
+                <p class="footer-text">
+                    Find your ideal villain for any evil mission. Connect with the best villains
+                    around!
+                </p>
             </div>
-          </div>
-        </div>
-        <hr class="footer-divider">
-        <div class="footer-row center">
-          <p class="footer-text">&copy; 2024 VillainConnect. All rights reserved.</p>
-        </div>
-      </div>
+
+            <nav>
+                <h5 class="footer-title">Useful Links</h5>
+                <menu class="link-list">
+                    <li>
+                        <a href="#" class="link">
+                            About Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="link">
+                            Services
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="link">
+                            Contact
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="link">
+                            FAQ
+                        </a>
+                    </li>
+                </menu>
+            </nav>
+
+            <div class="socials">
+                <h5 class="footer-title">Follow Us</h5>
+                <menu class="link-list">
+                    <li>
+                        <a href="#" class="link">
+                            <i class="fa-brands fa-facebook fa-lg"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="link">
+                            <i class="fa-brands fa-twitter fa-lg"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="link">
+                            <i class="fa-brands fa-instagram fa-lg"></i>
+                        </a>
+                    </li>
+                </menu>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="copyright">
+            <p>&copy; 2024 Villfind. All rights reserved.</p>
+        </section>
     </footer>
 </template>
 
 <script>
 export default {
-  name: "Footer",
+    name: "Footer",
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 footer {
-  background-color: black;
-  color: white;
-  padding: 2rem 0;
-  width: 100%;
-}
+    background-color: black;
+    color: white;
+    width: 100%;
+    padding: 2rem;
 
-.footer-container {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  text-align: center; 
-}
+    section {
+        &.connections {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
 
-.footer-row {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+            .footer-title {
+                text-transform: uppercase;
+                margin-bottom: 1.5rem;
+                font-size: 1.5rem;
+            }
 
-.footer-column {
-  flex: 1;
-  margin-bottom: 1rem;
-  min-width: 200px;
-}
+            .link-list {
+                display: flex;
+                gap: .5rem;
+            }
 
-.footer-title {
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
+            .mission {
+                flex: 0 0 calc(50% - 1rem);
 
-.footer-list {
-  padding: 0;
-}
+                @media (max-width: 1260px) {
+                    flex-basis: 100%;
+                }
+            }
 
-.footer-link {
-  color: #fff;
-  text-decoration: none;
-  position: relative;
-  transition: color 0.3s;
-}
+            nav {
+                flex: 0 0 calc(25% - 2rem);
 
-.footer-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background-color: violet;
-  transition: width 0.3s ease;
-}
+                @media (max-width: 1260px) {
+                    flex-basis: calc(50% - 1rem);
+                }
 
-.footer-link:hover::after {
-  width: 100%;
-}
+                @media (max-width: 880px) {
+                    flex-basis: 100%;
+                }
 
-.footer-link:hover {
-  color: violet;
-}
+                .link-list {
+                    flex-direction: column;
+                }
 
-.social-icon {
-  color: #fff;
-  margin-right: 1rem;
-  transition: transform 0.3s ease, color 0.3s ease;
-}
+                .link {
+                    color: #fff;
+                    text-decoration: none;
+                    position: relative;
+                    transition: color 0.3s;
 
-.social-icon:hover {
-  transform: scale(1.3);
-  color: violet;
-}
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 0;
+                        height: 2px;
+                        bottom: -2px;
+                        left: 0;
+                        background-color: violet;
+                        transition: width 0.3s ease;
+                    }
 
-.footer-divider {
-  border: none;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.2);
-  margin: 1.5rem 0;
-}
+                    &:hover {
+                        color: violet;
 
-.center {
-  text-align: center;
-}
+                        &::after {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
 
-@media (max-width: 768px) {
-  .footer-row {
-    flex-direction: column;
-  }
+            .socials {
+                flex: 0 0 calc(25% - 1rem);
 
-  .social-icon {
-    margin: 0.5rem;
-  }
+                @media (max-width: 1260px) {
+                    flex-basis: calc(50% - 1rem);
+                }
+
+                @media (max-width: 880px) {
+                    flex-basis: 100%;
+                }
+
+                .link {
+                    color: #fff;
+                    margin-right: 1rem;
+                    transition: transform 0.3s ease, color 0.3s ease;
+
+                    &:hover {
+                        transform: scale(1.3);
+                        color: violet;
+                    }
+                }
+            }
+        }
+    }
+
+    .divider {
+        border: none;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.2);
+        margin: 2rem 0;
+    }
+
+    .copyright {
+        text-align: center;
+    }
 }
 </style>
