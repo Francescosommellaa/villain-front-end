@@ -116,9 +116,9 @@ export default {
     // }));
     // console.log(this.villains);
     // Chiamte axios
-    this.getApi('/api/villains' + 'villains', 'villains');
+    this.getApi(store.urlApi + 'villains', 'villains');
     // this.getApi(store.urlApi + 'universes', 'universes');
-    this.getApi('/api/skills', 'skills', 'skills');
+    this.getApi(store.urlApi + 'skills', 'skills');
     // this.getApi(store.urlApi + 'services', 'services');
   },
 };
@@ -136,16 +136,16 @@ export default {
     <!-- card printing  -->
     <div class="villains-flex">
       <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched">
-  <div>
-    <span>{{ console.log(skill) }}</span>
-    <h2>Skill: {{ skill.name }}</h2>
-    <VillainCard 
-      v-for="(villain, index) in skill.villains" 
-      :key="index" 
-      :villain="villain" 
-    />
-  </div>
-</div>
+      <div>
+        <span>{{ console.log(skill) }}</span>
+        <h2>Skill: {{ skill.name }}</h2>
+        <VillainCard 
+          v-for="(villain, index) in skill.villains" 
+          :key="index" 
+          :villain="villain" 
+        />
+      </div>
+    </div>
 
       <VillainCard v-else v-for="(villain, index) in villains" :key="index" :villain="villain" />
     </div>
