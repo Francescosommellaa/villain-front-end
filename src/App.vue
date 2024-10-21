@@ -51,7 +51,10 @@ export default {
   </nav>
 
   <RouterView />
-  <Footer />
+  <div class="bottom">
+    <Footer />
+  </div>
+
 
   </div>
 </template>
@@ -74,5 +77,12 @@ export default {
     top: -100px;
   }
 }
-
+.bottom {
+    background-color: black;
+    color: white;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
 </style>

@@ -77,11 +77,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '../assets/style/generals/variables' as *;
+@import '../assets/style/main.scss';
 footer {
-    background-color: black;
-    color: white;
-    width: 100%;
-    padding: 2rem;
+    width: 80%;
 
     section {
         &.connections {
@@ -93,7 +92,7 @@ footer {
             .footer-title {
                 text-transform: uppercase;
                 margin-bottom: 1.5rem;
-                font-size: 1.5rem;
+                font-size: 1.1rem;
             }
 
             .link-list {
@@ -125,7 +124,7 @@ footer {
                 }
 
                 .link {
-                    color: #fff;
+                    color: $light;
                     text-decoration: none;
                     position: relative;
                     transition: color 0.3s;
@@ -137,16 +136,12 @@ footer {
                         height: 2px;
                         bottom: -2px;
                         left: 0;
-                        background-color: violet;
                         transition: width 0.3s ease;
                     }
 
                     &:hover {
-                        color: violet;
+                        color:$secondary;
 
-                        &::after {
-                            width: 100%;
-                        }
                     }
                 }
             }
@@ -163,13 +158,13 @@ footer {
                 }
 
                 .link {
-                    color: #fff;
+                    color: $light;
                     margin-right: 1rem;
                     transition: transform 0.3s ease, color 0.3s ease;
 
                     &:hover {
                         transform: scale(1.3);
-                        color: violet;
+                        color:$secondary;
                     }
                 }
             }
