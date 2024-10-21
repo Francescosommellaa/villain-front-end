@@ -7,8 +7,10 @@ export default {
 <template>
     <section class="jumbo">
         <div class="cont-jumbo">
-            <h1 class="main-title">FIND YOUR VILLAIN</h1>
-            <a href="#" class="btn btn-primary">Hire a Villain</a>
+                <h1 class="main-title">FIND YOUR VILLAIN</h1>
+                <div class="under">
+                    <button class="btn btn-primary"><a href="#">Hire a Villain</a></button>
+                </div>
         </div>
         <div class="cont-what">
             <h4>WHAT ?</h4>
@@ -27,9 +29,9 @@ export default {
 @import '../assets/style/main.scss';
 
 .jumbo {
-    height: 450px;
+    height: 600px;
     width: 100%;
-    background-image: url('../assets/images/main/jumbo.webp');
+    background-image: url('../assets/images/main/jumbo.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 10%;
@@ -40,26 +42,22 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 30px;
         width: 80%;
         height: 100%;
         margin: 0 auto;
         font-size: 50px;
         text-align: center;
 
-        .main-title,
-        a {
+        .main-title {
             color: white;
             font-weight: bold;
+            text-shadow: 1px 1px 10px $primary;
+            padding-bottom: 1.5rem;
+        }
+        a {
+            font-size: 1.5rem;
         }
 
-        a {
-            font-size: 18px;
-            text-decoration: none;
-            padding: 10px 25px;
-            border-radius: 5px;
-            background-color: $primary;
-        }
     }
 
     .cont-what {
@@ -84,6 +82,6 @@ export default {
             font-size: 16px;
             line-height: 150%;
         }
-    }
+    }  
 }
 </style>

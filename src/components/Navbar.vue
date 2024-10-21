@@ -26,7 +26,10 @@ export default {
     <!-- Middle Section (Navigation Links) -->
     <nav class="navbar-center">
       <router-link class="nav-link" :class="{ active: currentRoute === '/' }" to="/">Home</router-link>
-      <router-link class="nav-link" :class="{ active: currentRoute === '/AdvancedResearch' }" to="/AdvancedResearch">Advanced Research</router-link>
+      <router-link :to="{ name: 'AdvancedResearch'}">
+  Vai a Advanced Research
+</router-link>
+
     </nav>
 
     <!-- Right Section (Button) -->
@@ -97,9 +100,11 @@ export default {
   height: 2px;
   background-color: $dark;
 }
+
 .navbar-right .btn-mobile {
   display: none;
 }
+
 .navbar-right .btn-desktop {
   display: inline-block;
 }
