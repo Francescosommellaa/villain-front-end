@@ -80,6 +80,7 @@ export default {
 </div>
 <main v-else>
   <div id="advanced-filter" class="left">
+
     <h2>Filtra i nostri Villain</h2>
 
     <div class="filter-section">
@@ -138,7 +139,9 @@ export default {
   margin: 20px auto;
 
   h2 {
-    color: $primary;   
+    background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+    background-clip: text;
+    color: transparent; 
     margin-bottom: 20px;
     text-transform: uppercase;
   }
