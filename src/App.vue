@@ -45,9 +45,11 @@ export default {
 <template>
   <div id="app">
 
+  <!-- Navbar -->
   <nav :class="['navbar', { 'navbar-sticky': isSticky, 'navbar-hidden': !isVisible }]">
     <Navbar />
   </nav>
+
   <RouterView />
   <Footer />
 
