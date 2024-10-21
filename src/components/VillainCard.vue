@@ -46,7 +46,7 @@ export default {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s ease;
+  transition: transform 0.3s ease;
 
   img{
     object-position: top; 
@@ -89,11 +89,10 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     color: $light;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     opacity: 0;
     transition: opacity 2s ease;
     z-index: 2;
-    text-align: center;
   }
 
   .villain-info {
@@ -115,6 +114,17 @@ export default {
 
   .btn {
     width: 100%;
+  }
+  .under {
+    width: 100%;
+    z-index: 100;
+    font-size: $btn-font-size;
+    border-radius: $btn-border-radius;
+    border: none;
+    transition: 0.8s ease-in-out;
+    &:hover{
+      background-color: white;
+    }
   }
 }
 

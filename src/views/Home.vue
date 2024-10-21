@@ -92,7 +92,7 @@ export default {
         <option value="" disabled selected>Select by skills</option>
         <option v-for="skill in skills" :value="skill.id">{{ skill.name }}</option>
       </select>
-      <button>Show All</button>
+      <button @click="reserched = false">Show All</button>
      </div>
     <!-- card printing  -->
     <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched && !isLoading">
@@ -105,9 +105,10 @@ export default {
           />
       </div>
     </div>
-    <div v-else class="villains-flex">
-
-    <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
+    <div v-else-if="!isLoading">
+      <h2 v-if="!isLoading">All Villains</h2>
+      <div class="villains-flex">
+        <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
     
         <!-- pagination -->
         <div class="pagination">
@@ -115,6 +116,7 @@ export default {
               <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url"></button>
           </div>
         </div>
+      </div>
       </div>
   </main>
 </template>
@@ -180,7 +182,7 @@ h2{
     }
     button {
         padding: 11px 20px;
-        background-color: #007bff;
+        background-color: $primary;
         color: white;
         border: none;
         border-top-right-radius: 5px;
@@ -189,7 +191,7 @@ h2{
         transition: background-color 0.3s;
 
         &:hover {
-            background-color: #0056b3;
+            background-color: $secondary;
         }
     }
     
