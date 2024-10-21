@@ -176,21 +176,23 @@ h2{
     select {
         padding: 8px;
         border: 1px solid #ced4da;
+        border: none;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         font-size: 1rem;
         flex: 1;
     }
     button {
-        padding: 11px 20px;
-        background-color: $primary;
-        color: white;
-        border: none;
+        padding: 9px 18px;
+        border: 2px trasparent;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
+        transition: box-shadow 0.4s ease-in-out;
         cursor: pointer;
+        transition:  0.4s ease;
         &:hover {
             background-color: $secondary;
+            border: 2px solid $primary;
         }
     }
     

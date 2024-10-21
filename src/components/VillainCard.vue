@@ -20,7 +20,8 @@ export default {
     <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
     <div class="villain-reviews" v-if="villain.ratings && villain.ratings.length">
       <span v-for="star in 5" :key="star" class="star">
-        {{ star <= villain.ratings[0].value ? '★' : '☆' }} </span>
+        <i :class="star <= villain.ratings[0].value ? 'fa-solid fa-star' : 'fa-regular fa-star' "></i>
+      </span>
     </div>
   </div>
   <div class="under">
@@ -54,7 +55,6 @@ export default {
 
   &:hover {
     transform: translateY(-5px);
-    
     .over{
       position: absolute;
       top: 0;
@@ -66,10 +66,15 @@ export default {
       z-index: 1;
 
     }
-
     .villain-name {
       opacity: 1;
     }
+    .villain-info {
+      .villain-service {
+        color: $light;
+      }
+    }
+
   }
 
   .villain-img {
@@ -84,15 +89,17 @@ export default {
 
 
   .villain-name {
+    width: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: $light;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     opacity: 0;
     transition: opacity 2s ease;
     z-index: 2;
+    text-align: center
   }
 
   .villain-info {
@@ -100,31 +107,29 @@ export default {
     margin-bottom: 15px;
     position: relative;
     z-index: 2;
+    font-weight: 900;
     
     .villain-service {
       font-size: 1rem;
-      color: $secondary-text-emphasis;
+      color: $dark;
+      padding-bottom: 0.2rem;
+      transition: color 2s ease;
     }
 
     .villain-reviews {
-      color: $clr-rating-stars;
       font-size: 1.2rem;
+      padding-top: 0.5rem;
+      .fa-star {
+      color: $secondary;
+      font-size: 1rem;
+      padding: 0 0.1rem
     }
+    }
+
   }
 
   .btn {
     width: 100%;
-  }
-  .under {
-    width: 100%;
-    z-index: 100;
-    font-size: $btn-font-size;
-    border-radius: $btn-border-radius;
-    border: none;
-    transition: 0.8s ease-in-out;
-    &:hover{
-      background-color: white;
-    }
   }
 }
 

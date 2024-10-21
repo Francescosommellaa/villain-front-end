@@ -26,9 +26,7 @@ export default {
     <!-- Middle Section (Navigation Links) -->
     <nav class="navbar-center">
       <router-link class="nav-link" :class="{ active: currentRoute === '/' }" to="/">Home</router-link>
-      <router-link class="nav-link" :to="{ name: 'AdvancedResearch'}">
-  Vai a Advanced Research
-</router-link>
+      <router-link class="nav-link" :to="{ name: 'AdvancedResearch'}">Advanced Research</router-link>
 
     </nav>
 
