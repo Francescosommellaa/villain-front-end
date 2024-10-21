@@ -13,7 +13,7 @@ export default {
                 </div>
         </div>
         <div class="cont-what">
-            <h4>WHAT ?</h4>
+            <h4>WHAT?</h4>
             <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.<br>
                 Sint quae molestias optio id ea dolorum sit et

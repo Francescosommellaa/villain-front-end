@@ -120,7 +120,7 @@ export default {
       font-size: 1.2rem;
       padding-top: 0.5rem;
       .fa-star {
-      color: $secondary;
+      color: $primary;
       font-size: 1rem;
       padding: 0 0.1rem
     }
