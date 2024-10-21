@@ -114,7 +114,7 @@ export default {
         <!-- pagination -->
         <div class="pagination">
           <div v-if="villains.length" class="paginator_btn">
-              <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url"></button>
+              <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url" :class="{ 'active': link.active }"></button>
           </div>
         </div>
       </div>
@@ -160,7 +160,22 @@ main{
 .pagination {
   text-align: center;
   margin-top: 20px;
+  .paginator_btn {
+    padding: 15px 0 50px;
+    button {
+      padding: 5px 10px;
+      margin: 0 1px;
+      border: solid $primary 0.1rem;
+      transition: background-color 0.3s ease;
+      &:hover{
+        background-color: $secondary;
+        color: $light;
+      }
+
+    }
+  }
 }
+
 h2{
   text-align: center;
   margin: 20px auto;
@@ -185,11 +200,14 @@ h2{
     button {
         padding: 9px 18px;
         border: 2px trasparent;
+        border-radius: 3px;
+        background-color: $light;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         transition: box-shadow 0.4s ease-in-out;
         cursor: pointer;
         transition:  0.4s ease;
+
         &:hover {
             background-color: $secondary;
             border: 2px solid $primary;
@@ -197,6 +215,10 @@ h2{
     }
     
 }
+.active {
+        color: $light;
+        background-color: $secondary;
+      }
 
 
 
