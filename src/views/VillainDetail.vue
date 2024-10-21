@@ -16,9 +16,9 @@ export default {
         getApiDetails(slug){
             axios.get(store.urlApi+ 'villain/' + slug)
                 .then(resp =>{
-                    this.isLoading = false
                     this.villain = resp.data.villain;
                     console.log(this.villain)
+                    this.isLoading = false
                 })
         }
     },
@@ -38,6 +38,7 @@ export default {
         
     </div>
         <div v-else class="prova">
+            <span>{{console.log(villain)}}</span>
             <div class="cont-img mb-30">
                 <img :src="'http://localhost:8000' + villain.image" alt="prova">
             </div>
@@ -49,7 +50,7 @@ export default {
         <div class="cont-text">
             <h2>{{ villain.name }}</h2>
             <h5 class="mb-40">
-                <strong>Universe:</strong> {{villain.universe }}
+                <strong>Universe:</strong> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
             </h5>
             <h4 class="mb-30">
                 <strong>Skills:</strong>
@@ -70,9 +71,14 @@ export default {
             <hr class="mb-20">
             <div class="cont-reviews">
                 <div class="review" v-for="review in villain.ratings">
-                    <div><strong>Name</strong></div>
-                    <div class="mb-10"><em>{{ review.pivot.created_at }}</em></div>
-                    <div class="mb-10">STELLE</div>
+                    <div><strong>{{review.pivot.full_name}}</strong></div>
+                    <div class="mb-10"><em>{{ review.created_at }}</em></div>
+                    <div class="villain-reviews" v-if="review.value">
+                        <span>Stars: </span>
+                        <span v-for="star in 5" :key="star" class="star">
+                        {{ star <= review.value ? '★' : '☆' }} </span>
+                    </div>
+
                     <p class="mb-10">
                         {{ review.pivot.content }}
                     </p>
