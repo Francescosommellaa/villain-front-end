@@ -24,7 +24,7 @@ export default {
       </div>
     </div>
     <div class="under">
-      <button class="btn btn-primary"><a href="">Contact Now</a></button>
+      <router-link  class="btn btn-primary" :to="{ name: 'VillainDetail', params: { slug: villain.slug } }">Contact Now</router-link>
     </div>
     
   </div>

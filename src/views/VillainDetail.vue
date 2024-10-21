@@ -1,6 +1,31 @@
 <script>
+import { store } from '@/store/store';
+import axios from 'axios';
+
 export default {
     name: 'VillainDetail',
+    data(){
+        return{
+            villain: [],
+            slug: '',
+            isLoading: true,
+
+        }
+    },
+    methods:{
+        getApiDetails(slug){
+            axios.get(store.urlApi+ 'villain/' + slug)
+                .then(resp =>{
+                    this.isLoading = false
+                    this.villain = resp.data.villain;
+                    console.log(this.villain)
+                })
+        }
+    },
+    mounted(){
+        this.slug = this.$route.params.slug
+        this.getApiDetails(this.slug)
+    }
 }
 </script>
 
@@ -9,66 +34,47 @@ export default {
     <div class="cont-prova">
         
     </div>
-        <div class="prova">
+    <div v-if="isLoading">
+        
+    </div>
+        <div v-else class="prova">
             <div class="cont-img mb-30">
-                <img src="../assets/images/placeholders/bellatrix.webp" alt="prova">
+                <img :src="'http://localhost:8000' + villain.image" alt="prova">
             </div>
-            <h5 class="mb-20"><strong>CONTACT BELLATRIX:</strong></h5 class="mb">
+            <h5 class="mb-20"><strong>{{ villain.name }}</strong></h5 class="mb">
             <h5 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h5>
-            <h5><i class="fa-solid fa-phone"></i> 123456789</h5>
+            <h5><i class="fa-solid fa-phone"></i> {{villain.phone}}</h5>
         </div>
        
         <div class="cont-text">
-            <h2>BELLATRIX</h2>
+            <h2>{{ villain.name }}</h2>
             <h5 class="mb-40">
-                <strong>Universe:</strong> Dragon Ball
+                <strong>Universe:</strong> {{villain.universe }}
             </h5>
             <h4 class="mb-30">
                 <strong>Skills:</strong>
                 <ul>
-                    <li>Blablablabla</li>
-                    <li>Blablablabla</li>
-                    <li>Blablablabla</li>
+                    <li v-for="skill in villain.skills">{{skill.name}}</li>
                 </ul>
             </h4>
             <h4 class="mb-30">
                 <strong>Services:</strong>
                 <ul>
-                    <li>Blablablabla</li>
-                    <li>Blablablabla</li>
-                    <li>Blablablabla</li>
+                    <li v-for="service in villain.services">{{service.name}}</li>
                 </ul>
             </h4>
-            <h5 class="mb-50"><strong>CV:</strong> bellatrixcv.pdf</h5>
+            <h5 class="mb-50"><strong>CV:</strong> Villan cv</h5>
 
             <hr class="mb-20">
-            <h4 class="mb-20"><strong>Bellatrix's Reviews</strong></h4>
+            <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
             <hr class="mb-20">
             <div class="cont-reviews">
-                <div class="review">
+                <div class="review" v-for="review in villain.ratings">
                     <div><strong>Name</strong></div>
-                    <div class="mb-10"><em>30/10/24 19.30</em></div>
+                    <div class="mb-10"><em>{{ review.pivot.created_at }}</em></div>
                     <div class="mb-10">STELLE</div>
                     <p class="mb-10">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi omnis incidunt, et ex sit vel ducimus dolorum suscipit atque aliquid ipsa deserunt assumenda magnam distinctio illum velit, nulla ad temporibus!
-                    </p>
-                    <hr class="mb-10">
-                </div>
-                <div class="review">
-                    <div><strong>Name</strong></div>
-                    <div class="mb-10"><em>30/10/24 19.30</em></div>
-                    <div class="mb-10">STELLE</div>
-                    <p class="mb-10">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi omnis incidunt, et ex sit vel ducimus dolorum suscipit atque aliquid ipsa deserunt assumenda magnam distinctio illum velit, nulla ad temporibus!
-                    </p>
-                    <hr class="mb-10">
-                </div>
-                <div class="review">
-                    <div><strong>Name</strong></div>
-                    <div class="mb-10"><em>30/10/24 19.30</em></div>
-                    <div class="mb-10">STELLE</div>
-                    <p class="mb-10">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi omnis incidunt, et ex sit vel ducimus dolorum suscipit atque aliquid ipsa deserunt assumenda magnam distinctio illum velit, nulla ad temporibus!
+                        {{ review.pivot.content }}
                     </p>
                     <hr class="mb-10">
                 </div>

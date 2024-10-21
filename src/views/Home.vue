@@ -92,7 +92,7 @@ export default {
         <option value="" disabled selected>Select by skills</option>
         <option v-for="skill in skills" :value="skill.id">{{ skill.name }}</option>
       </select>
-      <button @click="reserched = false">Show All</button>
+      <button class="btn-primary" @click="reserched = false">Show All</button>
      </div>
     <!-- card printing  -->
     <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched && !isLoading">
@@ -188,8 +188,6 @@ h2{
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s;
-
         &:hover {
             background-color: $secondary;
         }

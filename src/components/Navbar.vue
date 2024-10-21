@@ -28,8 +28,8 @@ export default {
       <router-link class="nav-link" :class="{ active: currentRoute === '/' }" to="/">Home</router-link>
       <router-link class="nav-link" :class="{ active: currentRoute === '/AdvancedResearch' }"
         to="/AdvancedResearch">Advanced Research</router-link>
-      <router-link class="nav-link" :class="{ active: currentRoute === '/VillainDetail' }" to="/VillainDetail">Villain
-        Detail</router-link>
+      <!-- <router-link class="nav-link" :class="{ active: currentRoute === '/VillainDetail' }" to="/VillainDetail">Villain
+        Detail</router-link> -->
     </nav>
 
     <!-- Right Section (Button) -->
