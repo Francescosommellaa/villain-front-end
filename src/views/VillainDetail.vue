@@ -11,22 +11,40 @@ export default {
             isLoading: true,
         }
     },
-    methods:{
+    methods: {
         getApiDetails(slug){
-            axios.get(store.urlApi+ 'villain/' + slug)
+            axios.get(store.urlApi + 'villain/' + slug)
                 .then(resp =>{
                     this.villain = resp.data.villain;
-                    console.log(this.villain)
-                    this.isLoading = false
+                    console.log(this.villain);
+                    this.isLoading = false;
                 })
+        },
+        
+        formatDate(dateString) {
+            const date = new Date(dateString);
+
+            const formattedDate = date.toLocaleDateString('it-IT', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+
+            const formattedTime = date.toLocaleTimeString('it-IT', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            return `${formattedDate} ${formattedTime}`;
         }
     },
     mounted(){
-        this.slug = this.$route.params.slug
-        this.getApiDetails(this.slug)
+        this.slug = this.$route.params.slug;
+        this.getApiDetails(this.slug);
     }
 }
 </script>
+
 
 <template>
     <div class="cont-detail">
@@ -46,17 +64,17 @@ export default {
         </div>
        
         <div class="cont-text">
-            <h2>{{ villain.name }}</h2>
+            <h2 class="mb-20">{{ villain.name }}</h2>
             <h4 class="mb-30">
                 <strong>Skills:</strong>
-                <ul>
-                    <li v-for="skill in villain.skills"> <i class="fa-solid fa-hand-sparkles"></i>{{skill.name}}</li>
+                <ul class="mt-15">
+                    <li v-for="skill in villain.skills"> <i class="fa-solid fa-hand-sparkles mb-10 m-icon"></i>{{skill.name}}</li>
                 </ul>
             </h4>
             <h4 class="mb-30">
                 <strong>Services:</strong>
-                <ul>
-                    <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge"></i>{{service.name}}</li>
+                <ul class="mt-15">
+                    <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{service.name}}</li>
                 </ul>
             </h4>
             <h5 class="mb-50"><strong>CV:</strong> Villan cv</h5>
@@ -66,9 +84,8 @@ export default {
             <div class="cont-reviews">
                 <div class="review" v-for="review in villain.ratings">
                     <div><strong>{{review.pivot.full_name}}</strong></div>
-                    <div class="mb-10"><em>{{ review.created_at }}</em></div>
-                    <div class="villain-reviews" v-if="review.value">
-                        <span>Stars: </span>
+                    <div><em>{{ formatDate(review.created_at) }}</em></div>
+                    <div class="villain-reviews mb-10" v-if="review.value">
                         <span v-for="star in 5" :key="star" class="star">
                         {{ star <= review.value ? '★' : '☆' }} </span>
                     </div>
@@ -110,11 +127,11 @@ export default {
         padding: 20px;
         border-radius: 20px;
         border: 1px solid $primary;
-        // background-color: $gray-300;
         background: linear-gradient(45deg, $primary, $secondary,$accent);
 
         img {
-            border-radius: 20px;
+            background-color: white;
+            border-radius: 10px;
             width: 100%;
             height: auto;
             aspect-ratio: 4 / 5; 
@@ -123,13 +140,22 @@ export default {
         }
     }
 
-    .cont-reviews {
-        height: 200px;
-        overflow-y: auto;
+    .cont-text {
+        flex-grow: 1;
+
+        .cont-reviews {
+            height: 200px;
+            overflow-y: auto;
+        }
     }
 
     .fa-solid {
         color: $primary;
+        margin-right: 20px;
+    }
+
+    .m-icon {
+        margin-left: 20px;
     }
 
     h2 {
@@ -149,6 +175,10 @@ export default {
 
     h5 {
         font-size: 16px;
+    }
+
+    .mt-15 {
+        margin-top: 15px;
     }
 
     .mb-10 {
