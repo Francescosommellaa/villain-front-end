@@ -31,41 +31,36 @@ export default {
 
 <template>
     <div class="cont-detail">
-    <div class="cont-prova">
-        
-    </div>
     <div v-if="isLoading">
         
     </div>
-        <div v-else class="prova">
-            <span>{{console.log(villain)}}</span>
+        <div v-else class="cont-left">
             <div class="cont-img mb-30">
                 <img :src="'http://localhost:8000' + villain.image" alt="prova">
             </div>
-            <h5 class="mb-20"><strong>{{ villain.name }}</strong></h5 class="mb">
+            <h5 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h5 class="mb">
             <h5 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h5>
-            <h5><i class="fa-solid fa-phone"></i> {{villain.phone}}</h5>
+            <h5 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h5>
+            <h5 class="mb-10">
+                <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
+            </h5>
         </div>
        
         <div class="cont-text">
             <h2>{{ villain.name }}</h2>
-            <h5 class="mb-40">
-                <strong>Universe:</strong> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
-            </h5>
             <h4 class="mb-30">
                 <strong>Skills:</strong>
                 <ul>
-                    <li v-for="skill in villain.skills">{{skill.name}}</li>
+                    <li v-for="skill in villain.skills"> <i class="fa-solid fa-hand-sparkles"></i>{{skill.name}}</li>
                 </ul>
             </h4>
             <h4 class="mb-30">
                 <strong>Services:</strong>
                 <ul>
-                    <li v-for="service in villain.services">{{service.name}}</li>
+                    <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge"></i>{{service.name}}</li>
                 </ul>
             </h4>
             <h5 class="mb-50"><strong>CV:</strong> Villan cv</h5>
-
             <hr class="mb-20">
             <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
             <hr class="mb-20">
@@ -103,26 +98,26 @@ export default {
     gap: 80px;
     width: 80%;
     margin: 120px auto 40px;
-    // debug
-    // background-color: purple;
 
     li {
         list-style-type: none;
-        padding-left: 30px;
+        padding: 0;
         line-height: 160%;
     }
 
     .cont-img {
-        // flex-grow: 0;
         width: 400px;
-        padding: 30px;
-        // margin-left: 50px;
+        height: auto;
+        padding: 20px;
         border-radius: 20px;
-        // box-shadow: 2px 2px 10px grey;
         background-color: $gray-300;
 
         img {
             width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 5; 
+            object-fit: cover;
+            object-position: top;
         }
     }
 
