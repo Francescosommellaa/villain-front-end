@@ -15,16 +15,16 @@ export default {
    <div v-if="villain" class="villain-card">
     <img :src="'http://localhost:8000' + villain.image" alt="Villain Image" class="villain-img" />
     <div class="over"></div>
-    <h3 class="villain-name : ">{{ villain.name }}</h3>
+    <h3 class="villain-name">{{ villain.name }}</h3>
     <div class="villain-info">
       <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
-      <div class="villain-reviews" v-if="villain.ratings">
+      <div class="villain-reviews" v-if="villain.ratings && villain.ratings.length">
         <span v-for="star in 5" :key="star" class="star">
           {{ star <= villain.ratings[0].value ? '★' : '☆' }} </span>
       </div>
     </div>
     <div class="under">
-      <button class="btn btn-primary ">Contact Now</button>
+      <button class="btn btn-primary"><a href="">Contact Now</a></button>
     </div>
     
   </div>

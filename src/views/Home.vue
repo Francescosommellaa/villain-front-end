@@ -19,49 +19,14 @@ export default {
       paginatorLink: [],
       villanPerSkill: [],
       reserched: false,
-      search: '',
+      selectSkill: '',
       isLoading: true,
 
       currentPage: 1,
       villainsPerPage: 10,
     };
   },
-  // computed: {
-  //   paginatedVillains() {
-  //     // Se villains non è un array o è vuoto, ritorna un array vuoto
-  //     if (this.isLoading === true) {
-  //       return [];
-  //     }
-  //     const start = (this.currentPage - 1) * this.villainsPerPage;
-  //     const end = this.currentPage * this.villainsPerPage;
-  //     return this.villains.slice(start, end);
-  //   },
-  //   totalPages() {
-  //     // Stesso controllo su villains per calcolare le pagine totali
-  //     if (this.isLoading === true) {
-  //       return 1;
-  //     }
-  //     return Math.ceil(this.villains.length / this.villainsPerPage);
-  //   },
-  // },
-
-  watch: {
-    search(newSearch) {
-      this.getApiResearch(store.urlApi + 'list-by-skills', newSearch);
-    }
-  },
-
   methods: {
-    // nextPage() {
-    //   if (this.currentPage < this.totalPages) {
-    //     this.currentPage++;
-    //   }
-    // },
-    // prevPage() {
-    //   if (this.currentPage > 1) {
-    //     this.currentPage--;
-    //   }
-    // },
     // Chiamta alle api
     getApi(urlApi, type = 'villains', search = '') {
       this.isLoading = true;
@@ -74,11 +39,9 @@ export default {
           if (type === 'villains') {
             this.isLoading = false;
             this.villains = response.data.villains.data
-            // console.log(this.villains)
             this.paginatorLink = response.data.villains.links
-            // console.log(this.paginatorLink)
           } else {
-            this[type] = response.data
+            this[type] = response.data[type]
             this.isLoading = false;
             console.log(this[type])
           }
@@ -87,17 +50,20 @@ export default {
           console.log(error)
         })
     },
-    getApiResearch(urlApi, search = '') {
-      this.isLoading = true;
-      if (search) {
-        urlApi += `?search=${search}`;
+    filterBySkill() {
+      if (this.selectSkill) {
+        const url = `${store.urlApi}villains-by-skills/${this.selectSkill}`;
+        this.getApiResearch(url);
       }
+    },
+    getApiResearch(urlApi) {
+      this.isLoading = true;
       axios.get(urlApi)
         .then(response => {
           this.isLoading = false;
           this.reserched = true;
-          console.log(response.data.services.data)
-          this.villanPerSkill = response.data.services.data
+          console.log(response.data)
+          this.villanPerSkill = response.data
         })
         .catch(error => {
           this.isLoading = false;
@@ -107,14 +73,6 @@ export default {
     },
   },
   mounted() {
-    // 15 Fake Card
-    // this.villains = Array.from({ length: 15 }, (v, i) => ({
-    //   img: `/src/assets/images/placeholders/frieza.webp`,
-    //   name: `Villain ${i + 1}`,
-    //   service: `Servizio diabolico ${i + 1}`,
-    //   rating: Math.floor(Math.random() * 5) + 1,
-    // }));
-    // console.log(this.villains);
     // Chiamte axios
     this.getApi(store.urlApi + 'villains', 'villains');
     // this.getApi(store.urlApi + 'universes', 'universes');
@@ -129,33 +87,37 @@ export default {
   <Jumbotron />
   <main>
     <!-- Search bar -->
-     <div class="search_bar">
-      <label for="search">Search here:</label>
-      <input type="search" name="search" id="search" v-model="search">
+     <div class="select_bar">
+      <select name="skills" id="skills" @change="filterBySkill()" v-model="selectSkill">
+        <option value="" disabled selected>Select by skills</option>
+        <option v-for="skill in skills" :value="skill.id">{{ skill.name }}</option>
+      </select>
+      <button @click="reserched = false">Show All</button>
      </div>
     <!-- card printing  -->
-    <div class="villains-flex">
-      <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched">
-      <div>
-        <span>{{ console.log(skill) }}</span>
-        <h2>Skill: {{ skill.name }}</h2>
-        <VillainCard 
-          v-for="(villain, index) in skill.villains" 
-          :key="index" 
-          :villain="villain" 
-        />
+    <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched && !isLoading">
+      <h2 v-if="!isLoading">{{ skill.name }}</h2>
+      <div class="villains-flex">
+          <VillainCard 
+            v-for="(villain, index) in skill.villains" 
+            :key="index" 
+            :villain="villain" 
+          />
       </div>
     </div>
-
-      <VillainCard v-else v-for="(villain, index) in villains" :key="index" :villain="villain" />
-    </div>
-
-    <!-- pagination -->
-    <div class="pagination">
-      <div v-if="villains.length" class="paginator_btn">
-          <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url"></button>
+    <div v-else-if="!isLoading">
+      <h2 v-if="!isLoading">All Villains</h2>
+      <div class="villains-flex">
+        <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
+    
+        <!-- pagination -->
+        <div class="pagination">
+          <div v-if="villains.length" class="paginator_btn">
+              <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url"></button>
+          </div>
+        </div>
       </div>
-    </div>
+      </div>
   </main>
 </template>
 
@@ -168,15 +130,8 @@ main{
   padding-top: 4em;
 }
 
-.search_bar{
-  margin: 140px auto;
-  input{
-    width: 80%;
-    padding: 5px;
-  }
-}
 .villain-card {
-    flex: 0 1 calc(25% - 2em);
+  flex: 0 1 calc(25% - 2em);
     box-sizing: border-box;
     margin-bottom: 1em;
     cursor: pointer;
@@ -185,8 +140,8 @@ main{
 // Responsive for smaller screens
 @media (max-width: 1400px) {
     flex: 0 1 calc(33.33% - 2em); 
-}
-
+  }
+  
   @media (max-width: 1260px) {
     flex: 0 1 calc(50% - 2em); 
   }
@@ -205,4 +160,44 @@ main{
   text-align: center;
   margin-top: 20px;
 }
+h2{
+  text-align: center;
+  margin: 20px auto;
+}
+
+// Select bar
+
+.select_bar {
+    display: flex;
+    align-items: center;
+    margin: 120px auto;
+    width: 80%;
+    select {
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        font-size: 1rem;
+        flex: 1;
+    }
+    button {
+        padding: 11px 20px;
+        background-color: $primary;
+        color: white;
+        border: none;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: $secondary;
+        }
+    }
+    
+}
+
+
+
+
 </style>
