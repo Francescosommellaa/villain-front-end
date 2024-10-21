@@ -5,6 +5,7 @@ import axios from 'axios';
 import Jumbotron from '../components/Jumbotron.vue';
 
 export default {
+  
   name: 'Home',
   components: {
     VillainCard,

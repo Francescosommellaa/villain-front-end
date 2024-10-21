@@ -1,6 +1,12 @@
 <script>
 import VillainCard from "../components/VillainCard.vue";
 export default {
+  props: {
+    villains: {
+      type: Object,
+      required: true,
+    }
+  },
   name: 'AdvancedResearch',
   components: {
     VillainCard,
