@@ -14,15 +14,13 @@ export default {
                 <img src="../assets/images/placeholders/bellatrix.webp" alt="prova">
             </div>
             <h5 class="mb-20"><strong>CONTACT BELLATRIX:</strong></h5 class="mb">
+            <h5 class="mb-10"><i class="fa-solid fa-earth-americas"></i> Dragon Ball</h5>
             <h5 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h5>
             <h5><i class="fa-solid fa-phone"></i> 123456789</h5>
         </div>
        
         <div class="cont-text">
-            <h2>BELLATRIX</h2>
-            <h5 class="mb-40">
-                <strong>Universe:</strong> Dragon Ball
-            </h5>
+            <h2 class="mb-30">BELLATRIX</h2>
             <h4 class="mb-30">
                 <strong>Skills:</strong>
                 <ul>
