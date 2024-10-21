@@ -44,28 +44,27 @@ export default {
             </div>
             <h5 class="mb-20"><strong>{{ villain.name }}</strong></h5 class="mb">
             <h5 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h5>
-            <h5><i class="fa-solid fa-phone"></i> {{villain.phone}}</h5>
+            <h5 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h5>
+            <h5 class="mb-10">
+                <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
+            </h5>
         </div>
        
         <div class="cont-text">
             <h2>{{ villain.name }}</h2>
-            <h5 class="mb-40">
-                <strong>Universe:</strong> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
-            </h5>
             <h4 class="mb-30">
                 <strong>Skills:</strong>
                 <ul>
-                    <li v-for="skill in villain.skills">{{skill.name}}</li>
+                    <li v-for="skill in villain.skills"> <i class="fa-solid fa-hand-sparkles"></i>{{skill.name}}</li>
                 </ul>
             </h4>
             <h4 class="mb-30">
                 <strong>Services:</strong>
                 <ul>
-                    <li v-for="service in villain.services">{{service.name}}</li>
+                    <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge"></i>{{service.name}}</li>
                 </ul>
             </h4>
             <h5 class="mb-50"><strong>CV:</strong> Villan cv</h5>
-
             <hr class="mb-20">
             <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
             <hr class="mb-20">
@@ -108,7 +107,7 @@ export default {
 
     li {
         list-style-type: none;
-        padding-left: 30px;
+        padding: 0;
         line-height: 160%;
     }
 
