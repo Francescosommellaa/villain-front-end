@@ -9,7 +9,6 @@ export default {
             villain: [],
             slug: '',
             isLoading: true,
-
         }
     },
     methods:{
@@ -110,9 +109,12 @@ export default {
         height: auto;
         padding: 20px;
         border-radius: 20px;
-        background-color: $gray-300;
+        border: 1px solid $primary;
+        // background-color: $gray-300;
+        background: linear-gradient(45deg, $primary, $secondary,$accent);
 
         img {
+            border-radius: 20px;
             width: 100%;
             height: auto;
             aspect-ratio: 4 / 5; 

@@ -1,12 +1,8 @@
 <script>
+import { store } from "@/store/store";
 import VillainCard from "../components/VillainCard.vue";
+import axios from "axios";
 export default {
-  props: {
-    villains: {
-      type: Object,
-      required: true,
-    }
-  },
   name: 'AdvancedResearch',
   components: {
     VillainCard,
@@ -14,6 +10,11 @@ export default {
   data() {
     return {
       villains: [],
+      skills: [],
+      services: [],
+      universes: [],
+      paginatorLink: [],
+      isLoading: true,
       currentPage: 1,
       villainsPerPage: 12,
     };
@@ -40,51 +41,65 @@ export default {
         this.currentPage--;
       }
     },
+      // Chiamta alle api
+    getApi(urlApi, type = 'villains', search = '') {
+    this.isLoading = true;
+    if (search) {
+      urlApi += `?search=${search}`;
+    }
+    axios.get(urlApi)
+      .then(response => {
+        console.log('chiamta:', urlApi)
+        if (type === 'villains') {
+          this.isLoading = false;
+          this.villains = response.data.villains.data
+          this.paginatorLink = response.data.villains.links
+        } else {
+          this[type] = response.data[type]
+          this.isLoading = false;
+          console.log(this[type])
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
   },
   mounted() {
-    // 15 Fake Card
-    this.villains = Array.from({ length: 15 }, (v, i) => ({
-      img: `https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png`,
-      name: `Villain ${i + 1}`,
-      service: `Servizio diabolico ${i + 1}`,
-      rating: Math.floor(Math.random() * 5) + 1,
-    }));
-    console.log(this.villains);
+    // Chiamte axios
+    this.getApi(store.urlApi + 'villains', 'villains');
+    this.getApi(store.urlApi + 'universes', 'universes');
+    this.getApi(store.urlApi + 'skills', 'skills');
+    this.getApi(store.urlApi + 'services', 'services');
   },
 };
 </script>
 <template>
-<main>
+<div v-if="isLoading">
+
+</div>
+<main v-else>
   <div id="advanced-filter" class="left">
     <h2>Filtra i nostri Villain</h2>
 
     <div class="filter-section">
-      <h4>Filtro tipo 1</h4>
+      <h4>Services:</h4>
       <ul>
-        <li>Filtro 1</li>
-        <li>Filtro 2</li>
-        <li>Filtro 3</li>
-        <li>Filtro 4</li>
+        <li v-for="service in services">{{ service.name }}</li>
       </ul>
     </div>
 
     <div class="filter-section">
-      <h4>Filtro tipo 2</h4>
+      <h4>Universes:</h4>
       <ul>
-        <li>Filtro 1</li>
-        <li>Filtro 2</li>
-        <li>Filtro 3</li>
-        <li>Filtro 4</li>
+        <li v-for="universe in universes">{{ universe.name }}</li>
       </ul>
     </div>
 
     <div class="filter-section">
-      <h4>Filtro tipo 3</h4>
+      <h4>Skills</h4>
       <ul>
-        <li>Filtro 1</li>
-        <li>Filtro 2</li>
-        <li>Filtro 3</li>
-        <li>Filtro 4</li>
+        <li v-for="skill in skills">{{ skill.name }}</li>
       </ul>
     </div>
   </div>
@@ -131,27 +146,34 @@ export default {
   .filter-section {
     margin-bottom: 20px;
     
+    
     h4 {
       color: $secondary;              
-      margin-bottom: 10px;
+      line-height: 50px;
       position: relative;
     }
+    ul{
+      max-height: 250px;
+      overflow-y: auto;
+      overflow-x: hidden;
 
-    li {
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      color: $gray-800;
-      display: flex;
-      align-items: center;
 
-      &:hover {
-        background-color: $primary;
-        color: $light;              
-        transform: translateX(5px); 
-        cursor: pointer;
-      }
+      li {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        color: $gray-800;
+        display: flex;
+        align-items: center;
+  
+        &:hover {
+          background-color: $primary;
+          color: $light;              
+          transform: translateX(5px); 
+          cursor: pointer;
+        }
+    }
     }
   }
 }
