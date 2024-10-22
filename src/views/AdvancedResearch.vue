@@ -13,10 +13,12 @@ export default {
       skills: [],
       services: [],
       universes: [],
+      ratings: [],
       paginatorLink: [],
       isLoading: true,
       currentPage: 1,
       villainsPerPage: 12,
+      selectedRating: null,
     };
   },
   computed: {
@@ -41,28 +43,41 @@ export default {
         this.currentPage--;
       }
     },
-      // Chiamta alle api
+
+    applyFilter() {
+      let searchParams = this.selectedRating ? `?rating=${this.selectedRating}` : '';
+      this.getApi(store.urlApi + 'villains-rating', 'villains', searchParams);
+      // console.log('Rating response:', this.selectedRating);
+    },
+
+    // Chiamta alle api
     getApi(urlApi, type = 'villains', search = '') {
-    this.isLoading = true;
-    if (search) {
-      urlApi += `?search=${search}`;
-    }
-    axios.get(urlApi)
-      .then(response => {
-        console.log('chiamta:', urlApi)
-        if (type === 'villains') {
-          this.isLoading = false;
-          this.villains = response.data.villains.data
-          this.paginatorLink = response.data.villains.links
-        } else {
-          this[type] = response.data[type]
-          this.isLoading = false;
-          console.log(this[type])
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      this.isLoading = true;
+
+      if (search) {
+        urlApi += `${search}`;
+      }
+
+      axios.get(urlApi)
+        .then(response => {
+          // console.log('API response:', response.data);
+          // console.log('Rating response API:', this.selectedRating);
+          if (type === 'villains') {
+            this.isLoading = false;
+            this.villains = response.data.villains.data;
+            this.paginatorLink = response.data.villains.links;
+            console.log('response if:', response.data);
+
+          } else {
+            this[type] = response.data[type];
+            this.isLoading = false;
+            // console.log(this[type]);
+            console.log('response else:', response.data);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
   },
   mounted() {
@@ -71,6 +86,7 @@ export default {
     this.getApi(store.urlApi + 'universes', 'universes');
     this.getApi(store.urlApi + 'skills', 'skills');
     this.getApi(store.urlApi + 'services', 'services');
+    this.getApi(store.urlApi + 'ratings', 'ratings');
   },
 };
 </script>
@@ -82,6 +98,20 @@ export default {
   <div id="advanced-filter" class="left">
 
     <h2>Filtra i nostri Villain</h2>
+
+    <div class="filter-section">
+      <h4>Rating:</h4>
+      <ul>
+        <li v-for="rating in ratings" :key="rating">
+          <input type="radio" :id="'rating-' + rating.value" :value="rating.value" v-model="selectedRating" @change="applyFilter" />
+          <label :for="'rating-' + rating.value">
+            <span v-for="star in 5" :key="star" class="star">
+              <i :class="star <= rating.value ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
+            </span>
+          </label>
+        </li>
+      </ul>
+    </div>
 
     <div class="filter-section">
       <h4>Services:</h4>
@@ -148,7 +178,12 @@ export default {
 
   .filter-section {
     margin-bottom: 20px;
-    
+
+    .star {
+      color: $primary;
+      font-size: 1rem;
+      padding: 0 0.1rem
+    }    
     
     h4 {
       color: $secondary;              

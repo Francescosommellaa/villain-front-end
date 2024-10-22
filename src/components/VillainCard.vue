@@ -17,6 +17,7 @@ export default {
   <div class="over"></div>
   <h3 class="villain-name">{{ villain.name }}</h3>
   <div class="villain-info">
+    
     <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
     <div class="villain-reviews" v-if="villain.ratings && villain.ratings.length">
       <span v-for="star in 5" :key="star" class="star">
@@ -68,6 +69,17 @@ export default {
     }
     .villain-name {
       opacity: 1;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: $light;
+      font-size: 1.5rem;
+      // opacity: 0;
+      transition: opacity 2s ease;
+      z-index: 2;
+      text-align: center
     }
     .villain-info {
       .villain-service {
@@ -88,19 +100,19 @@ export default {
   }
 
 
-  .villain-name {
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: $light;
-    font-size: 1.5rem;
-    opacity: 0;
-    transition: opacity 2s ease;
-    z-index: 2;
-    text-align: center
-  }
+  // .villain-name {
+  //   width: 100%;
+  //   position: absolute;
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  //   color: $light;
+  //   font-size: 1.5rem;
+  //   opacity: 0;
+  //   transition: opacity 2s ease;
+  //   z-index: 2;
+  //   text-align: center
+  // }
 
   .villain-info {
     text-align: center;
