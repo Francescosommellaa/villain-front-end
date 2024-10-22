@@ -18,39 +18,10 @@ export default {
       paginatorLink: [],
       selectSkill: this.$route.params.skill || '',
       isLoading: true,
-      currentPage: 1,
-      villainsPerPage: 12,
+      selectedRating: null,
     };
   },
-  computed: {
-    paginatedVillains() {
-      const start = (this.currentPage - 1) * this.villainsPerPage;
-      const end = this.currentPage * this.villainsPerPage;
-      return this.villains.slice(start, end);
-    },
-    totalPages() {
-      return Math.ceil(this.villains.length / this.villainsPerPage);
-    },
-  },
-
   methods: {
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
-    prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
-
-    applyFilter() {
-      let searchParams = this.selectedRating ? `?rating=${this.selectedRating}` : '';
-      this.getApi(store.urlApi + 'villains-rating', 'villains', searchParams);
-      // console.log('Rating response:', this.selectedRating);
-    },
-
     // Chiamta alle api
     getApi(urlApi, type = 'villains', search = '') {
       this.isLoading = true;
@@ -61,19 +32,15 @@ export default {
 
       axios.get(urlApi)
         .then(response => {
-          // console.log('API response:', response.data);
-          // console.log('Rating response API:', this.selectedRating);
+          this.isLoading = false;
+          console.log('Prova:', urlApi);
           if (type === 'villains') {
-            this.isLoading = false;
-            this.villains = response.data.villains.data;
+            this.villains = response.data.villains;
             this.paginatorLink = response.data.villains.links;
-            console.log('response if:', response.data);
 
           } else {
             this[type] = response.data[type];
             this.isLoading = false;
-            // console.log(this[type]);
-            console.log('response else:', response.data);
           }
         })
         .catch(error => {
@@ -81,11 +48,20 @@ export default {
           this.isLoading = false;
         });
     },
+
+    applyFilter() {
+      let searchParams = this.selectedRating ? `?rating=${this.selectedRating}` : '';
+      this.getApi(store.urlApi + 'villains-rating', 'villains', searchParams);
+    },
+
     getApiResearch() {
       const params = {};
       if (this.selectSkill) {
         params.skill_id = this.selectSkill;
       } 
+      if(this.selectedRating) {
+        params.rating = this.selectedRating;
+      }
 
       const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
       this.getApi(url, 'villains');
@@ -116,7 +92,7 @@ export default {
       <h4>Rating:</h4>
       <ul>
         <li v-for="rating in ratings" :key="rating">
-          <input type="radio" :id="'rating-' + rating.value" :value="rating.value" v-model="selectedRating" @change="applyFilter" />
+          <input type="radio" :id="'rating-' + rating.value" :value="rating.value" v-model="selectedRating" @change="getApiResearch" />
           <label :for="'rating-' + rating.value">
             <span v-for="star in 5" :key="star" class="star">
               <i :class="star <= rating.value ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>

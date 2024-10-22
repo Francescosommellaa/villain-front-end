@@ -15,7 +15,6 @@ const router = createRouter({
       path: '/AdvancedResearch/:skill?',
       name: 'AdvancedResearch',
       component: AdvancedResearch,
-      props: true,
     },
     {
       path: '/VillainDetail/:slug',
