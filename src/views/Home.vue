@@ -15,12 +15,12 @@ export default {
     return {
       villains: [],
       skills: [],
-      services: [],
-      universes: [],
       paginatorLink: [],
       villanPerSkill: [],
       reserched: false,
       selectSkill: '',
+      selectService: '',
+      selectUniverse: '',
       isLoading: true,
 
       currentPage: 1,
@@ -39,7 +39,7 @@ export default {
           console.log('chiamta:', urlApi)
           if (type === 'villains') {
             this.isLoading = false;
-            this.villains = response.data.villains.data
+            this.villains = response.data.villains.data 
             this.paginatorLink = response.data.villains.links
           } else {
             this[type] = response.data[type]
@@ -51,27 +51,14 @@ export default {
           console.log(error)
         })
     },
-    filterBySkill() {
-      if (this.selectSkill) {
-        const url = `${store.urlApi}villains-by-skills/${this.selectSkill}`;
-        this.getApiResearch(url);
-      }
-    },
-    getApiResearch(urlApi) {
-      this.isLoading = true;
-      axios.get(urlApi)
-        .then(response => {
-          this.isLoading = false;
-          this.reserched = true;
-          console.log(response.data)
-          this.villanPerSkill = response.data
-        })
-        .catch(error => {
-          this.isLoading = false;
+      filterBySkill() {
+        const params = {};
 
-          console.log(error)
-        })
-    },
+        if (this.selectSkill) {
+          params.skill_id = this.selectSkill;
+        }
+      },
+
   },
   mounted() {
     // Chiamte axios
@@ -89,14 +76,15 @@ export default {
   <main>
     <!-- Search bar -->
      <div class="select_bar">
-      <select name="skills" id="skills" @change="filterBySkill()" v-model="selectSkill">
+      <select name="skills" id="skills" v-model="selectSkill" @change="filterBySkill()">
         <option value="" disabled selected>Select by skills</option>
         <option v-for="skill in skills" :value="skill.id">{{ skill.name }}</option>
       </select>
-      <button class="btn-primary" @click="reserched = false">Show All</button>
+      
+      <router-link class="btn-primary" :to="{ name: 'AdvancedResearch', params: { skill: selectSkill } }">Search</router-link>
      </div>
     <!-- card printing  -->
-    <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched && !isLoading">
+    <!-- <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched && !isLoading">
       <h2 v-if="!isLoading">{{ skill.name }}</h2>
       <div class="villains-flex">
           <VillainCard 
@@ -105,8 +93,8 @@ export default {
             :villain="villain" 
           />
       </div>
-    </div>
-    <div v-else-if="!isLoading">
+    </div> -->
+    <div>
       <h2 v-if="!isLoading">All Villains</h2>
       <div class="villains-flex">
         <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />

@@ -2,6 +2,7 @@
 import { store } from "@/store/store";
 import VillainCard from "../components/VillainCard.vue";
 import axios from "axios";
+
 export default {
   name: 'AdvancedResearch',
   components: {
@@ -15,10 +16,10 @@ export default {
       universes: [],
       ratings: [],
       paginatorLink: [],
+      selectSkill: this.$route.params.skill || '',
       isLoading: true,
       currentPage: 1,
       villainsPerPage: 12,
-      selectedRating: null,
     };
   },
   computed: {
@@ -77,12 +78,21 @@ export default {
         })
         .catch(error => {
           console.log(error);
+          this.isLoading = false;
         });
+    },
+    getApiResearch() {
+      const params = {};
+      if (this.selectSkill) {
+        params.skill_id = this.selectSkill;
+      } 
+
+      const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
+      this.getApi(url, 'villains');
     },
   },
   mounted() {
-    // Chiamte axios
-    this.getApi(store.urlApi + 'villains', 'villains');
+    this.getApiResearch();
     this.getApi(store.urlApi + 'universes', 'universes');
     this.getApi(store.urlApi + 'skills', 'skills');
     this.getApi(store.urlApi + 'services', 'services');
@@ -90,6 +100,9 @@ export default {
   },
 };
 </script>
+
+
+
 <template>
 <div v-if="isLoading">
 
@@ -138,21 +151,10 @@ export default {
   <div class="right">
     <div class="villains-flex">
         <VillainCard
-          v-for="(villain, index) in paginatedVillains"
+          v-for="(villain, index) in villains"
           :key="index"
           :villain="villain"
         />
-      </div>
-
-      <!-- pagination -->
-      <div class="pagination">
-        <a v-if="currentPage > 1" @click="prevPage">
-          <i class="fa-solid fa-chevron-left"></i>
-        </a>
-        <span>Pagina {{ currentPage }} di {{ totalPages }}</span>
-        <a v-if="currentPage < totalPages" @click="nextPage">
-          <i class="fa-solid fa-chevron-right"></i>
-        </a>
       </div>
   </div>
 </main>
