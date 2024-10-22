@@ -15,33 +15,13 @@ export default {
       services: [],
       universes: [],
       paginatorLink: [],
-      selectSkill: this.$route.params.skill || '', // Set initial skill from route
+      selectSkill: this.$route.params.skill || '',
       isLoading: true,
       currentPage: 1,
       villainsPerPage: 12,
     };
   },
-  computed: {
-    paginatedVillains() {
-      const start = (this.currentPage - 1) * this.villainsPerPage;
-      const end = this.currentPage * this.villainsPerPage;
-      return this.villains.slice(start, end);
-    },
-    totalPages() {
-      return Math.ceil(this.villains.length / this.villainsPerPage);
-    },
-  },
   methods: {
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
-    prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
     getApi(urlApi, type = 'villains') {
       this.isLoading = true;
       axios.get(urlApi)
@@ -72,10 +52,7 @@ export default {
     },
   },
   mounted() {
-    // Fetch the villains filtered by the skill passed from Home
-    this.getApiResearch(); // This will fetch villains based on the skill
-
-    // Fetch additional data
+    this.getApiResearch();
     this.getApi(store.urlApi + 'universes', 'universes');
     this.getApi(store.urlApi + 'skills', 'skills');
     this.getApi(store.urlApi + 'services', 'services');
@@ -124,17 +101,6 @@ export default {
           :villain="villain"
         />
       </div>
-
-      <!-- pagination -->
-      <!-- <div class="pagination">
-        <a v-if="currentPage > 1" @click="prevPage">
-          <i class="fa-solid fa-chevron-left"></i>
-        </a>
-        <span>Pagina {{ currentPage }} di {{ totalPages }}</span>
-        <a v-if="currentPage < totalPages" @click="nextPage">
-          <i class="fa-solid fa-chevron-right"></i>
-        </a>
-      </div> -->
   </div>
 </main>
 </template>
