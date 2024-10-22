@@ -2,6 +2,7 @@
 import { store } from "@/store/store";
 import VillainCard from "../components/VillainCard.vue";
 import axios from "axios";
+
 export default {
   name: 'AdvancedResearch',
   components: {
@@ -14,6 +15,7 @@ export default {
       services: [],
       universes: [],
       paginatorLink: [],
+      selectSkill: this.$route.params.skill || '', // Set initial skill from route
       isLoading: true,
       currentPage: 1,
       villainsPerPage: 12,
@@ -29,7 +31,6 @@ export default {
       return Math.ceil(this.villains.length / this.villainsPerPage);
     },
   },
-
   methods: {
     nextPage() {
       if (this.currentPage < this.totalPages) {
@@ -41,39 +42,49 @@ export default {
         this.currentPage--;
       }
     },
-      // Chiamta alle api
-    getApi(urlApi, type = 'villains', search = '') {
-    this.isLoading = true;
-    if (search) {
-      urlApi += `?search=${search}`;
-    }
-    axios.get(urlApi)
-      .then(response => {
-        console.log('chiamta:', urlApi)
-        if (type === 'villains') {
+    getApi(urlApi, type = 'villains') {
+      this.isLoading = true;
+      axios.get(urlApi)
+        .then(response => {
+          console.log(response.data)
           this.isLoading = false;
-          this.villains = response.data.villains.data
-          this.paginatorLink = response.data.villains.links
-        } else {
-          this[type] = response.data[type]
+          if (type === 'villains') {
+            this.villains = response.data.villains;
+            this.paginatorLink = response.data.villains.links;
+          } else {
           this.isLoading = false;
-          console.log(this[type])
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+            this[type] = response.data[type];
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.isLoading = false;
+        });
+    },
+    getApiResearch() {
+      const params = {};
+      if (this.selectSkill) {
+        params.skill_id = this.selectSkill;
+      } 
+
+      const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
+      this.getApi(url, 'villains');
     },
   },
   mounted() {
-    // Chiamte axios
-    this.getApi(store.urlApi + 'villains', 'villains');
+    // Fetch the villains filtered by the skill passed from Home
+    this.getApiResearch(); // This will fetch villains based on the skill
+
+    // Fetch additional data
     this.getApi(store.urlApi + 'universes', 'universes');
     this.getApi(store.urlApi + 'skills', 'skills');
     this.getApi(store.urlApi + 'services', 'services');
   },
 };
 </script>
+
+
+
 <template>
 <div v-if="isLoading">
 
@@ -108,14 +119,14 @@ export default {
   <div class="right">
     <div class="villains-flex">
         <VillainCard
-          v-for="(villain, index) in paginatedVillains"
+          v-for="(villain, index) in villains"
           :key="index"
           :villain="villain"
         />
       </div>
 
       <!-- pagination -->
-      <div class="pagination">
+      <!-- <div class="pagination">
         <a v-if="currentPage > 1" @click="prevPage">
           <i class="fa-solid fa-chevron-left"></i>
         </a>
@@ -123,7 +134,7 @@ export default {
         <a v-if="currentPage < totalPages" @click="nextPage">
           <i class="fa-solid fa-chevron-right"></i>
         </a>
-      </div>
+      </div> -->
   </div>
 </main>
 </template>

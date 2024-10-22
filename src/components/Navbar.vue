@@ -5,6 +5,11 @@ export default {
     currentRoute() {
       return this.$route.path;
     }
+  },
+  data() {
+    return {
+      selectSkill: '',
+    };
   }
 }
 </script>
@@ -26,7 +31,7 @@ export default {
     <!-- Middle Section (Navigation Links) -->
     <nav class="navbar-center">
       <router-link class="nav-link" :class="{ active: currentRoute === '/' }" to="/">Home</router-link>
-      <router-link class="nav-link" :class="{ active: currentRoute === '/AdvancedResearch' }" :to="{ name: 'AdvancedResearch'}">Advanced Research</router-link>
+      <router-link class="nav-link" :class="{ active: currentRoute === '/AdvancedResearch' }" :to="{ name: 'AdvancedResearch', params:{skill: selectSkill}}">Advanced Research</router-link>
     </nav>
 
     <!-- Right Section (Button) -->

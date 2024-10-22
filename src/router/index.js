@@ -12,7 +12,7 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/AdvancedResearch',
+      path: '/AdvancedResearch/:skill?',
       name: 'AdvancedResearch',
       component: AdvancedResearch,
       props: true,
