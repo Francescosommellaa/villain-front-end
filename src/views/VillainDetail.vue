@@ -1,9 +1,13 @@
 <script>
 import { store } from '@/store/store';
 import axios from 'axios';
+import ContactForm from "../components/ContactForm.vue";
 
 export default {
     name: 'VillainDetail',
+    components: {
+    ContactForm,
+  },
     data(){
         return{
             villain: [],
@@ -97,11 +101,9 @@ export default {
                 </div>
             </div>
         </div>
-
-        
-
-
     </div>
+            
+    <ContactForm :villain-services="villain.services"/>
 </template>
 
 <style scoped lang="scss">
