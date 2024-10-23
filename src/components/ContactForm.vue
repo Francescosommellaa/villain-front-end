@@ -52,12 +52,12 @@ export default {
 
 <template>
   <div class="message_sent" v-if="isSent">
-    <h1>Message successfully sent</h1>
+    <h1>Thank you! Your message has been successfully sent</h1>
   </div>
   <div class="contact-form" v-else>
-    <h2>Contact the Villain</h2>
+    <h2>Contact: {{ villainData.name }}</h2>
     
-    <form @submit.prevent="sentMessage()" method="POST">
+    <form @submit.prevent="sentMessage" method="POST">
       <!-- Name -->
       <div class="form-group">
         <label for="full_name">Full Name:</label>
@@ -108,6 +108,7 @@ export default {
         <label for="content">Message:</label>
         <textarea
           id="content"
+          rows="8"
           v-model="form.content"
           :class="{ 'is-invalid': formErrors.content }"
           placeholder="Enter your message"
@@ -134,6 +135,10 @@ export default {
   max-width: 90%;
   margin: 0 auto;
   
+  button{
+    float: right;
+  }
+
   h2 {
     color: $primary;
   }
@@ -177,5 +182,6 @@ export default {
   background-clip: text;
   color: transparent;
   min-height: 30vh;
+  margin: 30px auto;
 }
 </style>

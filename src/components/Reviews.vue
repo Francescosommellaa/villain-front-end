@@ -1,69 +1,83 @@
 <script>
+import { store } from '@/store/store';
+import axios from 'axios';
+
 export default {
     name: 'Reviews',
+    props: {
+    villainData: {
+      type: Object,
+      required: true
+    }
+  },
     data() {
     return {
-      newReview: {
-        fullName: '',
-        comment: '',
-        stars: 0,
-      },
+      isReviewed: false,
       hoverStars: 0, // Per gestire l'hover delle stelle
-      reviews: [
-        { fullName: 'John Doe', comment: 'Great service!', stars: 5 },
-        { fullName: 'Jane Smith', comment: 'Had a fantastic time!', stars: 4 },
-        { fullName: 'Alice Brown', comment: 'Good experience.', stars: 3 },
-      ],
+      form: {
+        full_name: '',
+        rating_id: 0,
+        content: ''
+      },
+      formErrors: {
+        full_name: false,
+        rating_id: 0,
+        content: false
+      }
     };
   },
-  computed: {
-    // Mostra massimo 4 recensioni
-    sortedReviews() {
-      return this.reviews.slice(0, 4);
-    },
-  },
   methods: {
-    addReview() {
-      this.reviews.unshift({
-        fullName: this.newReview.fullName,
-        comment: this.newReview.comment,
-        stars: this.newReview.stars,
-      });
-      // Reset del form
-      this.newReview.fullName = '';
-      this.newReview.comment = '';
-      this.newReview.stars = 0;
-      this.hoverStars = 0;
-    },
     setStars(star) {
-      this.newReview.stars = star;
+      this.form.rating_id = star;
     },
+    sentReview(){
+      console.log('start api')
+      console.log('ingresso funzione')
+      axios.post(store.urlApi + 'sent-rating',{
+          full_name: this.form.full_name,
+          rating_id: this.form.rating_id,
+          content: this.form.content,
+          villain_id: this.villainData.id
+      })
+        .then(resp=>{
+          console.log(resp.data)
+          this.isReviewed = true
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+    }
   },
 };
 </script>
 
 <template>
-  <div class="reviews-container">
+    <div class="review_sent" v-if="isReviewed">
+    <h1>Your review has been successfully sent</h1>
+  </div>
+  <div v-else class="reviews-container">
     <h2>Make a review</h2>
 
     <!-- Form per aggiungere una nuova recensione -->
-    <form @submit.prevent="addReview" class="review-form">
+    <form @submit.prevent="sentReview" method="POST" class="review-form">
       <div class="form-group">
         <label for="fullName">Full Name:</label>
         <input
           type="text"
           id="fullName"
-          v-model="newReview.fullName"
+          v-model="form.full_name"
           required
           placeholder="Your full name"
         />
       </div>
 
       <div class="form-group">
-        <label for="comment">Comment:</label>
+        <label for="content">Comment:</label>
         <textarea
-          id="comment"
-          v-model="newReview.comment"
+          id="content"
+          name="content"
+          rows="6"
+          v-model="form.content"
           required
           placeholder="Your review"
         ></textarea>
@@ -78,7 +92,7 @@ export default {
             class="star" 
             :class="star <= hoverStars ? 'fas fa-star' : 'far fa-star'" 
             @mouseover="hoverStars = star" 
-            @mouseleave="hoverStars = newReview.stars || 0"
+            @mouseleave="hoverStars = form.rating_id || 0"
             @click="setStars(star)"
           ></i>
         </div>
@@ -100,6 +114,10 @@ export default {
   background-color: $light;
   border-radius: 10px;
 
+  button{
+    float: right;
+    margin-bottom: 30px
+  }
   h2 {
     color: $primary;
     font-size: 1.5rem;
@@ -141,6 +159,13 @@ export default {
         }
     }
   }
+}
+.review_sent{
+  text-align: center;
+  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+  background-clip: text;
+  color: transparent;
+  min-height: 30vh;
 }
 </style>
   
