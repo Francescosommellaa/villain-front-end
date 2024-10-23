@@ -1,94 +1,122 @@
 <script>
+import { store } from '@/store/store';
+import axios from 'axios';
+
 export default {
   name: 'ContactForm',
   props: {
-    villainServices: {
-      type: Array,
+    villainData: {
+      type: Object,
       required: true
     }
   },
   data() {
     return {
+      urlApi: store.urlApi,
       form: {
-        fullName: '',
-        service: '',
-        message: '',
+        full_name: '',
+        email: '',
+        phone: '',
+        content: ''
       },
       formErrors: {
         fullName: false,
-        service: false,
-        message: false,
-      },
+        email: false,
+        phone: false,
+        content: false
+      }
     };
   },
   methods: {
-    validateForm() {
-      this.formErrors.fullName = !this.form.fullName;
-      this.formErrors.service = !this.form.service;
-      this.formErrors.message = !this.form.message;
-
-      if (!this.formErrors.fullName && !this.formErrors.service && !this.formErrors.message) {
-        alert('Form submitted successfully');
-      }
-    },
+    sentMessage(){
+      axios.post(this.urlApi + 'sent-message', {
+        full_name: this.form.full_name,
+        email: this.form.email,
+        phone: this.form.phone,
+        content: this.form.content,
+        villain_id: this.villainData.id
+      })
+      .then(resp => {
+        const successSent = resp.data;
+        console.log(successSent);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
   },
 };
-
 </script>
 
 <template>
-
-<div class="contact-form">
-  <h2>Contact the Villain</h2>
-  <form @submit.prevent="validateForm">
-    <div class="form-group">
-      <label for="fullName">Full Name:</label>
-      <input
-        type="text"
-        id="fullName"
-        v-model="form.fullName"
-        :class="{ 'is-invalid': formErrors.fullName }"
-        placeholder="Enter your full name"
-      />
-      <div v-if="formErrors.fullName" class="error-message">
-        Full Name is required.
-      </div>
-    </div>
-
-    <div class="form-group">
-        <label for="service">Service:</label>
-        <select
-          id="service"
-          v-model="form.service"
-          :class="{ 'is-invalid': formErrors.service }"
-        >
-          <option disabled value="">Select a service</option>
-          <option v-for="service in villainServices" :key="service.id" :value="service.name">{{ service.name }}</option>
-        </select>
-        <div v-if="formErrors.service" class="error-message">
-          Please select a service.
+  <div class="contact-form">
+    <h2>Contact the Villain</h2>
+    
+    <form @submit.prevent="sentMessage()" method="POST">
+      <!-- Name -->
+      <div class="form-group">
+        <label for="full_name">Full Name:</label>
+        <input
+          type="text"
+          name="full_name"
+          id="full_name"
+          v-model="form.full_name"
+          :class="{ 'is-invalid': formErrors.fullName }"
+          placeholder="Enter your full name"
+        />
+        <div v-if="formErrors.fullName" class="error-message">
+          Full Name is required.
         </div>
-    </div>
-
-    <div class="form-group">
-      <label for="message">Message:</label>
-      <textarea
-        id="message"
-        v-model="form.message"
-        :class="{ 'is-invalid': formErrors.message }"
-        placeholder="Enter your message"
-      ></textarea>
-      <div v-if="formErrors.message" class="error-message">
-        Message is required.
       </div>
-    </div>
-    
-    <button class="btn btn-primary" type="submit">Send Message</button>
-  </form>
-</div>
-    
-
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="mail"
+          name="email"
+          id="email"
+          v-model="form.email"
+          :class="{ 'is-invalid': formErrors.fullName }"
+          placeholder="Enter your email"
+        />
+        <div v-if="formErrors.email" class="error-message">
+          Mail is required.
+        </div>
+      </div>
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input
+          type="text"
+          name="phone"
+          id="phone"
+          v-model="form.phone"
+          :class="{ 'is-invalid': formErrors.phone }"
+          placeholder="Enter your phone number"
+        />
+        <div v-if="formErrors.fullName" class="error-message">
+          Mail is required.
+        </div>
+      </div>
+      <!-- Content -->
+      <div class="form-group">
+        <label for="content">Message:</label>
+        <textarea
+          id="content"
+          v-model="form.content"
+          :class="{ 'is-invalid': formErrors.content }"
+          placeholder="Enter your message"
+        ></textarea>
+        <div v-if="formErrors.message" class="error-message">
+          Message is required.
+        </div>
+      </div>
+      
+      <button class="btn btn-primary" type="submit">Send Message</button>
+    </form>
+  </div>
 </template>
+
 
 <style scoped lang="scss">
 @use '../assets/style/generals/variables' as *;
