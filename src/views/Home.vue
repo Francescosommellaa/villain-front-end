@@ -3,13 +3,15 @@ import VillainCard from "../components/VillainCard.vue";
 import { store } from '@/store/store';
 import axios from 'axios';
 import Jumbotron from '../components/Jumbotron.vue';
+import Loader from "@/components/Loader.vue";
 
 export default {
   
   name: 'Home',
   components: {
     VillainCard,
-    Jumbotron
+    Jumbotron,
+    Loader
   },
   data() {
     return {
@@ -22,7 +24,6 @@ export default {
       selectService: '',
       selectUniverse: '',
       isLoading: true,
-
       currentPage: 1,
       villainsPerPage: 10,
     };

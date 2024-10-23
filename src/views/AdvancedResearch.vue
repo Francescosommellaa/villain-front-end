@@ -2,11 +2,13 @@
 import { store } from "@/store/store";
 import VillainCard from "../components/VillainCard.vue";
 import axios from "axios";
+import Loader from "@/components/Loader.vue";
 
 export default {
   name: 'AdvancedResearch',
   components: {
     VillainCard,
+    Loader
   },
   data() {
     return {
@@ -17,7 +19,8 @@ export default {
       ratings: [],
       paginatorLink: [],
       selectSkill: this.$route.params.skill || '',
-      isLoading: true,
+      isLoadingFirst: true,
+      isLoadingVillains: true,
       selectedRating: null,
       minReviews: 0,
       maxReviews: 50,
@@ -34,15 +37,15 @@ export default {
 
       axios.get(urlApi)
         .then(response => {
-          this.isLoading = false;
           if (type === 'villains') {
+            this.isLoadingVillains = false;
             this.villains = response.data.villains;
             this.paginatorLink = response.data.villains.links;
             this.maxReviews = response.data.maxReviews;
             console.log(urlApi);
           } else {
             this[type] = response.data[type];
-            this.isLoading = false;
+            this.isLoadingFirst = false;
           }
         })
         .catch(error => {
@@ -68,7 +71,7 @@ export default {
         params.min_reviews = this.minReviews;
       }
       console.log(params);
-
+      this.isLoadingVillains = true;
       const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
       this.getApi(url, 'villains');
     },
@@ -86,9 +89,9 @@ export default {
 
 
 <template>
-<div v-if="isLoading">
-
-</div>
+<div class="loader" v-if="isLoadingFirst">
+      <Loader/>
+  </div>
 <main v-else>
   <div id="advanced-filter" class="left">
 
@@ -141,7 +144,10 @@ export default {
   </div>
 
   <div class="right">
-    <div class="villains-flex">
+    <div class="loader" v-if="isLoadingVillains">
+      <Loader/>
+  </div>
+    <div v-else class="villains-flex">
         <VillainCard
           v-for="(villain, index) in villains"
           :key="index"

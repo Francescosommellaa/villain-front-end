@@ -1,9 +1,13 @@
 <script>
 import { store } from '@/store/store';
 import axios from 'axios';
+import Loader from './Loader.vue';
 
 export default {
   name: 'ContactForm',
+  components:{
+    Loader
+  },
   props: {
     villainData: {
       type: Object,
@@ -14,6 +18,8 @@ export default {
     return {
       urlApi: store.urlApi,
       isSent: false,
+      isMessaged: false,
+      errorSent: false,
       form: {
         full_name: '',
         email: '',
@@ -30,6 +36,7 @@ export default {
   },
   methods: {
     sentMessage(){
+      this.isMessaged = true
       axios.post(this.urlApi + 'sent-message', {
         full_name: this.form.full_name,
         email: this.form.email,
@@ -44,6 +51,8 @@ export default {
       })
       .catch(err => {
         console.log(err);
+        this.isSent = true
+        this.errorSent = true
       });
     }
   },
@@ -51,8 +60,14 @@ export default {
 </script>
 
 <template>
-  <div class="message_sent" v-if="isSent">
-    <h1>Thank you! Your message has been successfully sent</h1>
+  <div class="message_sent" v-if="isMessaged && isSent && !errorSent">
+      <h1>Thank you! Your message has been successfully sent</h1>
+  </div>
+  <div class="loader" v-else-if="isMessaged && !isSent">
+        <Loader/>
+    </div>
+  <div v-else-if="errorSent">
+    <h1>Error Message not sent!</h1>
   </div>
   <div class="contact-form" v-else>
     <h2>Contact: {{ villainData.name }}</h2>
