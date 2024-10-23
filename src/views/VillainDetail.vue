@@ -2,11 +2,13 @@
 import { store } from '@/store/store';
 import axios from 'axios';
 import ContactForm from "../components/ContactForm.vue";
+import Reviews from '@/components/Reviews.vue';
 
 export default {
     name: 'VillainDetail',
     components: {
     ContactForm,
+    Reviews,
   },
     data(){
         return{
@@ -59,12 +61,15 @@ export default {
             <div class="cont-img mb-30">
                 <img :src="'http://localhost:8000' + villain.image" alt="prova">
             </div>
-            <h5 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h5 class="mb">
-            <h5 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h5>
-            <h5 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h5>
-            <h5 class="mb-10">
-                <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
-            </h5>
+            
+            <div class="cont-reviews">
+                <h4 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h4>
+                <h4 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h4>
+                <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h4>
+                <h4 class="mb-10">
+                    <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
+                </h4>
+            </div>
         </div>
        
         <div class="cont-text">
@@ -103,7 +108,8 @@ export default {
         </div>
     </div>
             
-    <ContactForm :villain-data="villain"/>
+    <ContactForm :villain-data="villain" :villain-services="villain.services"/>
+    <Reviews/>
 </template>
 
 <style scoped lang="scss">
@@ -189,7 +195,7 @@ export default {
 
     .mb-20 {
         margin-bottom: 20px;
-    }
+    } 
 
     .mb-30 {
         margin-bottom: 30px;
