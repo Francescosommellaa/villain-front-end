@@ -33,7 +33,7 @@ export default {
     getApi(urlApi, type = 'villains', search = '') {
       this.isLoading = true;
       if (search) {
-        urlApi += `?search=${search}`;
+        urlApi += search={search};
       }
       axios.get(urlApi)
         .then(response => {
@@ -51,6 +51,19 @@ export default {
         .catch(error => {
           console.log(error)
         })
+      },
+      getSponsoredVillains() {
+      const urlApi = store.urlApi + 'active-sponsorship';
+      axios.get(urlApi)
+        .then(response => {
+          console.log('API Sponsorship:', urlApi);
+          this.isLoading = false;
+          this.villains = response.data.villains;
+        })
+        .catch(error => {
+          console.log(error);
+          this.isLoading = false;
+        });
     },
       filterBySkill() {
         const params = {};
@@ -67,6 +80,7 @@ export default {
     // this.getApi(store.urlApi + 'universes', 'universes');
     this.getApi(store.urlApi + 'skills', 'skills');
     // this.getApi(store.urlApi + 'services', 'services');
+    this.getSponsoredVillains();
   },
 };
 
@@ -84,11 +98,11 @@ export default {
         <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
     
         <!-- pagination -->
-        <div class="pagination">
+        <!-- <div  class="pagination">
           <div v-if="villains.length" class="paginator_btn">
               <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url" :class="{ 'active': link.active }"></button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </main>
