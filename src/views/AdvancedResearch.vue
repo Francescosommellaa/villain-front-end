@@ -19,6 +19,8 @@ export default {
       selectSkill: this.$route.params.skill || '',
       isLoading: true,
       selectedRating: null,
+      minReviews: 0,
+      maxReviews: 50,
     };
   },
   methods: {
@@ -33,11 +35,11 @@ export default {
       axios.get(urlApi)
         .then(response => {
           this.isLoading = false;
-          console.log('Prova:', urlApi);
           if (type === 'villains') {
             this.villains = response.data.villains;
             this.paginatorLink = response.data.villains.links;
-
+            this.maxReviews = response.data.maxReviews;
+            console.log(urlApi);
           } else {
             this[type] = response.data[type];
             this.isLoading = false;
@@ -62,6 +64,10 @@ export default {
       if(this.selectedRating) {
         params.rating = this.selectedRating;
       }
+      if (this.minReviews) {
+        params.min_reviews = this.minReviews;
+      }
+      console.log(params);
 
       const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
       this.getApi(url, 'villains');
@@ -93,7 +99,7 @@ export default {
       <ul>
         <li v-for="rating in ratings" :key="rating">
           <input type="radio" :id="'rating-' + rating.value" :value="rating.value" v-model="selectedRating" @change="getApiResearch" />
-          <label :for="'rating-' + rating.value">
+          <label :for="'rating-' + rating.value" class="ms">
             <span v-for="star in 5" :key="star" class="star">
               <i :class="star <= rating.value ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
             </span>
@@ -101,6 +107,16 @@ export default {
         </li>
       </ul>
     </div>
+
+    <div class="filter-section">
+      <h4>Minimum Reviews:</h4>
+      <div class="progress-container">
+        <input type="range" :min="0" :max="maxReviews" v-model="minReviews" @change="getApiResearch"/>
+        <span class="ms">{{ minReviews }} reviews</span>
+      </div>
+    </div>
+
+
 
     <div class="filter-section">
       <h4>Services:</h4>
@@ -157,6 +173,10 @@ export default {
   .filter-section {
     margin-bottom: 20px;
 
+    .ms {
+      margin-left: 10px;
+    }
+
     .star {
       color: $primary;
       font-size: 1rem;
@@ -168,6 +188,7 @@ export default {
       line-height: 50px;
       position: relative;
     }
+
     ul{
       max-height: 250px;
       overflow-y: auto;
@@ -181,15 +202,8 @@ export default {
         transition: background-color 0.3s ease, transform 0.3s ease;
         color: $gray-800;
         display: flex;
-        align-items: center;
-  
-        &:hover {
-          background-color: $primary;
-          color: $light;              
-          transform: translateX(5px); 
-          cursor: pointer;
-        }
-    }
+        align-items: center;        
+      }
     }
   }
 }
