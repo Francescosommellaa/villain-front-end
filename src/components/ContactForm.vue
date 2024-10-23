@@ -1,45 +1,59 @@
 <script>
+import { store } from '@/store/store';
+import axios from 'axios';
+
 export default {
   name: 'ContactForm',
   props: {
-    villain: {
-      type: Object,
+    villainServices: {
+      type: Array,
       required: true
     }
   },
   data() {
     return {
+      urlApi: store.urlApi,
+      isSent: false,
       form: {
-        fullName: '',
-        service: '',
-        message: '',
+        full_name: '',
+        email: '',
+        phone: '',
+        content: ''
       },
       formErrors: {
         fullName: false,
-        service: false,
-        message: false,
-      },
+        email: false,
+        phone: false,
+        content: false
+      }
     };
   },
   methods: {
-    validateForm() {
-      this.formErrors.fullName = !this.form.fullName;
-      this.formErrors.service = !this.form.service;
-      this.formErrors.message = !this.form.message;
-
-      if (!this.formErrors.fullName && !this.formErrors.service && !this.formErrors.message) {
-        alert('Form submitted successfully');
-      }
-    },
+    sentMessage(){
+      axios.post(this.urlApi + 'sent-message', {
+        full_name: this.form.full_name,
+        email: this.form.email,
+        phone: this.form.phone,
+        content: this.form.content,
+        villain_id: this.villainData.id
+      })
+      .then(resp => {
+        const successSent = resp.data;
+        this.isSent = true;
+        console.log(successSent);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
   },
 };
-
 </script>
 
 <template>
 
 <div class="contact-form">
-  <h2>Contact {{ villain.name }}</h2>
+  <h2>Contact the Villain</h2>
   <form @submit.prevent="validateForm">
     <div class="form-group">
       <label for="fullName">Full Name:</label>
@@ -68,27 +82,26 @@ export default {
         <div v-if="formErrors.service" class="error-message">
           Please select a service.
         </div>
-    </div>
-
-    <div class="form-group">
-      <label for="message">Message:</label>
-      <textarea
-        id="message"
-        v-model="form.message"
-        :class="{ 'is-invalid': formErrors.message }"
-        placeholder="Enter your message"
-      ></textarea>
-      <div v-if="formErrors.message" class="error-message">
-        Message is required.
       </div>
-    </div>
-    
-    <button class="btn btn-primary" type="submit">Send Message</button>
-  </form>
-</div>
-    
-
+      <!-- Content -->
+      <div class="form-group">
+        <label for="content">Message:</label>
+        <textarea
+          id="content"
+          v-model="form.content"
+          :class="{ 'is-invalid': formErrors.content }"
+          placeholder="Enter your message"
+        ></textarea>
+        <div v-if="formErrors.message" class="error-message">
+          Message is required.
+        </div>
+      </div>
+      
+      <button class="btn btn-primary" type="submit">Send Message</button>
+    </form>
+  </div>
 </template>
+
 
 <style scoped lang="scss">
 @use '../assets/style/generals/variables' as *;
@@ -135,5 +148,13 @@ export default {
       font-size: 0.875rem;
     }
   }
+}
+
+.message_sent{
+  text-align: center;
+  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+  background-clip: text;
+  color: transparent;
+  min-height: 30vh;
 }
 </style>

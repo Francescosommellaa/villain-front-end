@@ -92,10 +92,8 @@ export default {
         </div>
         <hr class="mb-20">
     </div>
-
-    <ContactForm :villain="villain" />
-
-    <Reviews/>
+            
+    <ContactForm :villain-data="villain"/>
 </template>
 
 <style scoped lang="scss">
