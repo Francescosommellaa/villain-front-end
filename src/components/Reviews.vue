@@ -46,19 +46,6 @@ export default {
   <div class="reviews-container">
     <h2>Reviews</h2>
 
-    <!-- Sezione delle recensioni -->
-    <div v-for="(review, index) in sortedReviews" :key="index" class="review-card">
-      <div class="review-header">
-        <h4>{{ review.fullName }}</h4>
-      </div>
-      <div class="stars">
-        <span v-for="star in 5" :key="star" class="star">
-          {{ star <= review.stars ? '★' : '☆' }}
-        </span>
-      </div>
-      <p>{{ review.comment }}</p>
-    </div>
-
     <!-- Form per aggiungere una nuova recensione -->
     <form @submit.prevent="addReview" class="review-form">
       <div class="form-group">
@@ -106,8 +93,9 @@ export default {
   @use '../assets/style/generals/variables' as *;
   @import '../assets/style/main.scss';
   
-  .reviews-container {
-  max-width: 80%;
+.reviews-container {
+  padding: 0 2em;
+  max-width: 90%;
   margin: 4em auto;
   background-color: $light;
   border-radius: 10px;
@@ -119,42 +107,7 @@ export default {
   }
 }
 
-.review-card {
-  margin-bottom: 20px;
-  padding: 15px;
-  border-bottom: 1px solid $border-color;
-  background-color: $gray-100;
-  &:last-of-type {
-    border-bottom: none;
-  }
-
-  .review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    h4 {
-      font-weight: 700;
-      color: $primary;
-      margin: 0;
-    }
-  }
-
-  .stars {
-    color: $clr-rating-stars;
-    font-size: 1.2rem;
-    margin: 5px 0;
-  }
-
-  p {
-    color: $primary-text-emphasis;
-    font-size: 1rem;
-    margin-top: 10px;
-  }
-}
-
 .review-form {
-  padding: 20px;
-  border: 1px solid $border-color;
   border-radius: 8px;
   background-color: $gray-100;
 

@@ -62,7 +62,14 @@ export default {
                 <img :src="'http://localhost:8000' + villain.image" alt="prova">
             </div>
             
-            <!-- inserisci media recensioni -->
+            <div class="cont-reviews">
+                <h4 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h4>
+                <h4 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h4>
+                <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h4>
+                <h4 class="mb-10">
+                    <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
+                </h4>
+            </div>
         </div>
        
         <div class="cont-text">
@@ -81,16 +88,24 @@ export default {
             </h4>
             <h5 class="mb-50"><strong>CV:</strong> Villan cv</h5>
             <hr class="mb-20">
+            <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
+            <hr class="mb-20">
             <div class="cont-reviews">
-                <h4 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h4>
-                <h4 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h4>
-                <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h4>
-                <h4 class="mb-10">
-                    <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
-                </h4>
+                <div class="review" v-for="review in villain.ratings">
+                    <div><strong>{{review.pivot.full_name}}</strong></div>
+                    <div><em>{{ formatDate(review.created_at) }}</em></div>
+                    <div class="villain-reviews mb-10" v-if="review.value">
+                        <span v-for="star in 5" :key="star" class="star">
+                        {{ star <= review.value ? '★' : '☆' }} </span>
+                    </div>
+
+                    <p class="mb-10">
+                        {{ review.pivot.content }}
+                    </p>
+                    <hr class="mb-10">
+                </div>
             </div>
         </div>
-        <hr class="mb-20">
     </div>
             
     <ContactForm :villain-data="villain" :villain-services="villain.services"/>
