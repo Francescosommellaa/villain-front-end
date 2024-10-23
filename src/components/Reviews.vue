@@ -44,7 +44,7 @@ export default {
 
 <template>
   <div class="reviews-container">
-    <h2>Reviews</h2>
+    <h2>Make a review</h2>
 
     <!-- Form per aggiungere una nuova recensione -->
     <form @submit.prevent="addReview" class="review-form">
