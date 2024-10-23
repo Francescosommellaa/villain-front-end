@@ -111,7 +111,7 @@ export default {
     .select_bar {
     display: flex;
     align-items: center;
-    margin: 120px auto;
+    margin: 110px auto 50px;
     width: 80%;
     select {
         padding: 8px;

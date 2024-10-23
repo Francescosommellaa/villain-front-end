@@ -88,9 +88,12 @@ export default {
 <template>
   <Jumbotron :skills="skills"/>
   <main>
-    <div>
-      <h2 v-if="!isLoading">All Villains</h2>
-      <div class="villains-flex">
+    <section class="content">
+      <div>
+        <h2 v-if="!isLoading" class="title">Discover Premium Villains</h2>
+        <p class="presentation">Welcome to our exclusive selection of sponsored villains! Our antagonists are fearsome and iconic, part of a chosen group offering unique services and top-rated reviews. Explore their details, check out their services and ratings, and contact your favorite for your next adventure!</p>
+      </div>
+      <div v-if="!isLoading" class="villains-flex">
         <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
     
         <!-- pagination -->
@@ -100,7 +103,7 @@ export default {
           </div>
         </div> -->
       </div>
-    </div>
+    </section>
   </main>
 </template>
 
@@ -110,27 +113,34 @@ export default {
 @import '../assets/style/main.scss';
 
 main{
-  padding-top: 4em;
+  padding-top: 9em;
 }
 
+.content {
+  width: 90%;
+  margin: 0 auto;
+}
+.villains-flex {
+  margin: 0 4em;
+}
 .villain-card {
-  flex: 0 1 calc(25% - 2em);
-    box-sizing: border-box;
-    margin-bottom: 1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  flex: 0 1 calc(100% / 5 - 2em);
+  box-sizing: border-box;
+  margin-bottom: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
 
 // Responsive for smaller screens
-@media (max-width: 1400px) {
-    flex: 0 1 calc(33.33% - 2em); 
-  }
-  
-  @media (max-width: 1260px) {
-    flex: 0 1 calc(50% - 2em); 
+  @media (max-width: 1560px) {
+    flex: 0 1 calc(100% / 4 - 2em); 
   }
 
-  @media (max-width: 880px) {
-  flex: 0 1 calc(100% - 4em); 
+  @media (max-width: 1260px) {
+  flex: 0 1 calc(100% / 3  - 2em); 
+  }
+
+  @media (max-width: 980px) {
+  flex: 0 1 calc(100% / 2  - 2em); 
   }
 
 
@@ -157,52 +167,22 @@ main{
     }
   }
 }
+.active {
+  color: $light;
+  background-color: $secondary;
+}
 
-h2{
+.villain-card {
+  border: solid goldenrod 3.5px;
+}
+
+.title{
+  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+  background-clip: text;
+  color: transparent;
+  font-size: 2rem;
   text-align: center;
   margin: 20px auto;
 }
-
-// Select bar
-
-.select_bar {
-    display: flex;
-    align-items: center;
-    margin: 120px auto;
-    width: 80%;
-    select {
-        padding: 8px;
-        border: 1px solid #ced4da;
-        border: none;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-        font-size: 1rem;
-        flex: 1;
-    }
-    button {
-        padding: 9px 18px;
-        border: 2px trasparent;
-        border-radius: 3px;
-        background-color: $light;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-        transition: box-shadow 0.4s ease-in-out;
-        cursor: pointer;
-        transition:  0.4s ease;
-
-        &:hover {
-            background-color: $secondary;
-            border: 2px solid $primary;
-        }
-    }
-    
-}
-.active {
-        color: $light;
-        background-color: $secondary;
-      }
-
-
-
 
 </style>
