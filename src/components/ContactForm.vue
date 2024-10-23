@@ -13,6 +13,7 @@ export default {
   data() {
     return {
       urlApi: store.urlApi,
+      isSent: false,
       form: {
         full_name: '',
         email: '',
@@ -38,6 +39,7 @@ export default {
       })
       .then(resp => {
         const successSent = resp.data;
+        this.isSent = true;
         console.log(successSent);
       })
       .catch(err => {
@@ -49,7 +51,10 @@ export default {
 </script>
 
 <template>
-  <div class="contact-form">
+  <div class="message_sent" v-if="isSent">
+    <h1>Message successfully sent</h1>
+  </div>
+  <div class="contact-form" v-else>
     <h2>Contact the Villain</h2>
     
     <form @submit.prevent="sentMessage()" method="POST">
@@ -164,5 +169,13 @@ export default {
       font-size: 0.875rem;
     }
   }
+}
+
+.message_sent{
+  text-align: center;
+  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+  background-clip: text;
+  color: transparent;
+  min-height: 30vh;
 }
 </style>
