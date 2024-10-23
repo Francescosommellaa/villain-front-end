@@ -98,15 +98,45 @@ export default {
         <div v-if="!isLoading" class="villains-flex">
         <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" class="highlight"/>
     
-        <!-- pagination -->
-        <!-- <div  class="pagination">
-          <div v-if="villains.length" class="paginator_btn">
-              <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url" :class="{ 'active': link.active }"></button>
-          </div>
-        </div> -->
+          <!-- pagination -->
+          <!-- <div  class="pagination">
+            <div v-if="villains.length" class="paginator_btn">
+                <button v-for="link in paginatorLink" v-html="link.label" @click="getApi(link.url)" :disabled="link.active || !link.url" :class="{ 'active': link.active }"></button>
+            </div>
+          </div> -->
+        </div>
       </div>
+      <div class="text-container">
+        <h2 v-if="!isLoading" class="title">HOW TO HIRE IN VILLAIN</h2>
+        <h3 class="presentation"><strong>Hiring a villain from our roster is easy and straightforward. Follow these steps:</strong></h3>
+        <ul>
+          <li>
+            <strong>Explore our selection: </strong>
+            Browse the villain profiles and read their descriptions, skills, and reviews to find the one that best fits your needs.
+          </li>
+          <li>
+            <strong>Use the search filter: </strong>
+            Refine your search based on the specific skills you're looking for, such as sabotage, henchman recruitment, or world domination planning.
+          </li>
+          <li>
+            <strong>Contact the chosen villain: </strong>
+            Once you've found your ideal antagonist, click the contact button and fill out the request form, specifying the details of your mission or adventure.
+          </li>
+          <li>
+            <strong>Negotiate the terms :</strong>
+            After sending your request, the villain will respond with a quote or proposal. You can discuss terms, services, and costs, making sure everything is perfectly planned.
+          </li>
+          <li>
+            <strong>Begin the adventure: </strong>
+            Once the agreement is reached, your villain will get to work. Get ready for an adventure full of chaos and plot twists!
+          </li>
+        </ul>
       </div>
-
+      <section class="jumbo">
+        <div class="cont-jumbo">
+                <h1 class="main-title">FIND YOUR VILLAIN</h1>
+        </div>
+    </section>
     </div>
   </main>
 </template>
@@ -115,6 +145,36 @@ export default {
 @use '../assets/style/generals/variables' as *;
 @use '../assets/style/generals/view-style/views-style';
 @import '../assets/style/main.scss';
+
+.jumbo {
+    height: 600px;
+    width: 100%;
+    background-image: url('../assets/images/main/jumbo.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 10%;
+    position: relative;
+
+    .cont-jumbo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        height: 100%;
+        margin: 0 auto;
+        font-size: 50px;
+        text-align: center;
+
+        .main-title {
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 10px $primary;
+            padding-bottom: 1.5rem;
+        }
+    }
+  }
+
 
 main{
   padding-top: 9em;
@@ -145,6 +205,17 @@ main{
   line-height: 1.5rem;
   color: $primary;
   text-align: center;
+}
+
+ul {
+  margin: 3rem 0;
+  font-size: 1.1rem;
+  strong {
+    color: $primary;
+  }
+  li {
+    margin: 2rem 0
+  };
 }
 .villains-flex {
   margin: 0;
