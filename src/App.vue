@@ -81,7 +81,7 @@ export default {
     background-color: black;
     color: white;
     width: 100%;
-    padding: 2rem;
+    padding: 3rem 0;
     display: flex;
     justify-content: center;
 }

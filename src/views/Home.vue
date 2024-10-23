@@ -88,13 +88,14 @@ export default {
 <template>
   <Jumbotron :skills="skills"/>
   <main>
-    <section class="content">
-      <div>
+    <div class="content">
+      <div class="text-container">
         <h2 v-if="!isLoading" class="title">Discover Premium Villains</h2>
         <p class="presentation">Welcome to our exclusive selection of sponsored villains! Our antagonists are fearsome and iconic, part of a chosen group offering unique services and top-rated reviews. Explore their details, check out their services and ratings, and contact your favorite for your next adventure!</p>
       </div>
-      <div v-if="!isLoading" class="villains-flex">
-        <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
+      <div class="section-card">
+        <div v-if="!isLoading" class="villains-flex">
+        <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" class="highlight"/>
     
         <!-- pagination -->
         <!-- <div  class="pagination">
@@ -103,7 +104,9 @@ export default {
           </div>
         </div> -->
       </div>
-    </section>
+      </div>
+
+    </div>
   </main>
 </template>
 
@@ -116,18 +119,46 @@ main{
   padding-top: 9em;
 }
 
-.content {
+.text-container{
   width: 90%;
   margin: 0 auto;
 }
+.content, .section-card {
+  width: 100%; 
+  margin: 0 auto;  
+}
+
+.title{
+  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+  background-clip: text;
+  color: transparent;
+  font-size: 2rem;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.presentation {
+  margin: 2rem auto 3rem;
+  font-weight: 500;
+  color: $primary;
+}
 .villains-flex {
-  margin: 0 4em;
+  margin: 0;
+  width: 90%;
+
+}
+.section-card {
+  background: linear-gradient(0deg, $light, $primary, $light);;
+  padding: 6rem 0;
+  display: flex;
+  justify-content: center;
 }
 .villain-card {
   flex: 0 1 calc(100% / 5 - 2em);
   box-sizing: border-box;
   margin-bottom: 1em;
   cursor: pointer;
+  border: solid #fbce00 5px;
   transition: all 0.3s ease;
 
 // Responsive for smaller screens
@@ -147,7 +178,8 @@ main{
   @media (max-width: 700px) {
     flex: 0 1 calc(100% - 2em); 
   }
-}
+
+
 
 .pagination {
   text-align: center;
@@ -171,18 +203,5 @@ main{
   color: $light;
   background-color: $secondary;
 }
-
-.villain-card {
-  border: solid goldenrod 3.5px;
 }
-
-.title{
-  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
-  background-clip: text;
-  color: transparent;
-  font-size: 2rem;
-  text-align: center;
-  margin: 20px auto;
-}
-
 </style>
