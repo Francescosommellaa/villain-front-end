@@ -1,6 +1,29 @@
 <script>
+import { store } from '@/store/store';
+import axios from 'axios';
 export default {
-    name: 'Jumbotron'
+    name: 'Jumbotron',
+    props: {
+        skills: {
+            type: Array,
+            required: true
+        }
+    },
+    data() {
+        return {
+            selectSkill: ''
+        };
+    },
+    methods: {
+    // Chiamta alle api
+      filterBySkill() {
+        const params = {};
+
+        if (this.selectSkill) {
+          params.skill_id = this.selectSkill;
+        }
+      },
+    }
 }
 </script>
 
@@ -13,13 +36,15 @@ export default {
                 </div>
         </div>
         <div class="cont-what">
-            <h4>WHAT?</h4>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.<br>
-                Sint quae molestias optio id ea dolorum sit et
-                saepe explicabo, officia distinctio voluptates exercitationem atque consequatur, magni numquam assumenda
-                enim. Ab.
-            </p>
+        <!-- Search bar -->
+            <div class="select_bar">
+                <select name="skills" id="skills" v-model="selectSkill" @change="filterBySkill()">
+                    <option value="" disabled selected>Select by skills</option>
+                    <option v-for="skill in skills" :key="skill.id" :value="skill.id">{{ skill.name }}</option>
+                </select>
+            
+                <router-link class="btn-primary" :to="{ name: 'AdvancedResearch', params: { skill: selectSkill } }">Search</router-link>
+            </div>
         </div>
     </section>
 </template>
@@ -82,6 +107,38 @@ export default {
             font-size: 16px;
             line-height: 150%;
         }
-    }  
+    } 
+    .select_bar {
+    display: flex;
+    align-items: center;
+    margin: 120px auto;
+    width: 80%;
+    select {
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border: none;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        font-size: 1rem;
+        flex: 1;
+    }
+    button {
+        padding: 9px 18px;
+        border: 2px trasparent;
+        border-radius: 3px;
+        background-color: $light;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        transition: box-shadow 0.4s ease-in-out;
+        cursor: pointer;
+        transition:  0.4s ease;
+
+        &:hover {
+            background-color: $secondary;
+            border: 2px solid $primary;
+        }
+    }
+    
+}
 }
 </style>
