@@ -108,8 +108,8 @@ export default {
         </div>
     </div>
             
-    <ContactForm :villain-data="villain" :villain-services="villain.services"/>
-    <Reviews/>
+    <ContactForm :villainData="villain"/>
+    <Reviews :villainData="villain"/>
 </template>
 
 <style scoped lang="scss">
