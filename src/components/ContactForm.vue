@@ -2,8 +2,8 @@
 export default {
   name: 'ContactForm',
   props: {
-    villainServices: {
-      type: Array,
+    villain: {
+      type: Object,
       required: true
     }
   },
@@ -39,7 +39,7 @@ export default {
 <template>
 
 <div class="contact-form">
-  <h2>Contact the Villain</h2>
+  <h2>Contact {{ villain.name }}</h2>
   <form @submit.prevent="validateForm">
     <div class="form-group">
       <label for="fullName">Full Name:</label>
@@ -96,10 +96,9 @@ export default {
 
 .contact-form {
   background-color: $light;
-  padding: 2rem;
   border-radius: $btn-border-radius;
-  max-width: 90%;
-  margin: 0 auto;
+  max-width: 80%;
+  margin: 1em auto;
   
   h2 {
     color: $primary;
