@@ -129,7 +129,7 @@ export default {
 
 .contact-form {
   background-color: $light;
-  padding: 2rem;
+  padding: 2em;
   border-radius: $btn-border-radius;
   max-width: 90%;
   margin: 0 auto;
