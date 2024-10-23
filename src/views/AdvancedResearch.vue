@@ -173,6 +173,10 @@ export default {
   .filter-section {
     margin-bottom: 20px;
 
+    input[type='range'] {
+      accent-color: $primary; 
+    }
+
     .ms {
       margin-left: 10px;
     }
