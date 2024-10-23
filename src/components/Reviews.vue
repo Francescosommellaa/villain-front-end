@@ -150,13 +150,14 @@ export default {
   .interactive-stars {
     padding: 0.4em 0;
     font-size: 1.5rem;
-    color: $clr-rating-stars;
     .star {
       cursor: pointer;
       transition: color 0.2s;
-        &:hover {
-            color: $primary;
-        }
+      color: $primary;
+
+      &:hover {
+        color: $primary;
+      }
     }
   }
 }
