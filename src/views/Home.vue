@@ -72,28 +72,8 @@ export default {
 </script>
 
 <template>
-  <Jumbotron />
+  <Jumbotron :skills="skills"/>
   <main>
-    <!-- Search bar -->
-     <div class="select_bar">
-      <select name="skills" id="skills" v-model="selectSkill" @change="filterBySkill()">
-        <option value="" disabled selected>Select by skills</option>
-        <option v-for="skill in skills" :value="skill.id">{{ skill.name }}</option>
-      </select>
-      
-      <router-link class="btn-primary" :to="{ name: 'AdvancedResearch', params: { skill: selectSkill } }">Search</router-link>
-     </div>
-    <!-- card printing  -->
-    <!-- <div v-for="(skill, skillIndex) in villanPerSkill" :key="skillIndex" v-if="reserched && !isLoading">
-      <h2 v-if="!isLoading">{{ skill.name }}</h2>
-      <div class="villains-flex">
-          <VillainCard 
-            v-for="(villain, index) in skill.villains" 
-            :key="index" 
-            :villain="villain" 
-          />
-      </div>
-    </div> -->
     <div>
       <h2 v-if="!isLoading">All Villains</h2>
       <div class="villains-flex">
@@ -106,7 +86,7 @@ export default {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   </main>
 </template>
 
