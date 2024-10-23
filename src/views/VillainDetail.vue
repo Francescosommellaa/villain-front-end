@@ -8,15 +8,19 @@ import Loader from '@/components/Loader.vue';
 export default {
     name: 'VillainDetail',
     components: {
-    ContactForm,
-    Reviews,
-    Loader,
-  },
+        ContactForm,
+        Reviews,
+        Loader,
+    },
     data(){
         return{
             villain: [],
             slug: '',
             isLoading: true,
+            showCv: false,
+            cvExists: false,
+            cvUrl: '',
+            villainName: ''
         }
     },
     methods: {
@@ -25,8 +29,9 @@ export default {
                 .then(resp =>{
                     this.villain = resp.data.villain;
                     console.log(this.villain);
+                    this.checkCvExists();
                     this.isLoading = false;
-                })
+                });
         },
         
         formatDate(dateString) {
@@ -44,9 +49,32 @@ export default {
             });
 
             return `${formattedDate} ${formattedTime}`;
+        },
+        checkCvExists() {
+            if (!this.villain.cv || this.villain.cv === null) {
+                this.cvExists = false;
+                console.log('CV non disponibile');
+            } else {
+                this.cvExists = true;
+                this.cvUrl = `http://localhost:8000/${this.villain.cv}`;
+                console.log('URL generato:', this.cvUrl);
+            }
+        },
+        closeCv() {
+            this.showCv = false;
+        },
+        downloadCv() {
+            if (this.cvExists) {
+                const link = document.createElement('a');
+                link.href = this.cvUrl;
+                link.download = `${this.villainName}_CV.pdf`;
+                link.click();
+            }
         }
+        
     },
     mounted(){
+        this.villainName = this.$route.params.villainName;
         this.slug = this.$route.params.slug;
         this.getApiDetails(this.slug);
     }
@@ -90,7 +118,31 @@ export default {
                         <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{service.name}}</li>
                     </ul>
                 </h4>
-                <h5 class="mb-50"><strong>CV:</strong> Villan cv</h5>
+
+                <!-- villain cv -->
+                <div class="mb-30">
+                    <h4 class="mb-20"><strong>CV:</strong></h4>
+                    <h5 v-if="cvExists" class="mb-50">
+                        <button @click="showCv = true" class="btn btn-secondary">View CV</button>
+                    </h5>
+                
+                    <span v-else>CV not available for this villain.</span>
+                
+                    <!-- Modal CV -->
+                    <div v-if="showCv" class="modal-overlay mb-10" @click.self="closeCv">
+                        <transition name="fade">
+                            <div class="modal-content mb-10">
+                                <iframe :src="cvUrl" width="100%" height="100%" frameborder="0"></iframe>
+                                <div class="modal-actions">
+                                    <button @click="downloadCv" class="btn download-btn">Download CV</button>
+                                    <button @click="closeCv" class="btn close-btn">Close</button>
+                                </div>
+                            </div>
+                        </transition>
+                    </div>
+                </div>
+
+
                 <hr class="mb-20">
                 <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
                 <hr class="mb-20">
@@ -221,6 +273,66 @@ export default {
 
     em {
         font-size: 12px;
+    }
+
+    // Villaincv
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: $light;
+        padding: 1.5rem;
+        width: 80%;
+        height: 80%;
+        box-shadow: 0 4px 8px rgba($black, 0.3);
+        border-radius: 0.8rem;
+        position: relative;
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.3);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    .download-btn {
+        background-color: $success;
+        color: $light;
+
+        &:hover {
+            background-color: lighten($success, 10%);
+        }
+    }
+
+    .close-btn {
+        background-color: $danger;
+        color: $light;
+
+        &:hover {
+            background-color: lighten($danger, 10%);
+        }
     }
 }
 </style>
