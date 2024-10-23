@@ -1,9 +1,13 @@
 <script>
 import { store } from '@/store/store';
 import axios from 'axios';
+import Loader from './Loader.vue';
 
 export default {
     name: 'Reviews',
+    components:{
+      Loader
+    },
     props: {
     villainData: {
       type: Object,
@@ -13,6 +17,8 @@ export default {
     data() {
     return {
       isReviewed: false,
+      isSent: false,
+      errorSent: false,
       hoverStars: 0, // Per gestire l'hover delle stelle
       form: {
         full_name: '',
@@ -31,8 +37,7 @@ export default {
       this.form.rating_id = star;
     },
     sentReview(){
-      console.log('start api')
-      console.log('ingresso funzione')
+      this.isReviewed = true
       axios.post(store.urlApi + 'sent-rating',{
           full_name: this.form.full_name,
           rating_id: this.form.rating_id,
@@ -41,10 +46,12 @@ export default {
       })
         .then(resp=>{
           console.log(resp.data)
-          this.isReviewed = true
+          this.isSent = true
         })
         .catch(err=>{
           console.log(err)
+          this.isSent = true
+          this.errorSent = true
         })
     }
   },
@@ -52,8 +59,14 @@ export default {
 </script>
 
 <template>
-    <div class="review_sent" v-if="isReviewed">
+  <div class="review_sent" v-if="isReviewed && isSent && !errorSent">
     <h1>Your review has been successfully sent</h1>
+  </div>
+  <div class="loader" v-else-if="isReviewed && !isSent">
+        <Loader/>
+    </div>
+  <div v-else-if="errorSent">
+    <h1>Error Message not sent!</h1>
   </div>
   <div v-else class="reviews-container">
     <h2>Make a review</h2>

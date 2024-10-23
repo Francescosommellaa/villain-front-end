@@ -3,12 +3,14 @@ import { store } from '@/store/store';
 import axios from 'axios';
 import ContactForm from "../components/ContactForm.vue";
 import Reviews from '@/components/Reviews.vue';
+import Loader from '@/components/Loader.vue';
 
 export default {
     name: 'VillainDetail',
     components: {
     ContactForm,
     Reviews,
+    Loader,
   },
     data(){
         return{
@@ -53,68 +55,72 @@ export default {
 
 
 <template>
-    <div class="cont-detail">
-    <div v-if="isLoading">
-        
+    <div class="loader" v-if="isLoading">
+        <Loader/>
     </div>
-        <div v-else class="cont-left">
-            <div class="cont-img mb-30">
-                <img :src="'http://localhost:8000' + villain.image" alt="prova">
-            </div>
-            
-            <div class="cont-reviews">
-                <h4 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h4>
-                <h4 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h4>
-                <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h4>
-                <h4 class="mb-10">
-                    <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
-                </h4>
-            </div>
-        </div>
-       
-        <div class="cont-text">
-            <h2 class="mb-20">{{ villain.name }}</h2>
-            <h4 class="mb-30">
-                <strong>Skills:</strong>
-                <ul class="mt-15">
-                    <li v-for="skill in villain.skills"> <i class="fa-solid fa-hand-sparkles mb-10 m-icon"></i>{{skill.name}}</li>
-                </ul>
-            </h4>
-            <h4 class="mb-30">
-                <strong>Services:</strong>
-                <ul class="mt-15">
-                    <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{service.name}}</li>
-                </ul>
-            </h4>
-            <h5 class="mb-50"><strong>CV:</strong> Villan cv</h5>
-            <hr class="mb-20">
-            <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
-            <hr class="mb-20">
-            <div class="cont-reviews">
-                <div class="review" v-for="review in villain.ratings">
-                    <div><strong>{{review.pivot.full_name}}</strong></div>
-                    <div><em>{{ formatDate(review.created_at) }}</em></div>
-                    <div class="villain-reviews mb-10" v-if="review.value">
-                        <span v-for="star in 5" :key="star" class="star">
-                        {{ star <= review.value ? '★' : '☆' }} </span>
-                    </div>
+    <div v-else>
 
-                    <p class="mb-10">
-                        {{ review.pivot.content }}
-                    </p>
-                    <hr class="mb-10">
+        <div class="cont-detail">
+            <div class="cont-left">
+                <div class="cont-img mb-30">
+                    <img :src="'http://localhost:8000' + villain.image" alt="prova">
+                </div>
+                
+                <div class="cont-reviews">
+                    <h4 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h4>
+                    <h4 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h4>
+                    <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h4>
+                    <h4 class="mb-10">
+                        <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
+                    </h4>
+                </div>
+            </div>
+           
+            <div class="cont-text">
+                <h2 class="mb-20">{{ villain.name }}</h2>
+                <h4 class="mb-30">
+                    <strong>Skills:</strong>
+                    <ul class="mt-15">
+                        <li v-for="skill in villain.skills"> <i class="fa-solid fa-hand-sparkles mb-10 m-icon"></i>{{skill.name}}</li>
+                    </ul>
+                </h4>
+                <h4 class="mb-30">
+                    <strong>Services:</strong>
+                    <ul class="mt-15">
+                        <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{service.name}}</li>
+                    </ul>
+                </h4>
+                <h5 class="mb-50"><strong>CV:</strong> Villan cv</h5>
+                <hr class="mb-20">
+                <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
+                <hr class="mb-20">
+                <div class="cont-reviews">
+                    <div class="review" v-for="review in villain.ratings">
+                        <div><strong>{{review.pivot.full_name}}</strong></div>
+                        <div><em>{{ formatDate(review.created_at) }}</em></div>
+                        <div class="villain-reviews mb-10" v-if="review.value">
+                            <span v-for="star in 5" :key="star" class="star">
+                            {{ star <= review.value ? '★' : '☆' }} </span>
+                        </div>
+    
+                        <p class="mb-10">
+                            {{ review.pivot.content }}
+                        </p>
+                        <hr class="mb-10">
+                    </div>
                 </div>
             </div>
         </div>
+        <ContactForm :villainData="villain"/>
+        <Reviews :villainData="villain"/>
     </div>
             
-    <ContactForm :villainData="villain"/>
-    <Reviews :villainData="villain"/>
 </template>
 
 <style scoped lang="scss">
 @use '../assets/style/generals/variables' as *;
 @import '../assets/style/main.scss';
+
 
 .cont-detail {
     display: flex;

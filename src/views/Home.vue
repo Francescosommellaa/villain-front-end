@@ -3,13 +3,15 @@ import VillainCard from "../components/VillainCard.vue";
 import { store } from '@/store/store';
 import axios from 'axios';
 import Jumbotron from '../components/Jumbotron.vue';
+import Loader from "@/components/Loader.vue";
 
 export default {
   
   name: 'Home',
   components: {
     VillainCard,
-    Jumbotron
+    Jumbotron,
+    Loader
   },
   data() {
     return {
@@ -22,7 +24,6 @@ export default {
       selectService: '',
       selectUniverse: '',
       isLoading: true,
-
       currentPage: 1,
       villainsPerPage: 10,
     };
@@ -74,8 +75,11 @@ export default {
 <template>
   <Jumbotron :skills="skills"/>
   <main>
-    <div>
-      <h2 v-if="!isLoading">All Villains</h2>
+    <div class="loader" v-if="isLoading">
+      <Loader/>
+  </div>
+    <div v-else>
+      <h2>All Villains</h2>
       <div class="villains-flex">
         <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" />
     
