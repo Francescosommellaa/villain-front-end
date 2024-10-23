@@ -167,6 +167,7 @@ export default {
   background-clip: text;
   color: transparent;
   min-height: 30vh;
+  margin-top: 70px
 }
 </style>
   
