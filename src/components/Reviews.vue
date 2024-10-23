@@ -177,27 +177,15 @@ export default {
   }
 
   .interactive-stars {
-    font-size: 2rem;
+    padding: 0.4em 0;
+    font-size: 1.5rem;
     color: $clr-rating-stars;
     .star {
       cursor: pointer;
       transition: color 0.2s;
-    }
-    .star:hover {
-      color: $primary;
-    }
-  }
-
-  button {
-    background-color: $primary;
-    color: $light;
-    padding: $btn-padding-y $btn-padding-x;
-    border-radius: $btn-border-radius;
-    font-weight: $btn-font-weight;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    &:hover {
-      background-color: $secondary;
+        &:hover {
+            color: $primary;
+        }
     }
   }
 }

@@ -5,6 +5,10 @@ import axios from 'axios';
 export default {
   name: 'ContactForm',
   props: {
+    villainData: {
+      type: Object,
+      required: true
+    },
     villainServices: {
       type: Array,
       required: true

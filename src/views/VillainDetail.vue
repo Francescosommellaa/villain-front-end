@@ -93,7 +93,8 @@ export default {
         <hr class="mb-20">
     </div>
             
-    <ContactForm :villain-data="villain"/>
+    <ContactForm :villain-data="villain" :villain-services="villain.services"/>
+    <Reviews/>
 </template>
 
 <style scoped lang="scss">
