@@ -8,10 +8,6 @@ export default {
     villainData: {
       type: Object,
       required: true
-    },
-    villainServices: {
-      type: Array,
-      required: true
     }
   },
   data() {
@@ -55,36 +51,56 @@ export default {
 </script>
 
 <template>
-
-<div class="contact-form">
-  <h2>Contact the Villain</h2>
-  <form @submit.prevent="validateForm">
-    <div class="form-group">
-      <label for="fullName">Full Name:</label>
-      <input
-        type="text"
-        id="fullName"
-        v-model="form.fullName"
-        :class="{ 'is-invalid': formErrors.fullName }"
-        placeholder="Enter your full name"
-      />
-      <div v-if="formErrors.fullName" class="error-message">
-        Full Name is required.
+  <div class="message_sent" v-if="isSent">
+    <h1>Message successfully sent</h1>
+  </div>
+  <div class="contact-form" v-else>
+    <h2>Contact the Villain</h2>
+    
+    <form @submit.prevent="sentMessage()" method="POST">
+      <!-- Name -->
+      <div class="form-group">
+        <label for="full_name">Full Name:</label>
+        <input
+          type="text"
+          name="full_name"
+          id="full_name"
+          v-model="form.full_name"
+          :class="{ 'is-invalid': formErrors.fullName }"
+          placeholder="Enter your full name"
+        />
+        <div v-if="formErrors.fullName" class="error-message">
+          Full Name is required.
+        </div>
       </div>
-    </div>
-
-    <div class="form-group">
-        <label for="service">Service:</label>
-        <select
-          id="service"
-          v-model="form.service"
-          :class="{ 'is-invalid': formErrors.service }"
-        >
-          <option disabled value="">Select a service</option>
-          <option v-for="service in villainServices" :key="service.id" :value="service.name">{{ service.name }}</option>
-        </select>
-        <div v-if="formErrors.service" class="error-message">
-          Please select a service.
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="mail"
+          name="email"
+          id="email"
+          v-model="form.email"
+          :class="{ 'is-invalid': formErrors.fullName }"
+          placeholder="Enter your email"
+        />
+        <div v-if="formErrors.email" class="error-message">
+          Mail is required.
+        </div>
+      </div>
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input
+          type="text"
+          name="phone"
+          id="phone"
+          v-model="form.phone"
+          :class="{ 'is-invalid': formErrors.phone }"
+          placeholder="Enter your phone number"
+        />
+        <div v-if="formErrors.fullName" class="error-message">
+          Mail is required.
         </div>
       </div>
       <!-- Content -->
@@ -113,9 +129,10 @@ export default {
 
 .contact-form {
   background-color: $light;
+  padding: 2rem;
   border-radius: $btn-border-radius;
-  max-width: 80%;
-  margin: 1em auto;
+  max-width: 90%;
+  margin: 0 auto;
   
   h2 {
     color: $primary;
