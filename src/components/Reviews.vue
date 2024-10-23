@@ -8,19 +8,8 @@ export default {
         comment: '',
         stars: 0,
       },
-      hoverStars: 0, // Per gestire l'hover delle stelle
-      reviews: [
-        { fullName: 'John Doe', comment: 'Great service!', stars: 5 },
-        { fullName: 'Jane Smith', comment: 'Had a fantastic time!', stars: 4 },
-        { fullName: 'Alice Brown', comment: 'Good experience.', stars: 3 },
-      ],
+      hoverStars: 0,
     };
-  },
-  computed: {
-    // Mostra massimo 4 recensioni
-    sortedReviews() {
-      return this.reviews.slice(0, 4);
-    },
   },
   methods: {
     addReview() {
@@ -132,13 +121,14 @@ export default {
   .interactive-stars {
     padding: 0.4em 0;
     font-size: 1.5rem;
-    color: $clr-rating-stars;
     .star {
       cursor: pointer;
       transition: color 0.2s;
-        &:hover {
-            color: $primary;
-        }
+      color: $primary;
+
+      &:hover {
+        color: $primary;
+      }
     }
   }
 }
