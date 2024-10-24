@@ -24,6 +24,7 @@ export default {
       isLoadingFirst: true,
       isLoadingVillains: true,
       selectedRating: null,
+      hoverStars: 0,
       minReviews: 0,
       maxReviews: 50,
     };
@@ -123,7 +124,11 @@ export default {
       this.selectedRating = null;
 
       this.getApiResearch();
-    }
+    },
+    setStars(star) {
+      this.selectedRating = star;
+      this.getApiResearch();
+    },
   },
 
     watch: {
@@ -158,16 +163,20 @@ export default {
     <span class="btn btn-primary" @click="resetFilter">Clear Filters</span>
     <div class="filter-section">
       <h4>Rating:</h4>
-      <ul>
-        <li v-for="rating in ratings" :key="rating">
-          <input type="radio" :id="'rating-' + rating.value" :value="rating.value" v-model="selectedRating" @change="getApiResearch" />
-          <label :for="'rating-' + rating.value" class="ms">
-            <span v-for="star in 5" :key="star" class="star">
-              <i :class="star <= rating.value ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
-            </span>
-          </label>
-        </li>
-      </ul>
+      <!-- New reviews -->
+      <div class="form-group">
+        <div class="interactive-stars">
+          <i 
+            v-for="star in 5" 
+            :key="star" 
+            class="star" 
+            :class="star <= hoverStars ? 'fas fa-star' : 'far fa-star'" 
+            @mouseover="hoverStars = star" 
+            @mouseleave="hoverStars = form.rating_id || 0"
+            @click="setStars(star)"
+          ></i>
+        </div>
+      </div>
     </div>
 
     <div class="filter-section">
