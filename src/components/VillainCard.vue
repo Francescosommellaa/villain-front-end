@@ -25,7 +25,12 @@ export default {
     <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
     <div class="villain-reviews" v-if="villain.ratings && villain.ratings.length">
       <span v-for="star in 5" :key="star" class="star">
-        <i :class="star <= ratingAvg() ? 'fa-solid fa-star' : 'fa-regular fa-star' "></i>
+        <i :class="{
+            'fa-solid fa-star': star <= Math.floor(ratingAvg()),
+            'fa-solid fa-star-half-stroke': star === Math.ceil(ratingAvg()) && ratingAvg() % 1 !== 0, 
+            'fa-regular fa-star': star > ratingAvg()
+          }"
+        ></i>
       </span>
     </div>
     <div class="villain-reviews" v-else>

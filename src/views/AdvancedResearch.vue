@@ -169,7 +169,7 @@ export default {
           <i 
             v-for="star in 5" 
             :key="star" 
-            class="star" 
+            class="star cursor" 
             :class="star <= hoverStars ? 'fas fa-star' : 'far fa-star'" 
             @mouseover="hoverStars = star" 
             @mouseleave="hoverStars = form.rating_id || 0"
@@ -217,6 +217,7 @@ export default {
       <h4>Skills</h4>
         <ul>
           <li 
+            class="cursor"
             v-for="skill in skills" 
             :key="skill.id" 
             :class="{ 'btn-primary': skill.id == selectSkill }"
@@ -277,6 +278,10 @@ export default {
 
     input[type='range'] {
       accent-color: $primary; 
+    }
+
+    .cursor {
+      cursor: pointer;
     }
 
     .ms {
