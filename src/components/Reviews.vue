@@ -41,7 +41,7 @@ export default {
       axios.post(store.urlApi + 'sent-rating',{
           full_name: this.form.full_name,
           rating_id: this.form.rating_id,
-          content: this.form.content,
+          content: this.form.content || '',
           villain_id: this.villainData.id
       })
         .then(resp=>{
@@ -49,7 +49,8 @@ export default {
           this.isSent = true
         })
         .catch(err=>{
-          console.log(err)
+          // console.log(err)
+          console.log('Errore risposta:', err.response ? err.response.data : err);
           this.isSent = true
           this.errorSent = true
         })
@@ -65,8 +66,9 @@ export default {
   <div class="loader" v-else-if="isReviewed && !isSent">
         <Loader/>
     </div>
-  <div v-else-if="errorSent">
-    <h1>Error Message not sent!</h1>
+  <div class="review_error" v-else-if="errorSent">
+    <h1>Error: Message not sent!</h1>
+    <h4>(Stars are required)</h4>
   </div>
   <div v-else class="reviews-container">
     <h2>Make a review</h2>
@@ -91,7 +93,6 @@ export default {
           name="content"
           rows="6"
           v-model="form.content"
-          required
           placeholder="Your review"
         ></textarea>
       </div>
@@ -179,8 +180,16 @@ export default {
   background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
   background-clip: text;
   color: transparent;
-  min-height: 30vh;
-  margin-top: 70px
+  margin: 70px 0;
 }
+
+.review_error{
+  text-align: center;
+  background: $danger;
+  background-clip: text;
+  color: transparent;
+  margin: 70px 0;
+}
+
 </style>
   
