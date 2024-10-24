@@ -15,6 +15,7 @@ export default {
   },
   data() {
     return {
+      store,
       villains: [],
       skills: [],
       paginatorLink: [],
@@ -107,37 +108,20 @@ export default {
           </div> -->
         </div>
       </div>
-      <div class="text-container">
-        <h2 class="title">HOW TO HIRE IN VILLAIN</h2>
-        <h3 class="presentation"><strong>Hiring a villain from our roster is easy and straightforward. Follow these steps:</strong></h3>
+       <!-- Info How to hire a villain -->
+      <div class="text-container hire">
+        <div v-for="title in store.howToHireTitle">
+          <h2 v-if="!isLoading" class="title">{{ title.title }}</h2>
+          <h3 class="presentation"><strong>{{ title.intro }}</strong></h3>
+        </div>
         <ul>
-          <li>
-            <strong>Explore our selection: </strong>
-            Browse the villain profiles and read their descriptions, skills, and reviews to find the one that best fits your needs.
-          </li>
-          <li>
-            <strong>Use the search filter: </strong>
-            Refine your search based on the specific skills you're looking for, such as sabotage, henchman recruitment, or world domination planning.
-          </li>
-          <li>
-            <strong>Contact the chosen villain: </strong>
-            Once you've found your ideal antagonist, click the contact button and fill out the request form, specifying the details of your mission or adventure.
-          </li>
-          <li>
-            <strong>Negotiate the terms :</strong>
-            After sending your request, the villain will respond with a quote or proposal. You can discuss terms, services, and costs, making sure everything is perfectly planned.
-          </li>
-          <li>
-            <strong>Begin the adventure: </strong>
-            Once the agreement is reached, your villain will get to work. Get ready for an adventure full of chaos and plot twists!
+          <li v-for="instruction in store.howToHireInfo">
+            <i :class="instruction.icon"></i>
+            <strong>{{ instruction.title }}</strong>
+            <p>{{ instruction.info }}</p>
           </li>
         </ul>
       </div>
-      <section class="jumbo">
-        <div class="cont-jumbo">
-                <h1 class="main-title">FIND YOUR VILLAIN</h1>
-        </div>
-    </section>
     </div>
   </main>
 </template>
@@ -146,35 +130,6 @@ export default {
 @use '../assets/style/generals/variables' as *;
 @use '../assets/style/generals/view-style/views-style';
 @import '../assets/style/main.scss';
-
-.jumbo {
-    height: 600px;
-    width: 100%;
-    background-image: url('../assets/images/main/jumbo.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 10%;
-    position: relative;
-
-    .cont-jumbo {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 80%;
-        height: 100%;
-        margin: 0 auto;
-        font-size: 50px;
-        text-align: center;
-
-        .main-title {
-            color: white;
-            font-weight: bold;
-            text-shadow: 1px 1px 10px $primary;
-            padding-bottom: 1.5rem;
-        }
-    }
-  }
 
 
 main{
@@ -279,5 +234,21 @@ ul {
   color: $light;
   background-color: $secondary;
 }
+}
+
+.hire {
+  padding-bottom: 3rem;
+  i {
+    color: $primary;
+    font-size: 20px;
+    padding-right: 15px;
+  }
+  strong {
+    font-size: 1.1rem;
+  }
+  p {
+    padding: 20px 0 0 35px;
+  }
+
 }
 </style>
