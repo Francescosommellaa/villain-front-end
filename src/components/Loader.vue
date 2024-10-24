@@ -9,16 +9,16 @@ export default{
 	<svg class="ip" viewBox="0 0 256 128" width="256px" height="128px" xmlns="http://www.w3.org/2000/svg">
 		<defs>
 			<linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
-				<stop offset="0%" stop-color="#5ebd3e" />
-				<stop offset="33%" stop-color="#ffb900" />
-				<stop offset="67%" stop-color="#f78200" />
-				<stop offset="100%" stop-color="#e23838" />
+				<stop offset="0%" />
+				<stop offset="33%" />
+				<stop offset="67%" />
+				<stop offset="100%" />
 			</linearGradient>
 			<linearGradient id="grad2" x1="1" y1="0" x2="0" y2="0">
-				<stop offset="0%" stop-color="#e23838" />
-				<stop offset="33%" stop-color="#973999" />
-				<stop offset="67%" stop-color="#009cdf" />
-				<stop offset="100%" stop-color="#5ebd3e" />
+				<stop offset="0%" />
+				<stop offset="33%" />
+				<stop offset="67%" />
+				<stop offset="100%" />
 			</linearGradient>
 		</defs>
 		<g fill="none" stroke-linecap="round" stroke-width="16">
@@ -36,39 +36,50 @@ export default{
 </template>
 
 <style lang="scss" scoped>
-* {
-	border: 0;
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
+@use '../assets/style/generals/variables' as *;
+
 :root {
-	--hue: 223;
-	--bg: hsl(var(--hue),90%,95%);
-	--fg: hsl(var(--hue),90%,5%);
 	--trans-dur: 0.3s;
-	font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
 }
-body {
-	background-color: var(--bg);
-	color: var(--fg);
-	font: 1em/1.5 sans-serif;
-	height: 100vh;
-	display: grid;
-	place-items: center;
-	transition: background-color var(--trans-dur);
+
+#grad1 {
+	stop{
+		&:nth-child(1){
+			stop-color: $primary;
+		}
+		&:nth-child(2){
+			stop-color: $secondary;
+		}
+		&:nth-child(3){
+			stop-color: $accent;
+		}
+		&:nth-child(4){
+			stop-color: $accent;
+		}
+	}
 }
-main {
-	padding: 1.5em 0;
+
+#grad2 {
+	stop{
+		&:nth-child(4){
+			stop-color: $primary;
+		}
+		&:nth-child(3){
+			stop-color: $secondary;
+		}
+		&:nth-child(2){
+			stop-color: $accent;
+		}
+		&:nth-child(1){
+			stop-color: $accent;
+		}
+	}
 }
 .ip {
 	width: 16em;
 	height: 8em;
 }
-.ip__track {
-	stroke: hsl(var(--hue),90%,90%);
-	transition: stroke var(--trans-dur);
-}
+
 .ip__worm1,
 .ip__worm2 {
 	animation: worm1 2s linear infinite;
@@ -77,15 +88,8 @@ main {
 	animation-name: worm2;
 }
 
-/* Dark theme */
-@media (prefers-color-scheme: dark) {
-	:root {
-		--bg: hsl(var(--hue),90%,5%);
-		--fg: hsl(var(--hue),90%,95%);
-	}
-	.ip__track {
-		stroke: hsl(var(--hue),90%,15%);
-	}
+.ip__track {
+	stroke: transparent;
 }
 
 /* Animation */
