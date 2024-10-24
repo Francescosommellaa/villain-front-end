@@ -5,7 +5,7 @@ export const store = reactive({
 
     howToHireTitle:[
         {
-            title:"HOW TO HIRE IN VILLAIN",
+            title:"HOW TO HIRE A VILLAIN",
             intro:"Hiring a villain from our roster is easy and straightforward. Follow these steps:",
         },
     ],
