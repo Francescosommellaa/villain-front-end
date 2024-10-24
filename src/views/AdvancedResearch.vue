@@ -79,8 +79,6 @@ export default {
       if (this.selectUniverse) {
         params.universe_id = this.selectUniverse;
       }
-
-      console.log(params);
       this.isLoadingVillains = true;
       const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
       this.getApi(url, 'villains');
@@ -116,6 +114,16 @@ export default {
         }
         this.getApiResearch();
     },
+
+    resetFilter(){
+      console.log('reset')
+      this.selectService = '';
+      this.selectSkill = '';
+      this.selectUniverse = '';
+      this.selectedRating = null;
+
+      this.getApiResearch();
+    }
   },
 
     watch: {
@@ -147,7 +155,7 @@ export default {
   <div id="advanced-filter" class="left">
 
     <h2>Filtra i nostri Villain</h2>
-
+    <span class="btn btn-primary" @click="resetFilter">Clear Filters</span>
     <div class="filter-section">
       <h4>Rating:</h4>
       <ul>
@@ -214,12 +222,15 @@ export default {
     <div class="loader" v-if="isLoadingVillains">
       <Loader/>
   </div>
-    <div v-else class="villains-flex">
+    <div v-else-if="villains.length" class="villains-flex">
         <VillainCard
           v-for="(villain, index) in villains"
           :key="index"
           :villain="villain"
         />
+      </div>
+      <div v-else class="no_villains">
+        <h2>No Villain Found</h2>
       </div>
   </div>
 </main>
@@ -247,9 +258,10 @@ export default {
     display: none;
   }
 
+  
   .filter-section {
     margin-bottom: 20px;
-
+    
     .btn-primary{
       color: white;
     }
@@ -261,7 +273,7 @@ export default {
     .ms {
       margin-left: 10px;
     }
-
+    
     .star {
       color: $primary;
       font-size: 1rem;
@@ -273,12 +285,12 @@ export default {
       line-height: 50px;
       position: relative;
     }
-
+    
     ul{
       max-height: 250px;
       overflow-y: auto;
       overflow-x: hidden;
-
+      
 
       li {
         padding: 10px;
@@ -291,6 +303,11 @@ export default {
       }
     }
   }
+}
+.no_villains{
+  color: red;
+  text-align: center;
+  margin-top: 50px;
 }
 
 main {
