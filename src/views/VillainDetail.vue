@@ -56,7 +56,7 @@ export default {
                 console.log('CV non disponibile');
             } else {
                 this.cvExists = true;
-                this.cvUrl = `http://localhost:8000/${this.villain.cv}`;
+                this.cvUrl = `http://localhost:8000${this.villain.cv}`;
                 console.log('URL generato:', this.cvUrl);
             }
         },
@@ -314,7 +314,7 @@ export default {
     .modal-actions {
         display: flex;
         justify-content: space-between;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
     }
 
     .download-btn {
