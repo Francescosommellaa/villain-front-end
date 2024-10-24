@@ -7,8 +7,12 @@ export default {
       required: true,
     },
   },
+  methods:{
+    ratingAvg(){
+      return this.villain.ratings.reduce((sum, rating)=>sum + rating.value, 0) / this.villain.ratings.length
+    }
+  }
 };
-
 </script>
 
 <template>
@@ -21,14 +25,23 @@ export default {
     <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
     <div class="villain-reviews" v-if="villain.ratings && villain.ratings.length">
       <span v-for="star in 5" :key="star" class="star">
-        <i :class="star <= villain.ratings[0].value ? 'fa-solid fa-star' : 'fa-regular fa-star' "></i>
+        <i :class="{
+            'fa-solid fa-star': star <= Math.floor(ratingAvg()),
+            'fa-solid fa-star-half-stroke': star === Math.ceil(ratingAvg()) && ratingAvg() % 1 !== 0, 
+            'fa-regular fa-star': star > ratingAvg()
+          }"
+        ></i>
+      </span>
+    </div>
+    <div class="villain-reviews" v-else>
+      <span v-for="star in 5" :key="star" class="star">
+        <i class='fa-regular fa-star'></i>
       </span>
     </div>
   </div>
   <div class="under">
     <router-link   :to="{ name: 'VillainDetail', params: { slug: villain.slug } }"><button class="btn btn-primary">Contact Now</button></router-link>
   </div>
-    
 </router-link>
 
 </template>

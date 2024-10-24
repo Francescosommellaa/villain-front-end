@@ -59,6 +59,7 @@ export default {
                 this.cvUrl = `http://localhost:8000/${this.villain.cv}`;
                 console.log('URL generato:', this.cvUrl);
             }
+            console.log(this.villain.cv);
         },
         closeCv() {
             this.showCv = false;
@@ -122,10 +123,12 @@ export default {
                 <!-- villain cv -->
                 <div class="mb-30">
                     <h4 class="mb-20"><strong>CV:</strong></h4>
-                    
+
                     <h5 v-if="cvExists" class="mb-50">
                         <button @click="showCv = true" class="btn btn-secondary">View CV</button>
                     </h5>
+
+                    <span v-else>CV not available for this villain.</span>
 
                     <!-- Modal CV -->
                     <div v-if="showCv" class="modal-overlay" @click.self="closeCv">
@@ -139,8 +142,6 @@ export default {
                             </div>
                         </transition>
                     </div>
-
-                    <span v-else>CV not available for this villain.</span>
                 </div>
 
 
@@ -292,18 +293,13 @@ export default {
 
     .modal-content {
         background-color: $light;
-        padding: 1.5rem;
+        padding: 1.5rem 1.5rem 5rem 1.5rem;
         width: 80%;
         height: 80%;
         box-shadow: 0 4px 12px rgba($black, 0.3);
         border-radius: 0.5rem;
         position: relative;
         animation: fadeIn 0.5s ease-in-out;
-    }
-
-    .iframe {
-        width: 100%;
-        height: calc(100% - 50px);
     }
 
     @keyframes fadeIn {
@@ -320,8 +316,7 @@ export default {
     .modal-actions {
         display: flex;
         justify-content: space-between;
-        background-color: $light;
-        padding: 1rem;
+        padding: 1rem 0;
     }
 
     .download-btn {
