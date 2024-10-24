@@ -39,12 +39,10 @@ export default {
         .then(response => {
           console.log('chiamta:', urlApi)
           if (type === 'villains') {
-            this.isLoading = false;
             this.villains = response.data.villains.data 
             this.paginatorLink = response.data.villains.links
           } else {
             this[type] = response.data[type]
-            this.isLoading = false;
             console.log(this[type])
           }
         })
@@ -76,7 +74,7 @@ export default {
   },
   mounted() {
     // Chiamte axios
-    this.getApi(store.urlApi + 'villains', 'villains');
+    // this.getApi(store.urlApi + 'villains', 'villains');
     // this.getApi(store.urlApi + 'universes', 'universes');
     this.getApi(store.urlApi + 'skills', 'skills');
     // this.getApi(store.urlApi + 'services', 'services');
@@ -91,11 +89,14 @@ export default {
   <main>
     <div class="content">
       <div class="text-container">
-        <h2 v-if="!isLoading" class="title">Discover Premium Villains</h2>
+        <h2 class="title">Discover Premium Villains</h2>
         <p class="presentation">Welcome to our exclusive selection of sponsored villains! Our antagonists are fearsome and iconic, part of a chosen group offering unique services and top-rated reviews. Take your time to explore their profiles, review their specialties, and check out their top-rated reviews from past clients</p>
       </div>
-      <div class="section-card">
-        <div v-if="!isLoading" class="villains-flex">
+      <div class="loader" v-if="isLoading">
+        <Loader/>
+    </div>
+      <div v-else class="section-card">
+        <div class="villains-flex">
         <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" class="highlight"/>
     
           <!-- pagination -->
@@ -107,7 +108,7 @@ export default {
         </div>
       </div>
       <div class="text-container">
-        <h2 v-if="!isLoading" class="title">HOW TO HIRE IN VILLAIN</h2>
+        <h2 class="title">HOW TO HIRE IN VILLAIN</h2>
         <h3 class="presentation"><strong>Hiring a villain from our roster is easy and straightforward. Follow these steps:</strong></h3>
         <ul>
           <li>
