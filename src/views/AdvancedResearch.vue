@@ -19,6 +19,8 @@ export default {
       ratings: [],
       paginatorLink: [],
       selectSkill: this.$route.params.skill || '',
+      selectService: '',
+      selectUniverse: '',
       isLoadingFirst: true,
       isLoadingVillains: true,
       selectedRating: null,
@@ -70,12 +72,61 @@ export default {
       if (this.minReviews) {
         params.min_reviews = this.minReviews;
       }
+      // Controlli service e universe
+      if (this.selectService) {
+        params.service_id = this.selectService;
+      }
+      if (this.selectUniverse) {
+        params.universe_id = this.selectUniverse;
+      }
+
       console.log(params);
       this.isLoadingVillains = true;
       const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
       this.getApi(url, 'villains');
     },
+    // gestione selezione skill
+    selectedSkill(skillId) {
+        if (this.selectSkill === skillId) {
+            this.selectSkill = null;
+        } else {
+            this.selectSkill = skillId; 
+        }
+        this.$router.push({ 
+            name: this.$route.name, 
+            params: { skill: skillId }
+        });
+        this.getApiResearch();
+    },
+
+    selectedService(serviceId) {
+        if (this.selectService === serviceId) {
+            this.selectService = null;
+        } else {
+            this.selectService = serviceId; 
+        }
+        this.getApiResearch();
+    },
+
+    selectedUniverse(universeId) {
+        if (this.selectUniverse === universeId) {
+            this.selectUniverse = null;
+        } else {
+            this.selectUniverse = universeId; 
+        }
+        this.getApiResearch();
+    },
   },
+
+    watch: {
+  '$route.params.skill': {
+    immediate: true,
+    handler(newSkill) {
+      this.selectSkill = newSkill || '';
+      this.getApiResearch();
+    }
+  }
+},
   mounted() {
     this.getApiResearch();
     this.getApi(store.urlApi + 'universes', 'universes');
@@ -121,27 +172,43 @@ export default {
 
 
 
-    <div class="filter-section">
+    <div class="filter-section d-none">
       <h4>Services:</h4>
       <ul>
-        <li v-for="service in services">{{ service.name }}</li>
+        <li 
+            v-for="service in services" 
+            :key="service.id" 
+            :class="{ 'btn-primary': service.id == selectService }"
+            @click="selectedService(service.id)">
+            {{ service.name }}
+          </li>
       </ul>
     </div>
 
-    <div class="filter-section">
+    <div class="filter-section d-none">
       <h4>Universes:</h4>
       <ul>
-        <li v-for="universe in universes">{{ universe.name }}</li>
+        <li v-for="universe in universes"
+        :key="universe.id" 
+            :class="{ 'btn-primary': universe.id == selectUniverse }"
+            @click="selectedUniverse(universe.id)">
+        {{ universe.name }}</li>
       </ul>
     </div>
 
     <div class="filter-section">
       <h4>Skills</h4>
-      <ul>
-        <li v-for="skill in skills">{{ skill.name }}</li>
-      </ul>
+        <ul>
+          <li 
+            v-for="skill in skills" 
+            :key="skill.id" 
+            :class="{ 'btn-primary': skill.id == selectSkill }"
+            @click="selectedSkill(skill.id)">
+            {{ skill.name }}
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
 
   <div class="right">
     <div class="loader" v-if="isLoadingVillains">
@@ -176,8 +243,16 @@ export default {
     text-transform: uppercase;
   }
 
+  .d-none{
+    display: none;
+  }
+
   .filter-section {
     margin-bottom: 20px;
+
+    .btn-primary{
+      color: white;
+    }
 
     input[type='range'] {
       accent-color: $primary; 
