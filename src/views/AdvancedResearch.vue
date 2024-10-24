@@ -155,7 +155,7 @@ export default {
 <template>
 <div class="loader" v-if="isLoadingFirst">
       <Loader/>
-  </div>
+</div>
 <main v-else>
   <div id="advanced-filter" class="left">
 
@@ -236,6 +236,7 @@ export default {
           v-for="(villain, index) in villains"
           :key="index"
           :villain="villain"
+          :class="{ 'sponsored-villain highlight': villain.active_sponsorship }"
         />
       </div>
       <div v-else class="no_villains">
@@ -360,6 +361,9 @@ main {
 .pagination {
   text-align: center;
   margin-top: 20px;
+}
+.sponsored-villain {
+  border: solid #fbce00 4px;
 }
 
 

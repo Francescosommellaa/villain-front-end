@@ -95,7 +95,7 @@ export default {
       </div>
       <div class="loader" v-if="isLoading">
         <Loader/>
-    </div>
+      </div>
       <div v-else class="section-card">
         <div class="villains-flex">
         <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" class="highlight"/>
