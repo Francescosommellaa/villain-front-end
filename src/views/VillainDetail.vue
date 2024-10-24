@@ -314,7 +314,7 @@ export default {
     .modal-actions {
         display: flex;
         justify-content: space-between;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
     }
 
     .download-btn {
