@@ -56,7 +56,7 @@ export default {
                 console.log('CV non disponibile');
             } else {
                 this.cvExists = true;
-                this.cvUrl = `http://localhost:8000${this.villain.cv}`;
+                this.cvUrl = `http://localhost:8000/${this.villain.cv}`;
                 console.log('URL generato:', this.cvUrl);
             }
         },
@@ -122,16 +122,15 @@ export default {
                 <!-- villain cv -->
                 <div class="mb-30">
                     <h4 class="mb-20"><strong>CV:</strong></h4>
+                    
                     <h5 v-if="cvExists" class="mb-50">
                         <button @click="showCv = true" class="btn btn-secondary">View CV</button>
                     </h5>
-                
-                    <span v-else>CV not available for this villain.</span>
-                
+
                     <!-- Modal CV -->
-                    <div v-if="showCv" class="modal-overlay mb-10" @click.self="closeCv">
+                    <div v-if="showCv" class="modal-overlay" @click.self="closeCv">
                         <transition name="fade">
-                            <div class="modal-content mb-10">
+                            <div class="modal-content">
                                 <iframe :src="cvUrl" width="100%" height="100%" frameborder="0"></iframe>
                                 <div class="modal-actions">
                                     <button @click="downloadCv" class="btn download-btn">Download CV</button>
@@ -140,6 +139,8 @@ export default {
                             </div>
                         </transition>
                     </div>
+
+                    <span v-else>CV not available for this villain.</span>
                 </div>
 
 
@@ -294,10 +295,15 @@ export default {
         padding: 1.5rem;
         width: 80%;
         height: 80%;
-        box-shadow: 0 4px 8px rgba($black, 0.3);
-        border-radius: 0.8rem;
+        box-shadow: 0 4px 12px rgba($black, 0.3);
+        border-radius: 0.5rem;
         position: relative;
-        animation: fadeIn 0.6s ease-in-out;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .iframe {
+        width: 100%;
+        height: calc(100% - 50px);
     }
 
     @keyframes fadeIn {
@@ -314,7 +320,8 @@ export default {
     .modal-actions {
         display: flex;
         justify-content: space-between;
-        margin-top: 1.5rem;
+        background-color: $light;
+        padding: 1rem;
     }
 
     .download-btn {
