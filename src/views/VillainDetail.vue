@@ -20,7 +20,8 @@ export default {
             showCv: false,
             cvExists: false,
             cvUrl: '',
-            villainName: ''
+            villainName: '',
+            newReview: {},
         }
     },
     methods: {
@@ -32,6 +33,11 @@ export default {
                     this.checkCvExists();
                     this.isLoading = false;
                 });
+        },
+
+        handleReviewSent(review) {
+            console.log('Recensione inviata:', review);
+            this.newReview = review;
         },
         
         formatDate(dateString) {
@@ -156,17 +162,32 @@ export default {
                             <span v-for="star in 5" :key="star" class="star">
                             {{ star <= review.value ? '★' : '☆' }} </span>
                         </div>
-    
+ 
                         <p class="mb-10">
                             {{ review.pivot.content }}
                         </p>
                         <hr class="mb-10">
                     </div>
+                    <div v-if="Object.keys(newReview).length !== 0">
+                        <div class="review">
+                            <div><strong>{{newReview.full_name}}</strong></div>
+                            <div><em>{{ formatDate(newReview.created_at) }}</em></div>
+                            <div class="villain-reviews mb-10">
+                                <span v-for="star in 5" :key="star" class="star">
+                                {{ star <= newReview.rating_id ? '★' : '☆' }} </span>
+                            </div>
+    
+                            <p class="mb-10">
+                                {{ newReview.content }}
+                            </p>
+                            <hr class="mb-10">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <ContactForm :villainData="villain"/>
-        <Reviews :villainData="villain"/>
+        <Reviews :villainData="villain" @review-sent="handleReviewSent"/>
     </div>
             
 </template>

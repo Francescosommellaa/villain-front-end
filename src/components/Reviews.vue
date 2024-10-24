@@ -47,6 +47,14 @@ export default {
         .then(resp=>{
           console.log(resp.data)
           this.isSent = true
+          // Invio tramite emit
+          this.$emit('review-sent', {
+              full_name: this.form.full_name,
+              rating_id: this.form.rating_id,
+              content: this.form.content || '',
+              villain_id: this.villainData.id,
+              created_at: new Date(),
+          });
         })
         .catch(err=>{
           // console.log(err)
@@ -54,7 +62,7 @@ export default {
           this.isSent = true
           this.errorSent = true
         })
-    }
+      }
   },
 };
 </script>
