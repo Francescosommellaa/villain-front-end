@@ -67,7 +67,7 @@ export default {
         <Loader/>
     </div>
   <div class="review_error" v-else-if="errorSent">
-    <h1>Error: Message not sent!</h1>
+    <h1>Error: Review not sent!</h1>
     <h4>(Stars are required)</h4>
   </div>
   <div v-else class="reviews-container">
