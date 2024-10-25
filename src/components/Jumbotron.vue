@@ -34,7 +34,7 @@ export default {
         </div>
         <div class="cont-what">
             <div class="under">
-                    <button class="btn btn-primary"><a class="rule" href="#">HOW TO HIRE IN VILLAIN</a></button>
+                    <button class="btn btn-primary"><a class="rule" href="#">HOW TO HIRE A VILLAIN</a></button>
             </div>
         <!-- Search bar -->
          <p class="presentation">Use our search filter to find the perfect villain based on their skills, from world domination strategies to doomsday device creation!</p>
