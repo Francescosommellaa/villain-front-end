@@ -75,7 +75,7 @@ export default {
     <form @submit.prevent="sentMessage" method="POST">
       <!-- Name -->
       <div class="form-group">
-        <label for="full_name">Full Name:</label>
+        <label for="full_name">Full Name: *</label>
         <input
           type="text"
           name="full_name"
@@ -93,7 +93,7 @@ export default {
       </div>
       <!-- Email -->
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="email">Email: *</label>
         <input
           type="mail"
           name="email"
@@ -111,7 +111,7 @@ export default {
       </div>
       <!-- Phone -->
       <div class="form-group">
-        <label for="phone">Phone:</label>
+        <label for="phone">Phone: *</label>
         <input
           type="text"
           name="phone"
@@ -130,7 +130,7 @@ export default {
       </div>
       <!-- Content -->
       <div class="form-group">
-        <label for="content">Message:</label>
+        <label for="content">Message: *</label>
         <textarea
           id="content"
           rows="8"
