@@ -94,7 +94,7 @@ export default {
     <!-- Form per aggiungere una nuova recensione -->
     <form @submit.prevent="sentReview" method="POST" class="review-form">
       <div class="form-group">
-        <label for="fullName">Full Name:</label>
+        <label for="fullName">Full Name: *</label>
         <input
           type="text"
           id="fullName"
@@ -116,7 +116,7 @@ export default {
       </div>
 
       <div class="form-group">
-        <label>Stars:</label>
+        <label>Stars: *</label>
         <div class="interactive-stars" id="star_review">
           <i 
             v-for="star in 5" 
