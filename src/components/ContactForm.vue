@@ -80,6 +80,9 @@ export default {
           type="text"
           name="full_name"
           id="full_name"
+          pattern=".{3,}"
+          required
+          title="The name must be at least 3 characters long"
           v-model="form.full_name"
           :class="{ 'is-invalid': formErrors.fullName }"
           placeholder="Enter your full name"
@@ -95,6 +98,9 @@ export default {
           type="mail"
           name="email"
           id="email"
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          title="Please enter a valid lowercase email address."
+          required
           v-model="form.email"
           :class="{ 'is-invalid': formErrors.fullName }"
           placeholder="Enter your email"
@@ -110,6 +116,10 @@ export default {
           type="text"
           name="phone"
           id="phone"
+          pattern="^\+?[0-9\s]{10,15}$"
+          maxlength="15"
+          title="The phone must be numbers and max 15"
+          required
           v-model="form.phone"
           :class="{ 'is-invalid': formErrors.phone }"
           placeholder="Enter your phone number"
@@ -124,6 +134,9 @@ export default {
         <textarea
           id="content"
           rows="8"
+          pattern=".{8,}"
+          title="The message must be at least 8 characters long"
+          required
           v-model="form.content"
           :class="{ 'is-invalid': formErrors.content }"
           placeholder="Enter your message"

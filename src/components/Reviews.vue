@@ -19,6 +19,7 @@ export default {
       isReviewed: false,
       isSent: false,
       errorSent: false,
+      errorStars: false,
       hoverStars: 0, // Per gestire l'hover delle stelle
       form: {
         full_name: '',
@@ -35,8 +36,17 @@ export default {
   methods: {
     setStars(star) {
       this.form.rating_id = star;
+      this.errorStars = false;
+
     },
     sentReview(){
+      if (this.form.rating_id === 0) {
+        const stars = document.getElementById('star_review');
+        if (!stars.querySelector('.error-message')) {
+          this.errorStars = true;
+        }
+        return;
+      }
       this.isReviewed = true
       axios.post(store.urlApi + 'sent-rating',{
           full_name: this.form.full_name,
@@ -107,7 +117,7 @@ export default {
 
       <div class="form-group">
         <label>Stars:</label>
-        <div class="interactive-stars">
+        <div class="interactive-stars" id="star_review">
           <i 
             v-for="star in 5" 
             :key="star" 
@@ -118,6 +128,7 @@ export default {
             @click="setStars(star)"
           ></i>
         </div>
+        <small v-if="errorStars" class="error-message">Minimun stars 1</small>
       </div>
 
       <button type="submit" class="btn btn-primary">Submit Review</button>
@@ -146,13 +157,17 @@ export default {
     margin-bottom: 20px;
   }
 }
-
 .review-form {
   border-radius: 8px;
   background-color: $gray-100;
-
+  
+  
   .form-group {
     margin-bottom: 20px;
+    small.error-message{
+      display: block;
+      color: red;
+    }
     label {
       font-weight: $font-weight-bold;
       color: $label-text-emphasis;
