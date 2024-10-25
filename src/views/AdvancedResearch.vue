@@ -23,9 +23,9 @@ export default {
       selectUniverse: '',
       isLoadingFirst: true,
       isLoadingVillains: true,
-      selectedRating: null,
+      selectRating: null,
       hoverStars: 0,
-      minReviews: 0,
+      filterReviews: 0,
       maxReviews: 50,
     };
   },
@@ -57,28 +57,23 @@ export default {
         });
     },
 
-    applyFilter() {
-      let searchParams = this.selectedRating ? `?rating=${this.selectedRating}` : '';
-      this.getApi(store.urlApi + 'villains-rating', 'villains', searchParams);
-    },
-
     getApiResearch() {
       const params = {};
-      if (this.selectSkill) {
-        params.skill_id = this.selectSkill;
+      if (this.$route.query.skill) {
+        params.skill_id = this.$route.query.skill;
       } 
-      if(this.selectedRating) {
-        params.rating = this.selectedRating;
+      if(this.$route.query.rating) {
+        params.rating = this.$route.query.rating;
       }
-      if (this.minReviews) {
-        params.min_reviews = this.minReviews;
+      if (this.$route.query.reviews) {
+        params.min_reviews = this.$route.query.reviews;
       }
       // Controlli service e universe
-      if (this.selectService) {
-        params.service_id = this.selectService;
+      if (this.$route.query.service) {
+        params.service_id = this.$route.query.service;
       }
-      if (this.selectUniverse) {
-        params.universe_id = this.selectUniverse;
+      if (this.$route.query.universe) {
+        params.universe_id = this.$route.query.universe;
       }
       this.isLoadingVillains = true;
       const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
@@ -93,7 +88,9 @@ export default {
         }
         this.$router.push({ 
             name: this.$route.name, 
-            params: { skill: skillId }
+            query: { 
+              ...this.$route.query,
+              skill: skillId }
         });
         this.getApiResearch();
     },
@@ -104,6 +101,12 @@ export default {
         } else {
             this.selectService = serviceId; 
         }
+        this.$router.push({ 
+            name: this.$route.name, 
+            query: { 
+              ...this.$route.query,
+              service: serviceId }
+        });
         this.getApiResearch();
     },
 
@@ -113,22 +116,41 @@ export default {
         } else {
             this.selectUniverse = universeId; 
         }
+        this.$router.push({ 
+            name: this.$route.name, 
+            query: { 
+              ...this.$route.query,
+              universe: universeId }
+        });
         this.getApiResearch();
     },
-
-    resetFilter(){
-      console.log('reset')
-      this.selectService = '';
-      this.selectSkill = '';
-      this.selectUniverse = '';
-      this.selectedRating = null;
-
-      this.getApiResearch();
-    },
     setStars(star) {
-      this.selectedRating = star;
-      this.getApiResearch();
-    },
+      this.selectRating = star;
+      this.$router.push({ 
+        name: this.$route.name, 
+        query: { 
+          ...this.$route.query,
+          rating: star }
+        });
+        this.getApiResearch();
+      },
+      setReview(filterReviews) {
+        this.$router.push({ 
+          name: this.$route.name, 
+          query: { 
+            ...this.$route.query,
+            reviews: filterReviews }
+          });
+          this.getApiResearch();
+        },
+      resetFilter(){
+        console.log('reset')
+        this.selectService = '';
+        this.selectSkill = '';
+        this.selectUniverse = '';
+        this.selectRating = null;
+        this.getApiResearch();
+      },
   },
 
     watch: {
@@ -146,6 +168,7 @@ export default {
     this.getApi(store.urlApi + 'skills', 'skills');
     this.getApi(store.urlApi + 'services', 'services');
     this.getApi(store.urlApi + 'ratings', 'ratings');
+    console.log(this.$route.query.skill)
   },
 };
 </script>
@@ -163,7 +186,7 @@ export default {
     <span class="btn btn-primary" @click="resetFilter">Clear Filters</span>
     <div class="filter-section">
       <h4>Rating:</h4>
-      <!-- New reviews -->
+      <!-- Hover stars -->
       <div class="form-group">
         <div class="interactive-stars">
           <i 
@@ -182,14 +205,14 @@ export default {
     <div class="filter-section">
       <h4>Minimum Reviews:</h4>
       <div class="progress-container">
-        <input type="range" :min="0" :max="maxReviews" v-model="minReviews" @change="getApiResearch"/>
-        <span class="ms">{{ minReviews }} reviews</span>
+        <input type="range" :min="0" :max="maxReviews" v-model="filterReviews" @change="setReview(filterReviews)"/>
+        <span class="ms">{{ filterReviews }} reviews</span>
       </div>
     </div>
 
 
 
-    <div class="filter-section d-none">
+    <div class="filter-section">
       <h4>Services:</h4>
       <ul>
         <li 
