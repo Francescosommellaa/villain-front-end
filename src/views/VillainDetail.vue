@@ -243,10 +243,6 @@ export default {
         margin-right: 20px;
     }
 
-    .m-icon {
-        margin-left: 20px;
-    }
-
     h2 {
         font-size: 50px;
         color: $primary;
@@ -266,36 +262,40 @@ export default {
         font-size: 16px;
     }
 
+    .m-icon {
+        margin-left: $icon-margin-left;
+    }
+
     .mt-15 {
-        margin-top: 15px;
+      margin-top: $margin-top-15;
     }
 
     .mb-10 {
-        margin-bottom: 10px;
+      margin-bottom: $margin-bottom-10;
     }
 
     .mb-20 {
-        margin-bottom: 20px;
-    } 
+      margin-bottom: $margin-bottom-20;
+    }
 
     .mb-30 {
-        margin-bottom: 30px;
+      margin-bottom: $margin-bottom-30;
     }
 
     .mb-40 {
-        margin-bottom: 40px;
+      margin-bottom: $margin-bottom-40;
     }
 
     .mb-50 {
-        margin-bottom: 50px;
+      margin-bottom: $margin-bottom-50;
     }
 
     strong {
-        color: $primary;
+      color: $primary;
     }
 
     em {
-        font-size: 12px;
+      font-size: $em-font-size;
     }
 
     // Villaincv

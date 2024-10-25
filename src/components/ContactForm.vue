@@ -95,7 +95,7 @@ export default {
       <div class="form-group">
         <label for="email">Email: *</label>
         <input
-          type="mail"
+          type="email"
           name="email"
           id="email"
           pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
