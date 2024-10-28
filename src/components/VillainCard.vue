@@ -24,6 +24,7 @@ export default {
     
     <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
     <div class="villain-reviews" v-if="villain.ratings && villain.ratings.length">
+      <span class="review-count">{{ villain.ratings.length }}</span>
       <span v-for="star in 5" :key="star" class="star">
         <i :class="{
             'fa-solid fa-star': star <= Math.floor(ratingAvg()),
@@ -51,66 +52,7 @@ export default {
 @import '../assets/style/main.scss';
 
 
-  .villain-name {
-    padding: 10px 0;
-  }
-
-  .villain-img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5; 
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgb(53, 0, 95, 0.2);
-  }
-
-
-  // .villain-name {
-  //   width: 100%;
-  //   position: absolute;
-  //   top: 50%;
-  //   left: 50%;
-  //   transform: translate(-50%, -50%);
-  //   color: $light;
-  //   font-size: 1.5rem;
-  //   opacity: 0;
-  //   transition: opacity 2s ease;
-  //   z-index: 2;
-  //   text-align: center
-  // }
-
-  .villain-info {
-    text-align: center;
-    margin-bottom: 15px;
-    position: relative;
-    z-index: 2;
-    font-weight: 900;
-    
-    .villain-service {
-      font-size: 1rem;
-      color: $dark;
-      padding-bottom: 0.2rem;
-      transition: color 0.5s ease;
-    }
-
-    .villain-reviews {
-      font-size: 1.2rem;
-      padding-top: 0.5rem;
-      .fa-star {
-      color: $primary;
-      font-size: 1rem;
-      padding: 0 0.1rem
-    }
-    }
-
-  }
-
-  .btn {
-    width: 100%;
-  }
-  .villain-card {
+.villain-card {
   background-color: $light;
   padding: 20px;
   border: 2px solid $primary;
@@ -123,7 +65,8 @@ export default {
   overflow: hidden;
   transition: transform 0.5s ease;
 
-  img{
+  // Lascia invariata questa parte come richiesto
+  img { 
     object-position: top; 
   }
   &.highlight {
@@ -131,16 +74,38 @@ export default {
       .over {
         background-color: rgb(250, 204, 0, 0.4);
       }
-      .villain-name,.villain-service{
+      .villain-name,
+      .villain-service,
+      .review-count,
+      .villain-reviews .fa-star {
         color: $primary;
       }
     }
   }
 
   &:hover {
+    .villain-service,
+    .review-count {
+      color: white;
+
+    }
+
+    .villain-reviews .fa-star {
+      color: white;
+    }
+  }
+
+  .under {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  &:hover {
     transform: translateY(-5px);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-    .over{
+
+    .over {
       position: absolute;
       top: 0;
       left: 0;
@@ -149,8 +114,8 @@ export default {
       background-color: rgb(53, 0, 95, 0.6);
       transition: filter 0.5s ease;
       z-index: 1;
-
     }
+
     .villain-name {
       opacity: 1;
       width: 100%;
@@ -160,15 +125,60 @@ export default {
       transform: translate(-50%, -50%);
       color: $light;
       font-size: 1.5rem;
-      // opacity: 0;
       transition: opacity 0.5s ease;
       z-index: 2;
       text-align: center;
     }
+
     .villain-service {
       color: white;
     }
   }
 }
 
+.villain-name {
+  padding: 10px 0;
+}
+
+.villain-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgb(53, 0, 95, 0.2);
+}
+
+.villain-info {
+  text-align: center;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 2;
+  font-weight: 900;
+  
+  .villain-service {
+    font-size: 1rem;
+    color: $dark;
+    padding-bottom: 0.2rem;
+    transition: color 0.5s ease;
+  }
+
+  .villain-reviews {
+    font-size: 1.2rem;
+    padding-top: 0.5rem;
+
+    .fa-star {
+      color: $primary;
+      font-size: 1rem;
+      padding: 0 0.1rem;
+    }
+    .review-count {
+      margin-right: 0.5rem;
+      font-size: 1rem;
+    }
+
+  }
+}
 </style>
