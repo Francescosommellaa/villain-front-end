@@ -58,12 +58,13 @@ export default {
   border: 2px solid $primary;
   border-radius: 10px;
   display: flex;
+  min-height: 580px;
   flex-direction: column;
   align-items: center;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
-  transition: transform 0.5s ease;
+  transition: transform 0.8s ease-in-out;
 
   // Lascia invariata questa parte come richiesto
   img { 
@@ -73,12 +74,14 @@ export default {
     &:hover {
       .over {
         background-color: rgb(250, 204, 0, 0.4);
+        transition: background-color 0.4s ease-in-out
       }
       .villain-name,
       .villain-service,
       .review-count,
       .villain-reviews .fa-star {
         color: $primary;
+        transition: color 0.4s ease-in-out;
       }
     }
   }
@@ -112,7 +115,7 @@ export default {
       width: 100%;
       height: 100%;
       background-color: rgb(53, 0, 95, 0.6);
-      transition: filter 0.5s ease;
+      transition: filter 0.8s ease-in-out;
       z-index: 1;
     }
 
@@ -125,13 +128,14 @@ export default {
       transform: translate(-50%, -50%);
       color: $light;
       font-size: 1.5rem;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.8s ease-in-out, color 0.4s ease-in-out;
       z-index: 2;
       text-align: center;
     }
 
     .villain-service {
       color: white;
+      transition: color 0.4s ease-in-out;
     }
   }
 }
@@ -162,7 +166,7 @@ export default {
     font-size: 1rem;
     color: $dark;
     padding-bottom: 0.2rem;
-    transition: color 0.5s ease;
+    transition: color 0.4s ease-in-out;
   }
 
   .villain-reviews {
@@ -173,10 +177,12 @@ export default {
       color: $primary;
       font-size: 1rem;
       padding: 0 0.1rem;
+      transition: color 0.4s ease-in-out;
     }
     .review-count {
       margin-right: 0.5rem;
       font-size: 1rem;
+      transition: color 0.4s ease-in-out;
     }
 
   }
