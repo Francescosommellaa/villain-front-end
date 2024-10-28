@@ -184,6 +184,7 @@ export default {
 
     <h2>Filtra i nostri Villain</h2>
     <span class="btn btn-primary" @click="resetFilter">Clear Filters</span>
+    <div class="wrapper-filer-section">
     <div class="filter-section">
       <h4>Rating:</h4>
       <!-- Hover stars -->
@@ -211,44 +212,44 @@ export default {
     </div>
 
 
-
-    <div class="filter-section">
-      <h4>Services:</h4>
-      <ul>
-        <li 
-            v-for="service in services" 
-            :key="service.id" 
-            :class="{ 'btn-primary': service.id == selectService }"
-            @click="selectedService(service.id)">
-            {{ service.name }}
-          </li>
-      </ul>
-    </div>
-
-    <div class="filter-section d-none">
-      <h4>Universes:</h4>
-      <ul>
-        <li v-for="universe in universes"
-        :key="universe.id" 
-            :class="{ 'btn-primary': universe.id == selectUniverse }"
-            @click="selectedUniverse(universe.id)">
-        {{ universe.name }}</li>
-      </ul>
-    </div>
-
-    <div class="filter-section">
-      <h4>Skills</h4>
+      <div class="filter-section">
+        <h4>Services:</h4>
         <ul>
           <li 
-            class="cursor"
-            v-for="skill in skills" 
-            :key="skill.id" 
-            :class="{ 'btn-primary': skill.id == selectSkill }"
-            @click="selectedSkill(skill.id)">
-            {{ skill.name }}
-          </li>
+              v-for="service in services" 
+              :key="service.id" 
+              :class="{ 'btn-primary': service.id == selectService }"
+              @click="selectedService(service.id)">
+              {{ service.name }}
+            </li>
         </ul>
       </div>
+  
+      <div class="filter-section d-none">
+        <h4>Universes:</h4>
+        <ul>
+          <li v-for="universe in universes"
+          :key="universe.id" 
+              :class="{ 'btn-primary': universe.id == selectUniverse }"
+              @click="selectedUniverse(universe.id)">
+          {{ universe.name }}</li>
+        </ul>
+      </div>
+  
+      <div class="filter-section">
+        <h4>Skills</h4>
+          <ul>
+            <li 
+              class="cursor"
+              v-for="skill in skills" 
+              :key="skill.id" 
+              :class="{ 'btn-primary': skill.id == selectSkill }"
+              @click="selectedSkill(skill.id)">
+              {{ skill.name }}
+            </li>
+          </ul>
+        </div>
+    </div>
     </div>
 
   <div class="right">
@@ -277,7 +278,7 @@ export default {
 
 #advanced-filter {
   padding: 1em;      
-  max-width: 300px;
+  width: 300px;
   margin: 20px auto;
 
   h2 {
@@ -394,5 +395,19 @@ main {
   border: solid #fbce00 4px;
 }
 
+@media (max-width: 700px){
+  main{
+    flex-direction: column;
+
+    #advanced-filter{
+      width: 95%;
+      margin: auto;
+    }
+
+    .wrapper-filter-section{
+      display: flex;
+    }
+  }
+}
 
 </style>

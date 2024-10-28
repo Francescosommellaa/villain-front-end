@@ -24,15 +24,15 @@ export default {
     
     <p v-for="service in villain.services" class="villain-service">{{ service.name }}</p>
     <div class="villain-reviews" v-if="villain.ratings && villain.ratings.length">
-      <span class="review-count">{{ villain.ratings.length }}</span>
       <span v-for="star in 5" :key="star" class="star">
         <i :class="{
-            'fa-solid fa-star': star <= Math.floor(ratingAvg()),
-            'fa-solid fa-star-half-stroke': star === Math.ceil(ratingAvg()) && ratingAvg() % 1 !== 0, 
-            'fa-regular fa-star': star > ratingAvg()
-          }"
+          'fa-solid fa-star': star <= Math.floor(ratingAvg()),
+          'fa-solid fa-star-half-stroke': star === Math.ceil(ratingAvg()) && ratingAvg() % 1 !== 0, 
+          'fa-regular fa-star': star > ratingAvg()
+        }"
         ></i>
       </span>
+      <span class="review-count">Reviews: {{ villain.ratings.length }}</span>
     </div>
     <div class="villain-reviews" v-else>
       <span v-for="star in 5" :key="star" class="star">
@@ -180,9 +180,10 @@ export default {
       transition: color 0.4s ease-in-out;
     }
     .review-count {
-      margin-right: 0.5rem;
+      margin-top: 0.5rem;
       font-size: 1rem;
       transition: color 0.4s ease-in-out;
+      display: block;
     }
 
   }
