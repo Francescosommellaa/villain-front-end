@@ -32,36 +32,10 @@ export default {
                     this.checkCvExists();
                     this.isLoading = false;
                 })
-                .catch(err=>{
+                .catch(err => {
                     console.log(err)
                 });
         },
-
-        async getClientIp() {
-            try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                return data.ip;
-            } catch (error) {
-                console.error("Errore nell'ottenere l'IP:", error);
-                return null;
-            }
-        },
-
-        async  sendClientIpToServer() {
-        const clientIp = await this.getClientIp();
-        
-        if (clientIp) {
-            try {
-            await axios.post(store.urlApi + 'receive-client-ip', { ip: clientIp });
-            console.log("IP inviato correttamente");
-            } catch (error) {
-            console.error("Errore nell'invio dell'IP:", error);
-            }
-        }
-        },
-
-
 
         handleReviewSent(review) {
             this.newReview = review;
@@ -78,6 +52,7 @@ export default {
 
             return `${formattedDate}`;
         },
+
         checkCvExists() {
             if (!this.villain.cv || this.villain.cv === null) {
                 this.cvExists = false;
@@ -86,9 +61,11 @@ export default {
                 this.cvUrl = `http://localhost:8000${this.villain.cv}`;
             }
         },
+
         closeCv() {
             this.showCv = false;
         },
+
         downloadCv() {
             if (this.cvExists) {
                 const link = document.createElement('a');
@@ -97,13 +74,11 @@ export default {
                 link.click();
             }
         }
-
     },
     mounted() {
         this.villainName = this.$route.params.villainName;
         this.slug = this.$route.params.slug;
         this.getApiDetails(this.slug);
-        this.sendClientIpToServer();
     }
 }
 </script>
