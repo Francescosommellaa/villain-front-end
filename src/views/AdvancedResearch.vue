@@ -6,269 +6,259 @@ import Loader from "@/components/Loader.vue";
 
 export default {
   name: 'AdvancedResearch',
+
   components: {
     VillainCard,
     Loader
   },
+
   data() {
     return {
       villains: [],
-      skills: [],
-      services: [],
-      universes: [],
-      ratings: [],
       paginatorLink: [],
-      selectSkill: this.$route.params.skill || '',
-      selectService: '',
-      selectUniverse: '',
+
+      filters: {
+        skills: {
+          routeAPI: 'skills',
+          queryField: 'skill',
+          criteria: [],
+          temporalSelection: this.getTemporalSelection('skill'),
+        },
+
+        services: {
+          routeAPI: 'services',
+          queryField: 'services',
+          criteria: [],
+          temporalSelection: this.getTemporalSelection('services'),
+        },
+
+        universes: {
+          routeAPI: 'universes',
+          queryField: 'universe',
+          criteria: [],
+          temporalSelection: this.getTemporalSelection('universe'),
+        },
+
+        reviews: {
+          routeAPI: 'max-reviews',
+          queryField: 'reviews',
+          criteria: 0,
+          temporalSelection: this.getTemporalSelection('reviews'),
+        },
+
+        ratings: {
+          routeAPI: 'max-rating',
+          queryField: 'rating',
+          criteria: 0,
+          temporalSelection: this.getTemporalSelection('rating'),
+        },
+      },
+
       isLoadingFirst: true,
       isLoadingVillains: true,
-      selectRating: null,
-      hoverStars: 0,
-      filterReviews: 0,
-      maxReviews: 50,
+
+      isFailedFilters: false,
     };
   },
+
   methods: {
-    // Chiamta alle api
-    getApi(urlApi, type = 'villains', search = '') {
-      this.isLoading = true;
+    getTemporalSelection(queryField) {
+      return this.$route.query[queryField] ? Number(this.$route.query[queryField]) : 0;
+    },
 
-      if (search) {
-        urlApi += `${search}`;
-      }
+    getAllFilters() {
+      this.isLoadingFirst = true;
 
-      axios.get(urlApi)
+      Promise.all(Object.values(this.filters).map((filter) => this.getFilter(filter)))
+        .then(() => {
+          this.isLoadingFirst = false;
+        })
+        .catch((error) => {
+          this.isFailedFilters = true;
+          this.isLoadingFirst = false;
+        });
+    },
+
+    getFilter(filter) {
+      return axios.get(store.urlApi + filter.routeAPI)
         .then(response => {
-          if (type === 'villains') {
-            this.isLoadingVillains = false;
-            this.villains = response.data.villains;
-            this.paginatorLink = response.data.villains.links;
-            this.maxReviews = response.data.maxReviews;
-            console.log(urlApi);
-          } else {
-            this[type] = response.data[type];
-            this.isLoadingFirst = false;
-          }
+          filter.criteria = response.data[Object.keys(response.data).find(key => key !== 'success')];
         })
         .catch(error => {
-          console.log(error);
-          this.isLoading = false;
+          throw error;
         });
     },
 
     getApiResearch() {
       const params = {};
-      if (this.$route.query.skill) {
-        params.skill_id = this.$route.query.skill;
-      } 
-      if(this.$route.query.rating) {
+
+      if (this.$route.query.rating) {
         params.rating = this.$route.query.rating;
       }
+
       if (this.$route.query.reviews) {
         params.min_reviews = this.$route.query.reviews;
       }
-      // Controlli service e universe
+
+      if (this.$route.query.skill) {
+        params.skill_id = this.$route.query.skill;
+      }
+
       if (this.$route.query.service) {
         params.service_id = this.$route.query.service;
       }
+
       if (this.$route.query.universe) {
         params.universe_id = this.$route.query.universe;
       }
+
       this.isLoadingVillains = true;
+
       const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
-      this.getApi(url, 'villains');
-    },
-    // gestione selezione skill
-    selectedSkill(skillId) {
-        if (this.selectSkill === skillId) {
-            this.selectSkill = null;
-        } else {
-            this.selectSkill = skillId; 
-        }
-        this.$router.push({ 
-            name: this.$route.name, 
-            query: { 
-              ...this.$route.query,
-              skill: skillId }
-        });
-        this.getApiResearch();
+
+      // LOG
+      console.log(url);
+
+      // this.getApi(url, 'villains');
     },
 
-    selectedService(serviceId) {
-        if (this.selectService === serviceId) {
-            this.selectService = null;
-        } else {
-            this.selectService = serviceId; 
-        }
-        this.$router.push({ 
-            name: this.$route.name, 
-            query: { 
-              ...this.$route.query,
-              service: serviceId }
-        });
-        this.getApiResearch();
-    },
-
-    selectedUniverse(universeId) {
-        if (this.selectUniverse === universeId) {
-            this.selectUniverse = null;
-        } else {
-            this.selectUniverse = universeId; 
-        }
-        this.$router.push({ 
-            name: this.$route.name, 
-            query: { 
-              ...this.$route.query,
-              universe: universeId }
-        });
-        this.getApiResearch();
-    },
-    setStars(star) {
-      this.selectRating = star;
-      this.$router.push({ 
-        name: this.$route.name, 
-        query: { 
+    updateRouteQuery(paramField, paramValue) {
+      this.$router.push({
+        name: this.$route.name,
+        query: {
           ...this.$route.query,
-          rating: star }
-        });
-        this.getApiResearch();
-      },
-      setReview(filterReviews) {
-        this.$router.push({ 
-          name: this.$route.name, 
-          query: { 
-            ...this.$route.query,
-            reviews: filterReviews }
-          });
-          this.getApiResearch();
-        },
-      resetFilter(){
-        console.log('reset')
-        this.selectService = '';
-        this.selectSkill = '';
-        this.selectUniverse = '';
-        this.selectRating = null;
-        this.getApiResearch();
-      },
-  },
+          [paramField]: paramValue
+        }
+      });
 
-    watch: {
-  '$route.params.skill': {
-    immediate: true,
-    handler(newSkill) {
-      this.selectSkill = newSkill || '';
+      this.getApiResearch();
+    },
+
+    selectFilterFromSelect(filter, selectedId) {
+      filter.temporalSelection = (filter.temporalSelection === selectedId) ? null : selectedId;
+
+      this.updateRouteQuery(filter.queryField, filter.temporalSelection);
+    },
+
+    resetFilter() {
+      Object.values(this.filters).forEach((filter) => {
+        filter.temporalSelection = null;
+      });
+
+      this.$router.push({
+        name: this.$route.name,
+        query: {}
+      });
+
       this.getApiResearch();
     }
-  }
-},
+  },
+
   mounted() {
-    this.getApiResearch();
-    this.getApi(store.urlApi + 'universes', 'universes');
-    this.getApi(store.urlApi + 'skills', 'skills');
-    this.getApi(store.urlApi + 'services', 'services');
-    this.getApi(store.urlApi + 'ratings', 'ratings');
-    console.log(this.$route.query.skill)
+    this.getAllFilters();
   },
 };
 </script>
 
 
-
 <template>
-<div class="loader" v-if="isLoadingFirst">
-      <Loader/>
-</div>
-<main v-else>
-  <div id="advanced-filter" class="left">
-
-    <h2>Filtra i nostri Villain</h2>
-    <span class="btn btn-primary" @click="resetFilter">Clear Filters</span>
-    <div class="filter-section">
-      <h4>Rating:</h4>
-      <!-- Hover stars -->
-      <div class="form-group">
-        <div class="interactive-stars">
-          <i 
-            v-for="star in 5" 
-            :key="star" 
-            class="star cursor" 
-            :class="star <= hoverStars ? 'fas fa-star' : 'far fa-star'" 
-            @mouseover="hoverStars = star" 
-            @mouseleave="hoverStars = form.rating_id || 0"
-            @click="setStars(star)"
-          ></i>
-        </div>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <h4>Minimum Reviews:</h4>
-      <div class="progress-container">
-        <input type="range" :min="0" :max="maxReviews" v-model="filterReviews" @change="setReview(filterReviews)"/>
-        <span class="ms">{{ filterReviews }} reviews</span>
-      </div>
-    </div>
-
-
-
-    <div class="filter-section">
-      <h4>Services:</h4>
-      <ul>
-        <li 
-            v-for="service in services" 
-            :key="service.id" 
-            :class="{ 'btn-primary': service.id == selectService }"
-            @click="selectedService(service.id)">
-            {{ service.name }}
-          </li>
-      </ul>
-    </div>
-
-    <div class="filter-section d-none">
-      <h4>Universes:</h4>
-      <ul>
-        <li v-for="universe in universes"
-        :key="universe.id" 
-            :class="{ 'btn-primary': universe.id == selectUniverse }"
-            @click="selectedUniverse(universe.id)">
-        {{ universe.name }}</li>
-      </ul>
-    </div>
-
-    <div class="filter-section">
-      <h4>Skills</h4>
-        <ul>
-          <li 
-            class="cursor"
-            v-for="skill in skills" 
-            :key="skill.id" 
-            :class="{ 'btn-primary': skill.id == selectSkill }"
-            @click="selectedSkill(skill.id)">
-            {{ skill.name }}
-          </li>
-        </ul>
-      </div>
-    </div>
-
-  <div class="right">
-    <div class="loader" v-if="isLoadingVillains">
-      <Loader/>
+  <div class="loader" v-if="isLoadingFirst">
+    <Loader />
   </div>
-    <div v-else-if="villains.length" class="villains-flex">
-        <VillainCard
-          v-for="(villain, index) in villains"
-          :key="index"
-          :villain="villain"
-          :class="{ 'sponsored-villain highlight': villain.active_sponsorship }"
-        />
+  <main v-else>
+    <div id="advanced-filter" class="left">
+
+      <h2>Filters</h2>
+
+      <ul>
+        <!-- AVERAGE RATING FILTER -->
+        <li class="filter-section">
+          <h4>Rating:</h4>
+
+          <div class="interactive-stars">
+            <i v-for="star in filters.ratings.criteria" :key="star" class="star cursor "
+               :class="star <= filters.ratings.temporalSelection ? 'fa-solid fa-star' : 'fa-regular fa-star'"
+               @mouseover="filters.ratings.temporalSelection = star"
+               @mouseleave="filters.ratings.temporalSelection = this.$route.query.rating || 0"
+               @click="updateRouteQuery(filters.ratings.queryField, star)"></i>
+          </div>
+        </li>
+
+        <!-- MINIMUN NUMBER OF REVIEWS FILTER -->
+        <li class="filter-section">
+          <h4>Minimum Reviews:</h4>
+
+          <div class="progress-container">
+            <span>0</span>
+            <input type="range" :min="0" :max="filters.reviews.criteria"
+                   v-model="filters.reviews.temporalSelection"
+                   @change="updateRouteQuery(filters.reviews.queryField, filters.reviews.temporalSelection)" />
+            <span>{{ filters.reviews.criteria }}</span>
+          </div>
+        </li>
+
+        <!-- SERVICE FILTER -->
+        <li class="filter-section">
+          <h4>Services:</h4>
+
+          <menu>
+            <li v-for="service in filters.services.criteria" :key="service.id"
+                :class="{ 'btn-primary': service.id == filters.services.temporalSelection }"
+                @click="selectFilterFromSelect(filters.services, service.id)">
+              {{ service.name }}
+            </li>
+          </menu>
+        </li>
+
+        <!-- UNIVERSE FILTER -->
+        <li class="filter-section">
+          <h4>Universes:</h4>
+
+          <menu>
+            <li v-for="universe in filters.universes.criteria" :key="universe.id"
+                :class="{ 'btn-primary': universe.id == filters.universes.temporalSelection }"
+                @click="selectFilterFromSelect(filters.universes, universe.id)">
+              {{ universe.name }}</li>
+          </menu>
+        </li>
+
+        <!-- SKILL FILTER -->
+        <li class="filter-section">
+          <h4>Skills</h4>
+
+          <ul>
+            <li class="cursor" v-for="skill in filters.skills.criteria" :key="skill.id"
+                :class="{ 'btn-primary': skill.id == filters.skills.temporalSelection }"
+                @click="selectFilterFromSelect(filters.skills, skill.id)">
+              {{ skill.name }}
+            </li>
+          </ul>
+        </li>
+
+        <!-- CLEAR FILTERS -->
+        <li>
+          <button class="btn btn-primary" @click="resetFilter">
+            Clear Filters
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="right">
+      <div class="loader" v-if="isLoadingVillains">
+        <Loader />
+      </div>
+      <div v-else-if="villains.length" class="villains-flex">
+        <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain"
+                     :class="{ 'sponsored-villain highlight': villain.active_sponsorship }" />
       </div>
       <div v-else class="no_villains">
         <h2>No Villain Found</h2>
       </div>
-  </div>
-</main>
+    </div>
+  </main>
 </template>
+
 
 <style scoped lang="scss">
 @use '../assets/style/generals/variables' as *;
@@ -276,32 +266,32 @@ export default {
 @import '../assets/style/main.scss';
 
 #advanced-filter {
-  padding: 1em;      
+  padding: 1em;
   max-width: 300px;
   margin: 20px auto;
 
   h2 {
     background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
     background-clip: text;
-    color: transparent; 
+    color: transparent;
     margin-bottom: 20px;
     text-transform: uppercase;
   }
 
-  .d-none{
+  .d-none {
     display: none;
   }
 
-  
+
   .filter-section {
     margin-bottom: 20px;
-    
-    .btn-primary{
+
+    .btn-primary {
       color: white;
     }
 
     input[type='range'] {
-      accent-color: $primary; 
+      accent-color: $primary;
     }
 
     .cursor {
@@ -311,24 +301,24 @@ export default {
     .ms {
       margin-left: 10px;
     }
-    
+
     .star {
       color: $primary;
       font-size: 1rem;
       padding: 0 0.1rem
-    }    
-    
+    }
+
     h4 {
-      color: $secondary;              
+      color: $secondary;
       line-height: 50px;
       position: relative;
     }
-    
-    ul{
+
+    ul {
       max-height: 250px;
       overflow-y: auto;
       overflow-x: hidden;
-      
+
 
       li {
         padding: 10px;
@@ -337,12 +327,13 @@ export default {
         transition: background-color 0.3s ease, transform 0.3s ease;
         color: $gray-800;
         display: flex;
-        align-items: center;        
+        align-items: center;
       }
     }
   }
 }
-.no_villains{
+
+.no_villains {
   color: red;
   text-align: center;
   margin-top: 50px;
@@ -352,11 +343,12 @@ main {
   display: flex;
   margin-top: 6em;
 
-  .left{
+  .left {
     flex: 0 1 calc(20%);
     border-right: 2px solid $gray-600;
   }
-  .right{
+
+  .right {
     flex: 0 1 calc(80%);
   }
 }
@@ -368,31 +360,30 @@ main {
   cursor: pointer;
   transition: all 0.3s ease;
 
-// Responsive for smaller screens
-@media (max-width: 1500px) {
-  flex: 0 1 calc(33.33% - 2em); 
-}
+  // Responsive for smaller screens
+  @media (max-width: 1500px) {
+    flex: 0 1 calc(33.33% - 2em);
+  }
 
-@media (max-width: 1280px) {
-  flex: 0 1 calc(50% - 2em); 
-}
+  @media (max-width: 1280px) {
+    flex: 0 1 calc(50% - 2em);
+  }
 
-@media (max-width: 900px) {
-  flex: 0 1 calc(100% - 2em); 
-}
+  @media (max-width: 900px) {
+    flex: 0 1 calc(100% - 2em);
+  }
 
-@media (max-width: 700px) {
-  flex: 0 1 100%; 
-}
+  @media (max-width: 700px) {
+    flex: 0 1 100%;
+  }
 }
 
 .pagination {
   text-align: center;
   margin-top: 20px;
 }
+
 .sponsored-villain {
   border: solid #fbce00 4px;
 }
-
-
 </style>
