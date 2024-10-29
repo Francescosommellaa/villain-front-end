@@ -18,6 +18,9 @@ export default {
     return {
       villains: [],
       paginatorLink: [],
+      isServiceMenu: true,
+      isUniverseMenu: true,
+      isSkillMenu: true,
 
       filters: {
         skills: {
@@ -162,10 +165,12 @@ export default {
       });
 
       this.getApiResearch();
-    }
+    },
+    toggleMenu(menu) {
+      console.log('clicked')
+      this[menu] = !this[menu];
+    },
   },
-
-
   watch: {
     '$route.query': {
       immediate: true,
@@ -174,7 +179,6 @@ export default {
       }
     }
   },
-
 
   mounted() {
     this.getAllFilters();
@@ -190,14 +194,7 @@ export default {
   <main v-else>
     <aside class="left">
       <h2>Filters</h2>
-
       <ul class="filters">
-        <!-- CLEAR FILTERS -->
-        <li>
-          <button class="btn btn-primary" @click="resetFilter">
-            Clear Filters
-          </button>
-        </li>
         <!-- AVERAGE RATING FILTER -->
         <li class="filter-section">
           <h3>Rating:</h3>
@@ -226,9 +223,11 @@ export default {
 
         <!-- SERVICE FILTER -->
         <li class="filter-section">
-          <h3>Services:</h3>
-
-          <menu>
+          <div class="select_filter">
+            <h3>Services:</h3>
+            <i class="fa-solid fa-eye" @click="toggleMenu('isServiceMenu')"></i>
+          </div>
+          <menu v-show="isServiceMenu">
             <li v-for="service in filters.services.criteria" :key="service.id"
                 :class="{ 'btn-primary': service.id == filters.services.temporalSelection }"
                 @click="selectFilterFromSelect(filters.services, service.id)">
@@ -239,9 +238,12 @@ export default {
 
         <!-- UNIVERSE FILTER -->
         <li class="filter-section">
-          <h3>Universes:</h3>
+          <div class="select_filter">
+            <h3>Universes:</h3>
+            <i class="fa-solid fa-eye" @click="toggleMenu('isUniverseMenu')"></i>
+          </div>
 
-          <menu>
+          <menu v-show="isUniverseMenu">
             <li v-for="universe in filters.universes.criteria" :key="universe.id"
                 :class="{ 'btn-primary': universe.id == filters.universes.temporalSelection }"
                 @click="selectFilterFromSelect(filters.universes, universe.id)">
@@ -251,26 +253,40 @@ export default {
 
         <!-- SKILL FILTER -->
         <li class="filter-section">
-          <h3>Skills</h3>
+          <div class="select_filter">
+            <h3>Skills:</h3>
+            <i class="fa-solid fa-eye" @click="toggleMenu('isSkillMenu')"></i>
+          </div>
 
-          <menu>
-            <li v-for="skill in filters.skills.criteria" :key="skill.id"
-                :class="{ 'btn-primary': skill.id == filters.skills.temporalSelection }"
-                @click="selectFilterFromSelect(filters.skills, skill.id)">
+          <menu v-show="isSkillMenu">
+          <li v-for="skill in filters.skills.criteria" :key="skill.id"
+          :class="{ 'btn-primary': skill.id == filters.skills.temporalSelection }"
+          @click="selectFilterFromSelect(filters.skills, skill.id)">
               {{ skill.name }}
             </li>
           </menu>
         </li>
+
       </ul>
+      <!-- CLEAR FILTERS -->
+        <button class="btn btn-primary" @click="resetFilter">
+          Clear Filters
+        </button>
     </aside>
 
     <div class="right">
       <div class="loader" v-if="isLoadingVillains">
         <Loader />
       </div>
-      <div v-else-if="villains.length" class="villains-flex">
-        <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain"
-                     :class="{ 'sponsored-villain highlight': villain.active_sponsorship }" />
+      <div v-else-if="villains.length">
+        <div class="total_villain">
+          <h2>Villains</h2>
+          <h5>Founded {{ villains.length }} villains</h5>
+        </div>
+        <div class="villains-flex">
+          <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain"
+                       :class="{ 'sponsored-villain highlight': villain.active_sponsorship }" />
+        </div>
       </div>
       <div v-else class="no_villains">
         <h2>NO VILLAIN FOUND</h2>
@@ -284,6 +300,15 @@ export default {
 main {
   @include display-flex('between', 'start');
   margin-top: 6em;
+  .progress-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    input{
+      flex-grow: 1;
+    }
+  }
 
   aside {
     flex: 0 0 15rem;
@@ -296,6 +321,34 @@ main {
       background: black;
       background-clip: text;
       color: transparent;
+    }
+    ul{
+
+      &>li{
+        margin: 10px auto;
+
+        .select_filter{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .fa-solid.fa-eye{
+          display: inline;
+          @include text-clipping;
+
+        }
+      }
+        h3{
+          font-size: 1.4rem;
+          @include text-clipping;
+
+        }
+      }
+      menu{
+        margin: 5px auto;
+        li{
+          line-height: 22px;
+        }
+      }
     }
   }
 
@@ -321,6 +374,18 @@ main {
 
   .right {
     flex: 1 0;
+    padding-top: 2em;
+    
+    .total_villain{
+      margin: 0 2em 1em 2em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h2,
+      h5{
+        @include text-clipping;
+      }
+    }
 
     .villain-card {
       flex: 0 1 calc(25% - 2em);
@@ -378,16 +443,28 @@ main {
       ul{
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 1rem;
         justify-content: center;
         &>li{
-          flex-basis: calc(100% / 3 - 15px);
-          margin: 15px auto;
+          margin: 1rem auto;
+          &:nth-child(1),
+          &:nth-child(2){
+            flex: 0 0 calc(100% / 2 - 0.5rem);
+          }
+          &:nth-child(3),
+          &:nth-child(4),
+          &:nth-child(5){
+            flex: 0 0 calc(100% / 3 - 2rem / 3);
+          }
+
         }
         menu{
           max-height: 150px;
           overflow: auto
         }
+      }
+      button.btn.btn-primary{
+        width: 100%;
       }
     }
 
@@ -397,7 +474,7 @@ main {
   }
 }
 
-@media (max-width: 496px) {
+@media (max-width: 520px) {
   main {
     aside {
       ul{
@@ -408,8 +485,11 @@ main {
         gap: 5px;
         justify-content: center;
         &>li{
-          flex-basis: 100%;
           margin: 15px auto;
+          &:nth-child(n){
+            flex: 0 0 100%;
+          }
+
         }
         menu{
           max-height: 150px;

@@ -31,6 +31,9 @@ export default {
                     this.villain = resp.data.villain;
                     this.checkCvExists();
                     this.isLoading = false;
+                })
+                .catch(err=>{
+                    console.log(err)
                 });
         },
 
