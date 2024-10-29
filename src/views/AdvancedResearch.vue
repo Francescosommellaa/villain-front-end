@@ -7,10 +7,12 @@ import Loader from "@/components/Loader.vue";
 export default {
   name: 'AdvancedResearch',
 
+
   components: {
     VillainCard,
     Loader
   },
+
 
   data() {
     return {
@@ -58,8 +60,10 @@ export default {
       isLoadingVillains: true,
 
       isFailedFilters: false,
+      isFailedVillains: false,
     };
   },
+
 
   methods: {
     getTemporalSelection(queryField) {
@@ -72,6 +76,8 @@ export default {
       Promise.all(Object.values(this.filters).map((filter) => this.getFilter(filter)))
         .then(() => {
           this.isLoadingFirst = false;
+
+          this.getApiResearch();
         })
         .catch((error) => {
           this.isFailedFilters = true;
@@ -114,12 +120,17 @@ export default {
 
       this.isLoadingVillains = true;
 
-      const url = `${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`;
+      axios.get(`${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`)
+        .then((response) => {
+          this.villains = response.data.villains;
+          this.paginatorLink = response.data.villains.links;
 
-      // LOG
-      console.log(url);
+          this.isLoadingVillains = false;
+        }).catch((error) => {
+          this.isFailedVillains = false;
 
-      // this.getApi(url, 'villains');
+          this.isLoadingVillains = false;
+        });
     },
 
     updateRouteQuery(paramField, paramValue) {
@@ -130,8 +141,6 @@ export default {
           [paramField]: paramValue
         }
       });
-
-      this.getApiResearch();
     },
 
     selectFilterFromSelect(filter, selectedId) {
@@ -153,6 +162,17 @@ export default {
       this.getApiResearch();
     }
   },
+
+
+  watch: {
+    '$route.query': {
+      immediate: true,
+      handler() {
+        this.getApiResearch();
+      }
+    }
+  },
+
 
   mounted() {
     this.getAllFilters();
