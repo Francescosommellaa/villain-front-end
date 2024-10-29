@@ -15,14 +15,14 @@ export default {
         };
     },
     methods: {
-    // Chiamta alle api
-      filterBySkill() {
-        const params = {};
+        // Chiamta alle api
+        filterBySkill() {
+            const params = {};
 
-        if (this.selectSkill) {
-          params.skill_id = this.selectSkill;
-        }
-      },
+            if (this.selectSkill) {
+                params.skill_id = this.selectSkill;
+            }
+        },
     }
 }
 </script>
@@ -30,20 +30,24 @@ export default {
 <template>
     <section class="jumbo">
         <div class="cont-jumbo">
-                <h1 class="main-title">FIND YOUR VILLAIN</h1>
+            <h1 class="main-title">FIND YOUR VILLAIN</h1>
         </div>
         <div class="cont-what">
             <div class="under">
-                    <button class="btn btn-primary"><a class="rule" href="#">HOW TO HIRE A VILLAIN</a></button>
+                <button class="btn btn-primary"><a class="rule" href="#">HOW TO HIRE A
+                        VILLAIN</a></button>
             </div>
-        <!-- Search bar -->
-         <p class="presentation">Use our search filter to find the perfect villain based on their skills, from world domination strategies to doomsday device creation!</p>
+            <!-- Search bar -->
+            <p class="presentation">Use our search filter to find the perfect villain based on their
+                skills, from world domination strategies to doomsday device creation!</p>
             <div class="select_bar">
                 <select name="skills" id="skills" v-model="selectSkill" @change="filterBySkill()">
                     <option value="" disabled selected>Select by skills</option>
-                    <option v-for="skill in skills" :key="skill.id" :value="skill.id">{{ skill.name }}</option>
+                    <option v-for="skill in skills" :key="skill.id" :value="skill.id">{{ skill.name
+                        }}</option>
                 </select>
-                <router-link class="btn-primary search" :to="{ name: 'AdvancedResearch', params: { skill: selectSkill } }">Search</router-link>
+                <router-link class="btn-primary search"
+                             :to="{ name: 'AdvancedResearch', params: { skill: selectSkill } }">Search</router-link>
             </div>
         </div>
     </section>
@@ -76,7 +80,7 @@ export default {
         .main-title {
             color: white;
             font-weight: bold;
-            text-shadow: 1px 1px 10px $primary;
+            text-shadow: 1px 1px 10px $clr-brand-primary;
             padding-bottom: 1.5rem;
         }
 
@@ -98,33 +102,37 @@ export default {
         left: 15%;
 
         .presentation {
-        margin: 2rem auto;
-        font-weight: 500;
-        font-size: 1.1rem;
-        line-height: 1.5rem;
-        color: $primary;
+            margin: 2rem auto;
+            font-weight: 500;
+            font-size: 1.1rem;
+            line-height: 1.5rem;
+            color: $clr-brand-primary;
         }
+
         .rule {
             font-size: 1.5rem;
         }
-    } 
-    .select_bar {
-    display: flex;
-    align-items: center;
-    // margin: 110px auto 50px;
-    width: 80%;
-    select {
-        padding: 8px;
-        margin-right: 2px;
-        border: 1px solid #ced4da;
-        border: none;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-        font-size: 1rem;
-        flex: 1;
     }
-}
-.search {
+
+    .select_bar {
+        display: flex;
+        align-items: center;
+        // margin: 110px auto 50px;
+        width: 80%;
+
+        select {
+            padding: 8px;
+            margin-right: 2px;
+            border: 1px solid #ced4da;
+            border: none;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            font-size: 1rem;
+            flex: 1;
+        }
+    }
+
+    .search {
         padding: 6px 16px;
         font-size: 1rem;
         border: solid 2px transparent;
@@ -132,9 +140,10 @@ export default {
         border-bottom-right-radius: 5px;
         transition: 0.4s ease-in-out;
         cursor: pointer;
+
         &:hover {
-            background-color: $secondary;
-            border: 2px solid $primary;
+            background-color: $clr-brand-secondary;
+            border: 2px solid $clr-brand-primary;
         }
     }
 }

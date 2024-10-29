@@ -15,17 +15,17 @@
     overflow: hidden;
 
     &:hover {
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15); 
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
     }
 }
 
 // Primary Button with Gradient Hover Animation
 .btn-primary {
-    color: $light;
+    color: $clr-neutral-ltst;
 
     position: relative;
     z-index: 1;
-    background: linear-gradient(45deg, $primary, $secondary,$accent);
+    background: $grd-brand-dk;
 
     &:before {
         content: '';
@@ -39,7 +39,7 @@
     }
 
     &:hover {
-        background: linear-gradient(45deg, $primary, $secondary,$accent, $accent);
+        background: $grd-brand-lt;
         background-clip: text;
         color: transparent;
     }
@@ -50,37 +50,38 @@
 }
 
 .under {
-    width:max-content;
+    width: max-content;
     z-index: 100;
     font-size: $btn-font-size;
     border-radius: $btn-border-radius;
     border: none;
     transition: 0.8s ease-in-out;
-    &:hover{
-      background-color: white;
+
+    &:hover {
+        background-color: white;
     }
 }
 
 // Secondary Button with Color Inversion Animation
 .btn-secondary {
-    background-color: $secondary;
-    color: $light;
-    border: 2px solid $secondary;
+    background-color: $clr-brand-secondary;
+    color: $clr-neutral-ltst;
+    border: 2px solid $clr-brand-secondary;
     position: relative;
     z-index: 1;
 
     &:hover {
-        color: $secondary;
-        background-color: #6a0dad0c;
-        border-color: $secondary;
+        color: $clr-brand-secondary;
+        background-color: rgba($clr-brand-secondary, .05);
+        border-color: $clr-brand-secondary;
     }
 }
 
 // Disabled Button (No animation, no pointer)
 .btn-disabled {
-    background-color: $gray-600;
-    color: $light;
-    border-color: $gray-600;
+    background-color: $clr-neutral-dk;
+    color: $clr-neutral-ltst;
+    border-color: $clr-neutral-dk;
     cursor: not-allowed;
     pointer-events: none;
 }

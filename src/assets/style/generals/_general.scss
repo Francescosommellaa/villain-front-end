@@ -1,5 +1,4 @@
 @use './partrials/button' as *;
-@use './view-style/views-style' as *;
 @use './variables' as *;
 @use './mixins' as *;
 
@@ -12,7 +11,7 @@
 
 :root {
     font-size: 16px;
-    background-color: $body-bg;
+    background-color: $clr-neutral-ltst;
 }
 
 h1,
@@ -36,11 +35,11 @@ a {
 }
 
 .bg-white {
-    scrollbar-color: $primary;
+    scrollbar-color: $clr-brand-primary;
 }
 
 .bg-dark {
-    scrollbar-color: $gray-600 $dark;
+    scrollbar-color: $clr-neutral-dk $clr-neutral-dkst;
 }
 
 .rating {
@@ -53,4 +52,11 @@ a {
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+.villains-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    justify-content: center;
 }
