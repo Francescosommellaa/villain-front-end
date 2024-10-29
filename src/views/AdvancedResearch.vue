@@ -29,9 +29,9 @@ export default {
 
         services: {
           routeAPI: 'services',
-          queryField: 'services',
+          queryField: 'service',
           criteria: [],
-          temporalSelection: this.getTemporalSelection('services'),
+          temporalSelection: this.getTemporalSelection('service'),
         },
 
         universes: {
@@ -120,6 +120,8 @@ export default {
 
       this.isLoadingVillains = true;
 
+      console.log(`${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`);
+
       axios.get(`${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`)
         .then(response => {
           this.villains = response.data.villains;
@@ -186,14 +188,13 @@ export default {
     <Loader />
   </div>
   <main v-else>
-    <div id="advanced-filter" class="left">
-
+    <aside class="left">
       <h2>Filters</h2>
 
-      <ul>
+      <ul class="filters">
         <!-- AVERAGE RATING FILTER -->
         <li class="filter-section">
-          <h4>Rating:</h4>
+          <h3>Rating:</h3>
 
           <div class="interactive-stars">
             <i v-for="star in filters.ratings.criteria" :key="star" class="star cursor "
@@ -206,7 +207,7 @@ export default {
 
         <!-- MINIMUN NUMBER OF REVIEWS FILTER -->
         <li class="filter-section">
-          <h4>Minimum Reviews:</h4>
+          <h3>Minimum Reviews:</h3>
 
           <div class="progress-container">
             <span>0</span>
@@ -219,7 +220,7 @@ export default {
 
         <!-- SERVICE FILTER -->
         <li class="filter-section">
-          <h4>Services:</h4>
+          <h3>Services:</h3>
 
           <menu>
             <li v-for="service in filters.services.criteria" :key="service.id"
@@ -232,7 +233,7 @@ export default {
 
         <!-- UNIVERSE FILTER -->
         <li class="filter-section">
-          <h4>Universes:</h4>
+          <h3>Universes:</h3>
 
           <menu>
             <li v-for="universe in filters.universes.criteria" :key="universe.id"
@@ -244,10 +245,10 @@ export default {
 
         <!-- SKILL FILTER -->
         <li class="filter-section">
-          <h4>Skills</h4>
+          <h3>Skills</h3>
 
           <ul>
-            <li class="cursor" v-for="skill in filters.skills.criteria" :key="skill.id"
+            <li v-for="skill in filters.skills.criteria" :key="skill.id"
                 :class="{ 'btn-primary': skill.id == filters.skills.temporalSelection }"
                 @click="selectFilterFromSelect(filters.skills, skill.id)">
               {{ skill.name }}
@@ -262,7 +263,7 @@ export default {
           </button>
         </li>
       </ul>
-    </div>
+    </aside>
 
     <div class="right">
       <div class="loader" v-if="isLoadingVillains">
@@ -273,7 +274,7 @@ export default {
                      :class="{ 'sponsored-villain highlight': villain.active_sponsorship }" />
       </div>
       <div v-else class="no_villains">
-        <h2>No Villain Found</h2>
+        <h2>NO VILLAIN FOUND</h2>
       </div>
     </div>
   </main>
@@ -281,128 +282,61 @@ export default {
 
 
 <style scoped lang="scss">
-@use '../assets/style/generals/view-style/views-style';
-
-#advanced-filter {
-  padding: 1em;
-  max-width: 300px;
-  margin: 20px auto;
-
-  h2 {
-    background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-  }
-
-  .d-none {
-    display: none;
-  }
-
-
-  .filter-section {
-    margin-bottom: 20px;
-
-    .btn-primary {
-      color: white;
-    }
-
-    input[type='range'] {
-      accent-color: $primary;
-    }
-
-    .cursor {
-      cursor: pointer;
-    }
-
-    .ms {
-      margin-left: 10px;
-    }
-
-    .star {
-      color: $primary;
-      font-size: 1rem;
-      padding: 0 0.1rem
-    }
-
-    h4 {
-      color: $secondary;
-      line-height: 50px;
-      position: relative;
-    }
-
-    ul {
-      max-height: 250px;
-      overflow-y: auto;
-      overflow-x: hidden;
-
-
-      li {
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        color: $gray-800;
-        display: flex;
-        align-items: center;
-      }
-    }
-  }
-}
-
-.no_villains {
-  color: red;
-  text-align: center;
-  margin-top: 50px;
-}
-
 main {
-  display: flex;
+  @include display-flex('between', 'start');
   margin-top: 6em;
 
   .left {
-    flex: 0 1 calc(20%);
-    border-right: 2px solid $gray-600;
+    flex: 0 0 15rem;
+    position: sticky;
+    top: 0;
+    padding: 2rem 0 0 2rem;
+
+    h2 {
+      display: inline-block;
+      background: $grd-brand-dk;
+      background-clip: text;
+      color: transparent;
+    }
   }
 
   .right {
-    flex: 0 1 calc(80%);
+    flex: 1 0;
+
+    .villain-card {
+      flex: 0 1 calc(25% - 2em);
+      box-sizing: border-box;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      // Responsive for smaller screens
+      @media (max-width: 1500px) {
+        flex: 0 1 calc(33.33% - 2em);
+      }
+
+      @media (max-width: 1280px) {
+        flex: 0 1 calc(50% - 2em);
+      }
+
+      @media (max-width: 900px) {
+        flex: 0 1 calc(100% - 2em);
+      }
+
+      @media (max-width: 700px) {
+        flex: 0 1 100%;
+      }
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .sponsored-villain {
+      border: solid #fbce00 4px;
+    }
   }
-}
-
-.villain-card {
-  flex: 0 1 calc(25% - 2em);
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  // Responsive for smaller screens
-  @media (max-width: 1500px) {
-    flex: 0 1 calc(33.33% - 2em);
-  }
-
-  @media (max-width: 1280px) {
-    flex: 0 1 calc(50% - 2em);
-  }
-
-  @media (max-width: 900px) {
-    flex: 0 1 calc(100% - 2em);
-  }
-
-  @media (max-width: 700px) {
-    flex: 0 1 100%;
-  }
-}
-
-.pagination {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.sponsored-villain {
-  border: solid #fbce00 4px;
 }
 
 @media (max-width: 700px) {
