@@ -77,8 +77,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../assets/style/generals/variables' as *;
-@import '../assets/style/main.scss';
 footer {
     width: 80%;
 
@@ -140,7 +138,7 @@ footer {
                     }
 
                     &:hover {
-                        color:$secondary;
+                        color: $secondary;
 
                     }
                 }
@@ -164,7 +162,7 @@ footer {
 
                     &:hover {
                         transform: scale(1.3);
-                        color:$secondary;
+                        color: $secondary;
                     }
                 }
             }

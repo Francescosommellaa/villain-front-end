@@ -1,20 +1,20 @@
 <script>
 import { store } from '@/store/store';
 import axios from 'axios';
-import Loader from './Loader.vue';
+import Loader from './common/Loader.vue';
 
 export default {
-    name: 'Reviews',
-    components:{
-      Loader
-    },
-    props: {
+  name: 'Reviews',
+  components: {
+    Loader
+  },
+  props: {
     villainData: {
       type: Object,
       required: true
     }
   },
-    data() {
+  data() {
     return {
       isReviewed: false,
       isSent: false,
@@ -39,7 +39,7 @@ export default {
       this.errorStars = false;
 
     },
-    sentReview(){
+    sentReview() {
       if (this.form.rating_id === 0) {
         const stars = document.getElementById('star_review');
         if (!stars.querySelector('.error-message')) {
@@ -48,31 +48,31 @@ export default {
         return;
       }
       this.isReviewed = true
-      axios.post(store.urlApi + 'sent-rating',{
-          full_name: this.form.full_name,
-          rating_id: this.form.rating_id,
-          content: this.form.content || '',
-          villain_id: this.villainData.id
+      axios.post(store.urlApi + 'sent-rating', {
+        full_name: this.form.full_name,
+        rating_id: this.form.rating_id,
+        content: this.form.content || '',
+        villain_id: this.villainData.id
       })
-        .then(resp=>{
+        .then(resp => {
           console.log(resp.data)
           this.isSent = true
           // Invio tramite emit
           this.$emit('review-sent', {
-              full_name: this.form.full_name,
-              rating_id: this.form.rating_id,
-              content: this.form.content || '',
-              villain_id: this.villainData.id,
-              created_at: new Date(),
+            full_name: this.form.full_name,
+            rating_id: this.form.rating_id,
+            content: this.form.content || '',
+            villain_id: this.villainData.id,
+            created_at: new Date(),
           });
         })
-        .catch(err=>{
+        .catch(err => {
           // console.log(err)
           console.log('Errore risposta:', err.response ? err.response.data : err);
           this.isSent = true
           this.errorSent = true
         })
-      }
+    }
   },
 };
 </script>
@@ -82,8 +82,8 @@ export default {
     <h1>Your review has been successfully sent</h1>
   </div>
   <div class="loader" v-else-if="isReviewed && !isSent">
-        <Loader/>
-    </div>
+    <Loader />
+  </div>
   <div class="review_error" v-else-if="errorSent">
     <h1>Error: Review not sent!</h1>
     <h4>(Stars are required)</h4>
@@ -95,38 +95,23 @@ export default {
     <form @submit.prevent="sentReview" method="POST" class="review-form">
       <div class="form-group">
         <label for="fullName">Full Name: *</label>
-        <input
-          type="text"
-          id="fullName"
-          v-model="form.full_name"
-          required
-          placeholder="Your full name"
-        />
+        <input type="text" id="fullName" v-model="form.full_name" required
+               placeholder="Your full name" />
       </div>
 
       <div class="form-group">
         <label for="content">Comment:</label>
-        <textarea
-          id="content"
-          name="content"
-          rows="6"
-          v-model="form.content"
-          placeholder="Your review"
-        ></textarea>
+        <textarea id="content" name="content" rows="6" v-model="form.content"
+                  placeholder="Your review"></textarea>
       </div>
 
       <div class="form-group">
         <label>Stars: *</label>
         <div class="interactive-stars" id="star_review">
-          <i 
-            v-for="star in 5" 
-            :key="star" 
-            class="star" 
-            :class="star <= hoverStars ? 'fas fa-star' : 'far fa-star'" 
-            @mouseover="hoverStars = star" 
-            @mouseleave="hoverStars = form.rating_id || 0"
-            @click="setStars(star)"
-          ></i>
+          <i v-for="star in 5" :key="star" class="star"
+             :class="star <= hoverStars ? 'fas fa-star' : 'far fa-star'"
+             @mouseover="hoverStars = star" @mouseleave="hoverStars = form.rating_id || 0"
+             @click="setStars(star)"></i>
         </div>
         <small v-if="errorStars" class="error-message">Minimun stars 1</small>
       </div>
@@ -135,11 +120,8 @@ export default {
     </form>
   </div>
 </template>
-  
-  <style scoped lang="scss">
-  @use '../assets/style/generals/variables' as *;
-  @import '../assets/style/main.scss';
-  
+
+<style scoped lang="scss">
 .reviews-container {
   padding: 0 2em;
   max-width: 90%;
@@ -147,31 +129,36 @@ export default {
   background-color: $light;
   border-radius: 10px;
 
-  button{
+  button {
     float: right;
     margin-bottom: 30px
   }
+
   h2 {
     color: $primary;
     font-size: 1.5rem;
     margin-bottom: 20px;
   }
 }
+
 .review-form {
   border-radius: 8px;
   background-color: $gray-100;
-  
-  
+
+
   .form-group {
     margin-bottom: 20px;
-    small.error-message{
+
+    small.error-message {
       display: block;
       color: red;
     }
+
     label {
       font-weight: $font-weight-bold;
       color: $label-text-emphasis;
     }
+
     input,
     textarea {
       width: 100%;
@@ -187,6 +174,7 @@ export default {
   .interactive-stars {
     padding: 0.4em 0;
     font-size: 1.5rem;
+
     .star {
       cursor: pointer;
       transition: color 0.2s;
@@ -198,7 +186,8 @@ export default {
     }
   }
 }
-.review_sent{
+
+.review_sent {
   text-align: center;
   background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
   background-clip: text;
@@ -206,13 +195,11 @@ export default {
   margin: 70px 0;
 }
 
-.review_error{
+.review_error {
   text-align: center;
   background: $danger;
   background-clip: text;
   color: transparent;
   margin: 70px 0;
 }
-
 </style>
-  

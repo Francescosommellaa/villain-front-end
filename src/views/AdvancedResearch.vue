@@ -2,7 +2,7 @@
 import { store } from "@/store/store";
 import VillainCard from "../components/VillainCard.vue";
 import axios from "axios";
-import Loader from "@/components/Loader.vue";
+import Loader from "@/components/common/Loader.vue";
 
 export default {
   name: 'AdvancedResearch',

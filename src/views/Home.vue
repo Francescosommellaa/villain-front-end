@@ -3,7 +3,7 @@ import VillainCard from "../components/VillainCard.vue";
 import { store } from '@/store/store';
 import axios from 'axios';
 import Jumbotron from '../components/Jumbotron.vue';
-import Loader from "@/components/Loader.vue";
+import Loader from "@/components/common/Loader.vue";
 
 export default {
 

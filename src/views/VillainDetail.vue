@@ -3,7 +3,7 @@ import { store } from '@/store/store';
 import axios from 'axios';
 import ContactForm from "../components/ContactForm.vue";
 import Reviews from '@/components/Reviews.vue';
-import Loader from '@/components/Loader.vue';
+import Loader from '@/components/common/Loader.vue';
 
 export default {
     name: 'VillainDetail',
@@ -126,7 +126,8 @@ export default {
                     <h3>Services:</h3>
                     <ul class="mt-15">
                         <li v-for="service in villain.services"><i
-                               class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{ service.name }}
+                               class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{ service.name
+                            }}
                         </li>
                     </ul>
                 </div>
