@@ -124,7 +124,7 @@ export default {
 
 <style scoped lang="scss">
 .contact-form {
-  background-color: $light;
+  background-color: $clr-neutral-ltst;
   padding: 2em;
   border-radius: $btn-border-radius;
   max-width: 90%;
@@ -135,39 +135,39 @@ export default {
   }
 
   h2 {
-    color: $primary;
+    color: $clr-brand-primary;
   }
 
   .form-group {
     margin: 1.2rem 0;
 
     label {
-      color: $label-text-emphasis;
-      font-weight: $font-weight-bold;
+      color: $clr-neutral-dk;
+      font-weight: 700;
     }
 
     input,
     select,
     textarea {
-      background-color: $input-bg;
-      border: 1px solid $input-border-color;
+      background-color: $clr-neutral-ltst;
+      border: 1px solid $clr-neutral-lt;
       border-radius: $btn-border-radius;
       padding: 0.8rem;
       width: 100%;
-      font-size: $font-size-base;
-      color: $primary-text-emphasis;
+      font-size: $font-size-m;
+      color: $clr-neutral-dkst;
 
       &::placeholder {
-        color: $input-placeholder-color;
+        color: $clr-neutral-dk;
       }
 
       &.is-invalid {
-        border-color: $danger;
+        border-color: $clr-utility-danger;
       }
     }
 
     .error-message {
-      color: $danger;
+      color: $clr-utility-danger;
       font-size: 0.875rem;
     }
   }
@@ -175,7 +175,7 @@ export default {
 
 .message_sent {
   text-align: center;
-  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+  background: $grd-brand-lt;
   background-clip: text;
   color: transparent;
   min-height: 30vh;

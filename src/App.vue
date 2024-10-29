@@ -46,16 +46,13 @@ export default {
   <div id="app">
 
     <!-- Navbar -->
-    <nav :class="['navbar', { 'navbar-sticky': isSticky, 'navbar-hidden': !isVisible }]">
+    <div :class="['navbar', { 'navbar-sticky': isSticky, 'navbar-hidden': !isVisible }]">
       <Navbar />
-    </nav>
-
-    <RouterView />
-    <div class="bottom">
-      <Footer />
     </div>
 
+    <RouterView />
 
+    <Footer />
   </div>
 </template>
 
@@ -65,7 +62,7 @@ export default {
 .navbar {
   position: relative;
   width: 100%;
-  transition: top 0.5s ease;
+  transition: top .75s ease-out;
 
   &.navbar-sticky {
     position: fixed;
@@ -78,14 +75,5 @@ export default {
   &.navbar-hidden {
     top: -100px;
   }
-}
-
-.bottom {
-  background-color: black;
-  color: white;
-  width: 100%;
-  padding: 3rem 0;
-  display: flex;
-  justify-content: center;
 }
 </style>

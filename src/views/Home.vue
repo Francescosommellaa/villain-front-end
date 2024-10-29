@@ -131,8 +131,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@use '../assets/style/generals/view-style/views-style';
-
 main {
   padding-top: 9em;
 }
@@ -149,7 +147,7 @@ main {
 }
 
 .title {
-  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+  background: $grd-brand-lt;
   background-clip: text;
   color: transparent;
   font-size: 2rem;
@@ -162,7 +160,7 @@ main {
   font-weight: 500;
   font-size: 1.1rem;
   line-height: 1.5rem;
-  color: $primary;
+  color: $clr-brand-primary;
   text-align: center;
 }
 
@@ -171,7 +169,7 @@ ul {
   font-size: 1.1rem;
 
   strong {
-    color: $primary;
+    color: $clr-brand-primary;
   }
 
   li {
@@ -188,8 +186,8 @@ ul {
 }
 
 .section-card {
-  background: linear-gradient(0deg, $light, $primary, $light);
-  ;
+  // background: linear-gradient(0deg, $clr-neutral-ltst, rgb(53, 0, 95, 0.8), $clr-neutral-ltst);
+  background: linear-gradient(transparent, rgba($clr-brand-primary, .2), rgba($clr-brand-secondary, .5), rgba($clr-brand-primary, .2), transparent);
   padding: 6rem 0;
   display: flex;
   justify-content: center;
@@ -233,12 +231,12 @@ ul {
       button {
         padding: 5px 10px;
         margin: 0 1px;
-        border: solid $primary 0.1rem;
+        border: solid $clr-brand-primary 0.1rem;
         transition: background-color 0.3s ease;
 
         &:hover {
-          background-color: $secondary;
-          color: $light;
+          background-color: $clr-brand-secondary;
+          color: $clr-neutral-ltst;
         }
 
       }
@@ -246,8 +244,8 @@ ul {
   }
 
   .active {
-    color: $light;
-    background-color: $secondary;
+    color: $clr-neutral-ltst;
+    background-color: $clr-brand-secondary;
   }
 }
 
@@ -255,7 +253,7 @@ ul {
   padding-bottom: 3rem;
 
   i {
-    color: $primary;
+    color: $clr-brand-primary;
     font-size: 20px;
     padding-right: 15px;
   }

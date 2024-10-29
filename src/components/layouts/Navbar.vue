@@ -68,7 +68,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0.8em 2em;
-  background-color: $body-bg;
+  background-color: $clr-neutral-ltst;
 }
 
 /* Logo con animazione più fluida */
@@ -88,19 +88,19 @@ export default {
 }
 
 .nav-link {
-  color: $gray-800;
-  font-size: $font-size-base;
+  color: $clr-neutral-dk;
+  font-size: $font-size-m;
   position: relative;
   transition: color 0.4s, transform 0.3s ease;
 
   &:hover {
-    color: $navbar-dark-hover-color;
+    color: $clr-neutral-lt;
   }
 }
 
 .nav-link.active {
-  font-weight: $font-weight-bold;
-  color: $secondary;
+  font-weight: 700;
+  color: $clr-brand-secondary;
 }
 
 

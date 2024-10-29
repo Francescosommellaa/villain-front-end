@@ -78,9 +78,15 @@ export default {
 
 <style lang="scss" scoped>
 footer {
-    width: 80%;
+    background-color: black;
+    color: white;
+    width: 100%;
+    padding: 3rem 0;
 
     section {
+        width: 80%;
+        margin: 0 auto;
+
         &.connections {
             display: flex;
             justify-content: space-between;
@@ -122,7 +128,7 @@ footer {
                 }
 
                 .link {
-                    color: $light;
+                    color: $clr-neutral-ltst;
                     text-decoration: none;
                     position: relative;
                     transition: color 0.3s;
@@ -138,7 +144,7 @@ footer {
                     }
 
                     &:hover {
-                        color: $secondary;
+                        color: $clr-brand-secondary;
 
                     }
                 }
@@ -156,13 +162,13 @@ footer {
                 }
 
                 .link {
-                    color: $light;
+                    color: $clr-neutral-ltst;
                     margin-right: 1rem;
                     transition: transform 0.3s ease, color 0.3s ease;
 
                     &:hover {
                         transform: scale(1.3);
-                        color: $secondary;
+                        color: $clr-brand-secondary;
                     }
                 }
             }
@@ -170,10 +176,11 @@ footer {
     }
 
     .divider {
+        width: 80%;
         border: none;
         height: 1px;
         background-color: rgba(255, 255, 255, 0.2);
-        margin: 2rem 0;
+        margin: 2rem auto;
     }
 
     .copyright {

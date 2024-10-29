@@ -1,58 +1,29 @@
+// Colors
+$clr-brand-primary: #35005f;
+$clr-brand-secondary: #6A0DAD;
+$clr-brand-tertiary: #008B8B;
+
+$clr-utility-success: #198754;
+$clr-utility-danger: #DC3545;
+
+$clr-neutral-ltst: #F5F5F5;
+$clr-neutral-lt: #CCCCCC;
+$clr-neutral-dk: #444444;
+$clr-neutral-dkst: #0D0D0D;
+
 $clr-rating-stars: #ffd000;
 
-// Primary colors from your palette
-$primary:       #35005f;
-$secondary:     #6A0DAD;
-$accent:        #008B8B; // Using as accent color
-$success:       #198754;
-$info:          #1E90FF; // Attention color
-$warning:       #FFC107;
-$danger:        #DC3545;
-$light:         #F5F5F5; // Background color
-$dark:          #0D0D0D; // Primary text color
-
-// Gray tones (for text, labels, and borders)
-$gray-100:      #F5F5F5; // Background light
-$gray-300:      #CCCCCC; // Dividers and Borders
-$gray-600:      #666666; // Label text color
-$gray-800:      #333333; // Secondary text color
-$black:         #0D0D0D; // Primary text color
-
-// Text emphasis colors
-$primary-text-emphasis:   #0D0D0D; // Primary text color
-$secondary-text-emphasis: #333333; // Secondary text color
-$label-text-emphasis:     #666666; // Label text color
-
-// Background and gradient
-$body-bg:                 #F5F5F5; // Main background
-$gradient-bg:             linear-gradient(180deg, #F5F5F5, rgba(53, 0, 95, 0.8)); // Background gradient
-
-// Borders and dividers
-$border-color:            #CCCCCC;
-$divider-color:           #CCCCCC;
-
-// Button Variables
-$btn-padding-y: 0.6rem;
-$btn-padding-x: 1.5rem;
-$btn-font-size: 1rem;
-$btn-border-radius: 0.4rem;
-$btn-font-weight: 700;
-$btn-transition: background-color 0.8s, color 0.4s, border-color 0.4s;
+$grd-brand-dk: linear-gradient(45deg, $clr-brand-primary, $clr-brand-secondary, $clr-brand-tertiary);
+$grd-brand-lt: linear-gradient(45deg, $clr-brand-primary, $clr-brand-secondary, $clr-brand-tertiary, $clr-brand-tertiary);
 
 // Font settings
-$font-size-base:          1rem;
-$font-weight-normal:      400;
-$font-weight-bold:        700;
+$font-size-base: 16px;
 
-// Navbar
-$navbar-bg:               $primary;
-$navbar-dark-color:       #F5F5F5;
-$navbar-dark-hover-color: #CCCCCC;
-
-// Forms
-$input-bg:                $light;
-$input-border-color:      $border-color;
-$input-placeholder-color: $gray-600;
+$font-size-xs: .5rem;
+$font-size-s: .75rem;
+$font-size-m: 1rem;
+$font-size-l: 1.5rem;
+$font-size-xl: 2rem;
 
 // Margin
 $margin-top-15: 15px;
@@ -62,6 +33,10 @@ $margin-bottom-30: 30px;
 $margin-bottom-40: 40px;
 $margin-bottom-50: 50px;
 
-// styles for the icons
-$icon-margin-left: 20px;
-$em-font-size: 12px;
+// Buttons
+$btn-padding-y: 0.6rem;
+$btn-padding-x: 1.5rem;
+$btn-font-size: 1rem;
+$btn-border-radius: 0.4rem;
+$btn-font-weight: 700;
+$btn-transition: background-color 0.8s, color 0.4s, border-color 0.4s;

@@ -46,19 +46,19 @@ export default {
 #grad1 {
 	stop {
 		&:nth-child(1) {
-			stop-color: $primary;
+			stop-color: $clr-brand-primary;
 		}
 
 		&:nth-child(2) {
-			stop-color: $secondary;
+			stop-color: $clr-brand-secondary;
 		}
 
 		&:nth-child(3) {
-			stop-color: $accent;
+			stop-color: $clr-brand-tertiary;
 		}
 
 		&:nth-child(4) {
-			stop-color: $accent;
+			stop-color: $clr-brand-tertiary;
 		}
 	}
 }
@@ -66,19 +66,19 @@ export default {
 #grad2 {
 	stop {
 		&:nth-child(4) {
-			stop-color: $primary;
+			stop-color: $clr-brand-primary;
 		}
 
 		&:nth-child(3) {
-			stop-color: $secondary;
+			stop-color: $clr-brand-secondary;
 		}
 
 		&:nth-child(2) {
-			stop-color: $accent;
+			stop-color: $clr-brand-tertiary;
 		}
 
 		&:nth-child(1) {
-			stop-color: $accent;
+			stop-color: $clr-brand-tertiary;
 		}
 	}
 }

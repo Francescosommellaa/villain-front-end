@@ -126,7 +126,7 @@ export default {
   padding: 0 2em;
   max-width: 90%;
   margin: 4em auto;
-  background-color: $light;
+  background-color: $clr-neutral-ltst;
   border-radius: 10px;
 
   button {
@@ -135,7 +135,7 @@ export default {
   }
 
   h2 {
-    color: $primary;
+    color: $clr-brand-primary;
     font-size: 1.5rem;
     margin-bottom: 20px;
   }
@@ -143,7 +143,7 @@ export default {
 
 .review-form {
   border-radius: 8px;
-  background-color: $gray-100;
+  background-color: $clr-neutral-ltst;
 
 
   .form-group {
@@ -155,8 +155,8 @@ export default {
     }
 
     label {
-      font-weight: $font-weight-bold;
-      color: $label-text-emphasis;
+      font-weight: 700;
+      color: $clr-neutral-dk;
     }
 
     input,
@@ -165,9 +165,9 @@ export default {
       padding: 12px;
       margin-top: 5px;
       border-radius: $btn-border-radius;
-      border: 1px solid $input-border-color;
-      background-color: $input-bg;
-      color: $primary-text-emphasis;
+      border: 1px solid $clr-neutral-lt;
+      background-color: $clr-neutral-ltst;
+      color: $clr-neutral-dkst;
     }
   }
 
@@ -178,10 +178,10 @@ export default {
     .star {
       cursor: pointer;
       transition: color 0.2s;
-      color: $primary;
+      color: $clr-brand-primary;
 
       &:hover {
-        color: $primary;
+        color: $clr-brand-primary;
       }
     }
   }
@@ -189,7 +189,7 @@ export default {
 
 .review_sent {
   text-align: center;
-  background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+  background: $grd-brand-dk;
   background-clip: text;
   color: transparent;
   margin: 70px 0;
@@ -197,7 +197,7 @@ export default {
 
 .review_error {
   text-align: center;
-  background: $danger;
+  background: $clr-utility-danger;
   background-clip: text;
   color: transparent;
   margin: 70px 0;

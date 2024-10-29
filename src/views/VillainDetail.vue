@@ -208,7 +208,7 @@ export default {
     }
 
     h3 {
-        background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+        background: $grd-brand-lt;
         background-clip: text;
         color: transparent;
     }
@@ -218,8 +218,8 @@ export default {
         height: auto;
         padding: 20px;
         border-radius: 20px;
-        border: 1px solid $primary;
-        background: linear-gradient(45deg, $primary, $secondary, $accent);
+        border: 1px solid $clr-brand-primary;
+        background: $grd-brand-dk;
 
         img {
             background-color: white;
@@ -246,13 +246,13 @@ export default {
     }
 
     .fa-solid {
-        color: $primary;
+        color: $clr-brand-primary;
         margin-right: 20px;
     }
 
     h2 {
         font-size: 50px;
-        color: $primary;
+        color: $clr-brand-primary;
         margin-bottom: 5px;
     }
 
@@ -270,7 +270,7 @@ export default {
     }
 
     .m-icon {
-        margin-left: $icon-margin-left;
+        margin-left: 20px;
     }
 
     .mt-15 {
@@ -298,11 +298,11 @@ export default {
     }
 
     strong {
-        color: $primary;
+        color: $clr-brand-primary;
     }
 
     em {
-        font-size: $em-font-size;
+        font-size: 12;
     }
 
     // Villaincv
@@ -320,11 +320,11 @@ export default {
     }
 
     .modal-content {
-        background-color: $light;
+        background-color: $clr-neutral-ltst;
         padding: 1.5rem 1.5rem 5rem 1.5rem;
         width: 80%;
         height: 80%;
-        box-shadow: 0 4px 12px rgba($black, 0.3);
+        box-shadow: 0 4px 12px rgba($clr-neutral-dkst, 0.3);
         border-radius: 0.5rem;
         position: relative;
         animation: fadeIn 0.5s ease-in-out;
@@ -349,20 +349,20 @@ export default {
     }
 
     .download-btn {
-        background-color: $success;
-        color: $light;
+        background-color: $clr-utility-success;
+        color: $clr-neutral-ltst;
 
         &:hover {
-            background-color: lighten($success, 10%);
+            background-color: lighten($clr-utility-success, 10%);
         }
     }
 
     .close-btn {
-        background-color: $danger;
-        color: $light;
+        background-color: $clr-utility-danger;
+        color: $clr-neutral-ltst;
 
         &:hover {
-            background-color: lighten($danger, 10%);
+            background-color: lighten($clr-utility-danger, 10%);
         }
     }
 }
