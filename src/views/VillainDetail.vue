@@ -12,8 +12,8 @@ export default {
         Reviews,
         Loader,
     },
-    data(){
-        return{
+    data() {
+        return {
             villain: [],
             slug: '',
             isLoading: true,
@@ -25,9 +25,9 @@ export default {
         }
     },
     methods: {
-        getApiDetails(slug){
+        getApiDetails(slug) {
             axios.get(store.urlApi + 'villain/' + slug)
-                .then(resp =>{
+                .then(resp => {
                     this.villain = resp.data.villain;
                     console.log(this.villain);
                     this.checkCvExists();
@@ -39,7 +39,7 @@ export default {
             console.log('Recensione inviata:', review);
             this.newReview = review;
         },
-        
+
         formatDate(dateString) {
             const date = new Date(dateString);
 
@@ -78,9 +78,9 @@ export default {
                 link.click();
             }
         }
-        
+
     },
-    mounted(){
+    mounted() {
         this.villainName = this.$route.params.villainName;
         this.slug = this.$route.params.slug;
         this.getApiDetails(this.slug);
@@ -91,7 +91,7 @@ export default {
 
 <template>
     <div class="loader" v-if="isLoading">
-        <Loader/>
+        <Loader />
     </div>
     <div v-else>
         <div class="cont-detail">
@@ -100,29 +100,34 @@ export default {
                 <div class="cont-img mb-30">
                     <img :src="'http://localhost:8000' + villain.image" alt="prova">
                 </div>
-                
+
                 <div class="cont-reviews">
                     <h4 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h4>
                     <h4 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h4>
-                    <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{villain.phone}}</h4>
+                    <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{ villain.phone }}</h4>
                     <h4 class="mb-10">
-                        <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ? villain.universe.name : 'Loading universe...' }}
+                        <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ?
+                            villain.universe.name : 'Loading universe...' }}
                     </h4>
                 </div>
             </div>
-           
+
             <div class="cont-text">
                 <h2 class="mb-20">{{ villain.name }}</h2>
                 <div class="mb-30">
                     <h3>Skills:</h3>
                     <ul class="mt-15">
-                        <li v-for="skill in villain.skills"> <i class="fa-solid fa-hand-sparkles mb-10 m-icon"></i>{{skill.name}}</li>
+                        <li v-for="skill in villain.skills"> <i
+                               class="fa-solid fa-hand-sparkles mb-10 m-icon"></i>{{ skill.name }}
+                        </li>
                     </ul>
                 </div>
                 <div class="mb-30">
                     <h3>Services:</h3>
                     <ul class="mt-15">
-                        <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{service.name}}</li>
+                        <li v-for="service in villain.services"><i
+                               class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{ service.name }}
+                        </li>
                     </ul>
                 </div>
 
@@ -140,9 +145,11 @@ export default {
                     <div v-if="showCv" class="modal-overlay" @click.self="closeCv">
                         <transition name="fade">
                             <div class="modal-content">
-                                <iframe :src="cvUrl" width="100%" height="100%" frameborder="0"></iframe>
+                                <iframe :src="cvUrl" width="100%" height="100%"
+                                        frameborder="0"></iframe>
                                 <div class="modal-actions">
-                                    <button @click="downloadCv" class="btn download-btn">Download CV</button>
+                                    <button @click="downloadCv" class="btn download-btn">Download
+                                        CV</button>
                                     <button @click="closeCv" class="btn close-btn">Close</button>
                                 </div>
                             </div>
@@ -152,18 +159,18 @@ export default {
 
 
                 <hr class="mb-20">
-                <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
+                <h4 class="mb-20"><strong>{{ villain.name }}'s Reviews</strong></h4>
                 <hr class="mb-20">
                 <div class="cont-reviews">
                     <div v-if="Object.keys(newReview).length !== 0">
                         <div class="review">
-                            <div><strong>{{newReview.full_name}}</strong></div>
+                            <div><strong>{{ newReview.full_name }}</strong></div>
                             <div><em>{{ formatDate(newReview.created_at) }}</em></div>
                             <div class="villain-reviews mb-10">
                                 <span v-for="star in 5" :key="star" class="star">
-                                {{ star <= newReview.rating_id ? '★' : '☆' }} </span>
+                                    {{ star <= newReview.rating_id ? '★' : '☆' }} </span>
                             </div>
-    
+
                             <p class="mb-10">
                                 {{ newReview.content }}
                             </p>
@@ -171,13 +178,13 @@ export default {
                         </div>
                     </div>
                     <div class="review" v-for="review in villain.ratings">
-                        <div><strong>{{review.pivot.full_name}}</strong></div>
+                        <div><strong>{{ review.pivot.full_name }}</strong></div>
                         <div><em>{{ formatDate(review.created_at) }}</em></div>
                         <div class="villain-reviews mb-10" v-if="review.value">
                             <span v-for="star in 5" :key="star" class="star">
-                            {{ star <= review.value ? '★' : '☆' }} </span>
+                                {{ star <= review.value ? '★' : '☆' }} </span>
                         </div>
- 
+
                         <p class="mb-10">
                             {{ review.pivot.content }}
                         </p>
@@ -186,17 +193,13 @@ export default {
                 </div>
             </div>
         </div>
-        <ContactForm :villainData="villain"/>
-        <Reviews :villainData="villain" @review-sent="handleReviewSent"/>
+        <ContactForm :villainData="villain" />
+        <Reviews :villainData="villain" @review-sent="handleReviewSent" />
     </div>
-            
+
 </template>
 
 <style scoped lang="scss">
-@use '../assets/style/generals/variables' as *;
-@import '../assets/style/main.scss';
-
-
 .cont-detail {
     display: flex;
     align-items: flex-start;
@@ -210,7 +213,7 @@ export default {
         line-height: 160%;
     }
 
-    h3{
+    h3 {
         background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
         background-clip: text;
         color: transparent;
@@ -222,20 +225,20 @@ export default {
         padding: 20px;
         border-radius: 20px;
         border: 1px solid $primary;
-        background: linear-gradient(45deg, $primary, $secondary,$accent);
+        background: linear-gradient(45deg, $primary, $secondary, $accent);
 
         img {
             background-color: white;
             border-radius: 10px;
             width: 100%;
             height: auto;
-            aspect-ratio: 4 / 5; 
+            aspect-ratio: 4 / 5;
             object-fit: cover;
             object-position: top;
         }
     }
 
-    .cont-left{
+    .cont-left {
         width: 60%;
     }
 
@@ -277,35 +280,35 @@ export default {
     }
 
     .mt-15 {
-      margin-top: $margin-top-15;
+        margin-top: $margin-top-15;
     }
 
     .mb-10 {
-      margin-bottom: $margin-bottom-10;
+        margin-bottom: $margin-bottom-10;
     }
 
     .mb-20 {
-      margin-bottom: $margin-bottom-20;
+        margin-bottom: $margin-bottom-20;
     }
 
     .mb-30 {
-      margin-bottom: $margin-bottom-30;
+        margin-bottom: $margin-bottom-30;
     }
 
     .mb-40 {
-      margin-bottom: $margin-bottom-40;
+        margin-bottom: $margin-bottom-40;
     }
 
     .mb-50 {
-      margin-bottom: $margin-bottom-50;
+        margin-bottom: $margin-bottom-50;
     }
 
     strong {
-      color: $primary;
+        color: $primary;
     }
 
     em {
-      font-size: $em-font-size;
+        font-size: $em-font-size;
     }
 
     // Villaincv
@@ -338,6 +341,7 @@ export default {
             opacity: 0;
             transform: scale(0.3);
         }
+
         to {
             opacity: 1;
             transform: scale(1);
@@ -370,22 +374,25 @@ export default {
 }
 
 @media screen and (max-width:786px) {
-    .cont-detail{
+    .cont-detail {
         display: block;
-        .cont-left{
+
+        .cont-left {
             max-width: 80%;
             margin: 0 auto;
             text-align: center;
-            .cont-img{
+
+            .cont-img {
                 padding: 10px;
 
             }
         }
 
 
-        .cont-text{
+        .cont-text {
             margin-top: 25px;
-            h2{
+
+            h2 {
                 display: none;
             }
         }

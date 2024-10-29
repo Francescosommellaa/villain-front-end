@@ -121,12 +121,12 @@ export default {
       this.isLoadingVillains = true;
 
       axios.get(`${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`)
-        .then((response) => {
+        .then(response => {
           this.villains = response.data.villains;
           this.paginatorLink = response.data.villains.links;
 
           this.isLoadingVillains = false;
-        }).catch((error) => {
+        }).catch(error => {
           this.isFailedVillains = false;
 
           this.isLoadingVillains = false;
@@ -281,9 +281,7 @@ export default {
 
 
 <style scoped lang="scss">
-@use '../assets/style/generals/variables' as *;
 @use '../assets/style/generals/view-style/views-style';
-@import '../assets/style/main.scss';
 
 #advanced-filter {
   padding: 1em;

@@ -6,7 +6,7 @@ import Jumbotron from '../components/Jumbotron.vue';
 import Loader from "@/components/Loader.vue";
 
 export default {
-  
+
   name: 'Home',
   components: {
     VillainCard,
@@ -34,13 +34,13 @@ export default {
     getApi(urlApi, type = 'villains', search = '') {
       this.isLoading = true;
       if (search) {
-        urlApi += search={search};
+        urlApi += search = { search };
       }
       axios.get(urlApi)
         .then(response => {
           console.log('chiamta:', urlApi)
           if (type === 'villains') {
-            this.villains = response.data.villains.data 
+            this.villains = response.data.villains.data
             this.paginatorLink = response.data.villains.links
           } else {
             this[type] = response.data[type]
@@ -50,8 +50,8 @@ export default {
         .catch(error => {
           console.log(error)
         })
-      },
-      getSponsoredVillains() {
+    },
+    getSponsoredVillains() {
       const urlApi = store.urlApi + 'active-sponsorship';
       axios.get(urlApi)
         .then(response => {
@@ -64,13 +64,13 @@ export default {
           this.isLoading = false;
         });
     },
-      filterBySkill() {
-        const params = {};
+    filterBySkill() {
+      const params = {};
 
-        if (this.selectSkill) {
-          params.skill_id = this.selectSkill;
-        }
-      },
+      if (this.selectSkill) {
+        params.skill_id = this.selectSkill;
+      }
+    },
 
   },
   mounted() {
@@ -86,20 +86,24 @@ export default {
 </script>
 
 <template>
-  <Jumbotron :skills="skills"/>
+  <Jumbotron :skills="skills" />
   <main>
     <div class="content">
       <div class="text-container">
         <h2 class="title">Discover Premium Villains</h2>
-        <p class="presentation">Welcome to our exclusive selection of sponsored villains! Our antagonists are fearsome and iconic, part of a chosen group offering unique services and top-rated reviews. Take your time to explore their profiles, review their specialties, and check out their top-rated reviews from past clients</p>
+        <p class="presentation">Welcome to our exclusive selection of sponsored villains! Our
+          antagonists are fearsome and iconic, part of a chosen group offering unique services and
+          top-rated reviews. Take your time to explore their profiles, review their specialties, and
+          check out their top-rated reviews from past clients</p>
       </div>
       <div class="loader" v-if="isLoading">
-        <Loader/>
+        <Loader />
       </div>
       <div v-else class="section-card">
         <div class="villains-flex">
-        <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain" class="highlight"/>
-    
+          <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain"
+                       class="highlight" />
+
           <!-- pagination -->
           <!-- <div  class="pagination">
             <div v-if="villains.length" class="paginator_btn">
@@ -108,7 +112,7 @@ export default {
           </div> -->
         </div>
       </div>
-       <!-- Info How to hire a villain -->
+      <!-- Info How to hire a villain -->
       <div class="text-container hire">
         <div v-for="title in store.howToHireTitle">
           <h2 v-if="!isLoading" class="title">{{ title.title }}</h2>
@@ -127,25 +131,24 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@use '../assets/style/generals/variables' as *;
 @use '../assets/style/generals/view-style/views-style';
-@import '../assets/style/main.scss';
 
-
-main{
+main {
   padding-top: 9em;
 }
 
-.text-container{
+.text-container {
   width: 90%;
   margin: 0 auto;
 }
-.content, .section-card {
-  width: 100%; 
-  margin: 0 auto;  
+
+.content,
+.section-card {
+  width: 100%;
+  margin: 0 auto;
 }
 
-.title{
+.title {
   background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
   background-clip: text;
   color: transparent;
@@ -166,24 +169,32 @@ main{
 ul {
   margin: 3rem 0;
   font-size: 1.1rem;
+
   strong {
     color: $primary;
   }
+
   li {
     margin: 2rem 0
-  };
+  }
+
+  ;
 }
+
 .villains-flex {
   margin: 0;
   width: 90%;
 
 }
+
 .section-card {
-  background: linear-gradient(0deg, $light, $primary, $light);;
+  background: linear-gradient(0deg, $light, $primary, $light);
+  ;
   padding: 6rem 0;
   display: flex;
   justify-content: center;
 }
+
 .villain-card {
   flex: 0 1 calc(100% / 5 - 2em);
   box-sizing: border-box;
@@ -192,60 +203,67 @@ ul {
   border: solid #fbce00 5px;
   transition: all 0.3s ease;
 
-// Responsive for smaller screens
+  // Responsive for smaller screens
   @media (max-width: 1560px) {
-    flex: 0 1 calc(100% / 4 - 2em); 
+    flex: 0 1 calc(100% / 4 - 2em);
   }
 
   @media (max-width: 1260px) {
-  flex: 0 1 calc(100% / 3  - 2em); 
+    flex: 0 1 calc(100% / 3 - 2em);
   }
 
   @media (max-width: 980px) {
-  flex: 0 1 calc(100% / 2  - 2em); 
+    flex: 0 1 calc(100% / 2 - 2em);
   }
 
 
   @media (max-width: 700px) {
-    flex: 0 1 calc(100% - 2em); 
+    flex: 0 1 calc(100% - 2em);
   }
 
 
 
-.pagination {
-  text-align: center;
-  margin-top: 20px;
-  .paginator_btn {
-    padding: 15px 0 50px;
-    button {
-      padding: 5px 10px;
-      margin: 0 1px;
-      border: solid $primary 0.1rem;
-      transition: background-color 0.3s ease;
-      &:hover{
-        background-color: $secondary;
-        color: $light;
-      }
+  .pagination {
+    text-align: center;
+    margin-top: 20px;
 
+    .paginator_btn {
+      padding: 15px 0 50px;
+
+      button {
+        padding: 5px 10px;
+        margin: 0 1px;
+        border: solid $primary 0.1rem;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: $secondary;
+          color: $light;
+        }
+
+      }
     }
   }
-}
-.active {
-  color: $light;
-  background-color: $secondary;
-}
+
+  .active {
+    color: $light;
+    background-color: $secondary;
+  }
 }
 
 .hire {
   padding-bottom: 3rem;
+
   i {
     color: $primary;
     font-size: 20px;
     padding-right: 15px;
   }
+
   strong {
     font-size: 1.1rem;
   }
+
   p {
     padding: 20px 0 0 35px;
   }

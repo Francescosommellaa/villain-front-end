@@ -45,21 +45,23 @@ export default {
 <template>
   <div id="app">
 
-  <!-- Navbar -->
-  <nav :class="['navbar', { 'navbar-sticky': isSticky, 'navbar-hidden': !isVisible }]">
-    <Navbar />
-  </nav>
+    <!-- Navbar -->
+    <nav :class="['navbar', { 'navbar-sticky': isSticky, 'navbar-hidden': !isVisible }]">
+      <Navbar />
+    </nav>
 
-  <RouterView />
-  <div class="bottom">
-    <Footer />
-  </div>
+    <RouterView />
+    <div class="bottom">
+      <Footer />
+    </div>
 
 
   </div>
 </template>
 
 <style lang="scss">
+@import 'assets/style/main.scss';
+
 .navbar {
   position: relative;
   width: 100%;
@@ -69,7 +71,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000; 
+    z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
 
@@ -77,12 +79,13 @@ export default {
     top: -100px;
   }
 }
+
 .bottom {
-    background-color: black;
-    color: white;
-    width: 100%;
-    padding: 3rem 0;
-    display: flex;
-    justify-content: center;
+  background-color: black;
+  color: white;
+  width: 100%;
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
 }
 </style>
