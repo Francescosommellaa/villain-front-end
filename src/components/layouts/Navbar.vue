@@ -50,9 +50,9 @@ export default {
     <!-- Right Section (Button) -->
     <div class="navbar-right">
       <!-- Bottone per desktop -->
-      <button class="btn btn-secondary btn-desktop">
+      <a href="http://127.0.0.1:8000/register" class="btn btn-secondary btn-desktop">
         Become a Villain
-      </button>
+      </a>
 
       <!-- Bottone per mobile con icona Font Awesome -->
       <button class="btn btn-secondary btn-mobile">

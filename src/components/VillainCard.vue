@@ -58,7 +58,7 @@ export default {
   border: 2px solid $primary;
   border-radius: 10px;
   display: flex;
-  min-height: 580px;
+  max-height: 580px;
   flex-direction: column;
   align-items: center;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
@@ -142,6 +142,10 @@ export default {
 
 .villain-name {
   padding: 10px 0;
+}
+
+h3{
+  text-align: center
 }
 
 .villain-img {

@@ -185,7 +185,7 @@ export default {
             </div>
         </div>
         <ContactForm :villainData="villain" />
-        <Reviews :villainData="villain" @review-sent="handleReviewSent" />
+        <ReviewForm :villainData="villain" @review-sent="handleReviewSent" />
     </div>
 
 </template>

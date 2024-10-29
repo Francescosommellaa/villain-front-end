@@ -192,6 +192,12 @@ export default {
       <h2>Filters</h2>
 
       <ul class="filters">
+        <!-- CLEAR FILTERS -->
+        <li>
+          <button class="btn btn-primary" @click="resetFilter">
+            Clear Filters
+          </button>
+        </li>
         <!-- AVERAGE RATING FILTER -->
         <li class="filter-section">
           <h3>Rating:</h3>
@@ -247,20 +253,13 @@ export default {
         <li class="filter-section">
           <h3>Skills</h3>
 
-          <ul>
+          <menu>
             <li v-for="skill in filters.skills.criteria" :key="skill.id"
                 :class="{ 'btn-primary': skill.id == filters.skills.temporalSelection }"
                 @click="selectFilterFromSelect(filters.skills, skill.id)">
               {{ skill.name }}
             </li>
-          </ul>
-        </li>
-
-        <!-- CLEAR FILTERS -->
-        <li>
-          <button class="btn btn-primary" @click="resetFilter">
-            Clear Filters
-          </button>
+          </menu>
         </li>
       </ul>
     </aside>
@@ -286,7 +285,7 @@ main {
   @include display-flex('between', 'start');
   margin-top: 6em;
 
-  .left {
+  aside {
     flex: 0 0 15rem;
     position: sticky;
     top: 0;
@@ -294,10 +293,30 @@ main {
 
     h2 {
       display: inline-block;
-      background: $grd-brand-dk;
+      background: black;
       background-clip: text;
       color: transparent;
     }
+  }
+
+  .villains-flex{
+    @media (min-width: 1500px) {
+        gap: 2em;
+      }
+
+      @media (max-width: 1280px) {
+        gap: 1em;
+        margin: 0 1em;
+      }
+
+      @media (max-width: 900px) {
+        gap: 1em;
+        margin: 0 1em;
+      }
+
+      @media (max-width: 700px) {
+        gap: 1em;
+      }
   }
 
   .right {
@@ -311,20 +330,28 @@ main {
       transition: all 0.3s ease;
 
       // Responsive for smaller screens
-      @media (max-width: 1500px) {
-        flex: 0 1 calc(33.33% - 2em);
+      @media (min-width: 1500px) {
+        flex: 0 1 calc(100% / 5 - 2em);
       }
 
       @media (max-width: 1280px) {
-        flex: 0 1 calc(50% - 2em);
+        flex: 0 1 calc(100% / 4 - 2em);
       }
 
-      @media (max-width: 900px) {
+      @media (max-width: 1128px) {
+        flex: 0 1 calc(100% / 3 - 1em);
+      }
+
+      @media (max-width: 898px) {
+        flex: 0 1 calc(100% / 2 - 1em);
+      }
+
+      @media (max-width: 898px) {
+        flex: 0 1 calc(100% / 2 - 1em);
+      }
+
+      @media (max-width: 450px) {
         flex: 0 1 calc(100% - 2em);
-      }
-
-      @media (max-width: 700px) {
-        flex: 0 1 100%;
       }
     }
 
@@ -339,13 +366,56 @@ main {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 798px) {
   main {
     flex-direction: column;
-
-    #advanced-filter {
+    
+    aside {
       width: 95%;
       margin: auto;
+      padding: 10px;
+      position: static;
+      ul{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        &>li{
+          flex-basis: calc(100% / 3 - 15px);
+          margin: 15px auto;
+        }
+        menu{
+          max-height: 150px;
+          overflow: auto
+        }
+      }
+    }
+
+    .wrapper-filter-section {
+      display: flex;
+    }
+  }
+}
+
+@media (max-width: 496px) {
+  main {
+    aside {
+      ul{
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: center;
+        &>li{
+          flex-basis: 100%;
+          margin: 15px auto;
+        }
+        menu{
+          max-height: 150px;
+          overflow: auto
+        }
+      }
     }
 
     .wrapper-filter-section {
