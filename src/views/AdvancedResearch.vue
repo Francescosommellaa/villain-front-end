@@ -386,4 +386,19 @@ main {
 .sponsored-villain {
   border: solid #fbce00 4px;
 }
+
+@media (max-width: 700px) {
+  main {
+    flex-direction: column;
+
+    #advanced-filter {
+      width: 95%;
+      margin: auto;
+    }
+
+    .wrapper-filter-section {
+      display: flex;
+    }
+  }
+}
 </style>

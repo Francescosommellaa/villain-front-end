@@ -62,7 +62,7 @@ export default {
                 console.log('CV non disponibile');
             } else {
                 this.cvExists = true;
-                this.cvUrl = `http://localhost:8000/${this.villain.cv}`;
+                this.cvUrl = `http://localhost:8000${this.villain.cv}`;
                 console.log('URL generato:', this.cvUrl);
             }
             console.log(this.villain.cv);
@@ -94,9 +94,9 @@ export default {
         <Loader/>
     </div>
     <div v-else>
-
         <div class="cont-detail">
             <div class="cont-left">
+                <h2 class="mb-20">{{ villain.name }}</h2>
                 <div class="cont-img mb-30">
                     <img :src="'http://localhost:8000' + villain.image" alt="prova">
                 </div>
@@ -113,22 +113,22 @@ export default {
            
             <div class="cont-text">
                 <h2 class="mb-20">{{ villain.name }}</h2>
-                <h4 class="mb-30">
-                    <strong>Skills:</strong>
+                <div class="mb-30">
+                    <h3>Skills:</h3>
                     <ul class="mt-15">
                         <li v-for="skill in villain.skills"> <i class="fa-solid fa-hand-sparkles mb-10 m-icon"></i>{{skill.name}}</li>
                     </ul>
-                </h4>
-                <h4 class="mb-30">
-                    <strong>Services:</strong>
+                </div>
+                <div class="mb-30">
+                    <h3>Services:</h3>
                     <ul class="mt-15">
                         <li v-for="service in villain.services"><i class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{service.name}}</li>
                     </ul>
-                </h4>
+                </div>
 
                 <!-- villain cv -->
                 <div class="mb-30">
-                    <h4 class="mb-20"><strong>CV:</strong></h4>
+                    <h3 class="mb-20"><strong>CV:</strong></h3>
 
                     <h5 v-if="cvExists" class="mb-50">
                         <button @click="showCv = true" class="btn btn-secondary">View CV</button>
@@ -155,19 +155,6 @@ export default {
                 <h4 class="mb-20"><strong>{{villain.name}}'s Reviews</strong></h4>
                 <hr class="mb-20">
                 <div class="cont-reviews">
-                    <div class="review" v-for="review in villain.ratings">
-                        <div><strong>{{review.pivot.full_name}}</strong></div>
-                        <div><em>{{ formatDate(review.created_at) }}</em></div>
-                        <div class="villain-reviews mb-10" v-if="review.value">
-                            <span v-for="star in 5" :key="star" class="star">
-                            {{ star <= review.value ? '★' : '☆' }} </span>
-                        </div>
- 
-                        <p class="mb-10">
-                            {{ review.pivot.content }}
-                        </p>
-                        <hr class="mb-10">
-                    </div>
                     <div v-if="Object.keys(newReview).length !== 0">
                         <div class="review">
                             <div><strong>{{newReview.full_name}}</strong></div>
@@ -182,6 +169,19 @@ export default {
                             </p>
                             <hr class="mb-10">
                         </div>
+                    </div>
+                    <div class="review" v-for="review in villain.ratings">
+                        <div><strong>{{review.pivot.full_name}}</strong></div>
+                        <div><em>{{ formatDate(review.created_at) }}</em></div>
+                        <div class="villain-reviews mb-10" v-if="review.value">
+                            <span v-for="star in 5" :key="star" class="star">
+                            {{ star <= review.value ? '★' : '☆' }} </span>
+                        </div>
+ 
+                        <p class="mb-10">
+                            {{ review.pivot.content }}
+                        </p>
+                        <hr class="mb-10">
                     </div>
                 </div>
             </div>
@@ -210,8 +210,14 @@ export default {
         line-height: 160%;
     }
 
+    h3{
+        background: linear-gradient(45deg, $primary, $secondary, $accent, $accent);
+        background-clip: text;
+        color: transparent;
+    }
+
     .cont-img {
-        width: 400px;
+        width: 100%;
         height: auto;
         padding: 20px;
         border-radius: 20px;
@@ -229,6 +235,10 @@ export default {
         }
     }
 
+    .cont-left{
+        width: 60%;
+    }
+
     .cont-text {
         flex-grow: 1;
 
@@ -241,10 +251,6 @@ export default {
     .fa-solid {
         color: $primary;
         margin-right: 20px;
-    }
-
-    .m-icon {
-        margin-left: 20px;
     }
 
     h2 {
@@ -266,36 +272,40 @@ export default {
         font-size: 16px;
     }
 
+    .m-icon {
+        margin-left: $icon-margin-left;
+    }
+
     .mt-15 {
-        margin-top: 15px;
+      margin-top: $margin-top-15;
     }
 
     .mb-10 {
-        margin-bottom: 10px;
+      margin-bottom: $margin-bottom-10;
     }
 
     .mb-20 {
-        margin-bottom: 20px;
-    } 
+      margin-bottom: $margin-bottom-20;
+    }
 
     .mb-30 {
-        margin-bottom: 30px;
+      margin-bottom: $margin-bottom-30;
     }
 
     .mb-40 {
-        margin-bottom: 40px;
+      margin-bottom: $margin-bottom-40;
     }
 
     .mb-50 {
-        margin-bottom: 50px;
+      margin-bottom: $margin-bottom-50;
     }
 
     strong {
-        color: $primary;
+      color: $primary;
     }
 
     em {
-        font-size: 12px;
+      font-size: $em-font-size;
     }
 
     // Villaincv
@@ -355,6 +365,29 @@ export default {
 
         &:hover {
             background-color: lighten($danger, 10%);
+        }
+    }
+}
+
+@media screen and (max-width:786px) {
+    .cont-detail{
+        display: block;
+        .cont-left{
+            max-width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            .cont-img{
+                padding: 10px;
+
+            }
+        }
+
+
+        .cont-text{
+            margin-top: 25px;
+            h2{
+                display: none;
+            }
         }
     }
 }
