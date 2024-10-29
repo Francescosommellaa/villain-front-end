@@ -49,12 +49,7 @@ export default {
                 day: '2-digit'
             });
 
-            const formattedTime = date.toLocaleTimeString('it-IT', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-
-            return `${formattedDate} ${formattedTime}`;
+            return `${formattedDate}`;
         },
         checkCvExists() {
             if (!this.villain.cv || this.villain.cv === null) {
