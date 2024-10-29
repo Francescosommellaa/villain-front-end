@@ -2,14 +2,14 @@
 import { store } from '@/store/store';
 import axios from 'axios';
 import ContactForm from "../components/ContactForm.vue";
-import Reviews from '@/components/Reviews.vue';
+import ReviewForm from '@/components/ReviewForm.vue';
 import Loader from '@/components/common/Loader.vue';
 
 export default {
     name: 'VillainDetail',
     components: {
         ContactForm,
-        Reviews,
+        ReviewForm,
         Loader,
     },
     data() {
@@ -29,14 +29,12 @@ export default {
             axios.get(store.urlApi + 'villain/' + slug)
                 .then(resp => {
                     this.villain = resp.data.villain;
-                    console.log(this.villain);
                     this.checkCvExists();
                     this.isLoading = false;
                 });
         },
 
         handleReviewSent(review) {
-            console.log('Recensione inviata:', review);
             this.newReview = review;
         },
 
@@ -59,13 +57,10 @@ export default {
         checkCvExists() {
             if (!this.villain.cv || this.villain.cv === null) {
                 this.cvExists = false;
-                console.log('CV non disponibile');
             } else {
                 this.cvExists = true;
                 this.cvUrl = `http://localhost:8000${this.villain.cv}`;
-                console.log('URL generato:', this.cvUrl);
             }
-            console.log(this.villain.cv);
         },
         closeCv() {
             this.showCv = false;

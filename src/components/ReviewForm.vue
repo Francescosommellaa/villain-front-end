@@ -4,7 +4,7 @@ import axios from 'axios';
 import Loader from './common/Loader.vue';
 
 export default {
-  name: 'Reviews',
+  name: 'ReviewForm',
   components: {
     Loader
   },
