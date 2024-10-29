@@ -3,6 +3,16 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+        @use './src/assets/style/generals/mixins.scss' as *;
+        @use './src/assets/style/generals/variables.scss' as *;
+        `,
+      },
+    },
+  },
   plugins: [vue()],
   resolve: {
     alias: {
