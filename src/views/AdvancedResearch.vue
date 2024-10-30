@@ -311,11 +311,15 @@ main {
   }
 
   aside {
-    flex: 0 0 15rem;
+    flex: 0 0 16rem;
     // position: sticky;
     top: 0;
-    padding: 2rem 0 0 2rem;
-
+    padding: 2rem 0 0 1rem;
+    
+    .interactive-stars{
+      line-height: 2rem;
+      padding-left: 0.5rem;
+    }
     h2 {
       display: inline-block;
       background: black;
@@ -325,8 +329,9 @@ main {
     ul{
 
       &>li{
-        margin: 10px auto;
-
+        margin: 20px auto;
+        padding-bottom: 10px;
+        border-bottom: 1px solid black;
         .select_filter{
         display: flex;
         justify-content: space-between;
@@ -348,7 +353,7 @@ main {
         max-height: 150px;
         overflow: auto;
         li{
-          line-height: 22px;
+          line-height: 1.8rem;
         }
       }
     }
