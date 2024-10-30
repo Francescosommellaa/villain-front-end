@@ -64,6 +64,7 @@ export default {
   overflow: hidden;
   max-height: 580px;
   border: 5px solid $clr-brand-primary;
+  transition: box-shadow 0.8s ease-in-out;
   
 
   .villain-img {
@@ -71,6 +72,7 @@ export default {
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    object-position: top;
     object-position: top;
     border-radius: 8px;
     margin-bottom: 15px;

@@ -295,8 +295,7 @@ export default {
   </main>
 </template>
 
-
-<style scoped lang="scss">
+<style lang="scss" scoped>
 main {
   @include display-flex('between', 'start');
   margin-top: 6em;
@@ -311,15 +310,16 @@ main {
   }
 
   aside {
-    flex: 0 0 16rem;
+    flex: 0 0 15rem;
     // position: sticky;
     top: 0;
-    padding: 2rem 0 0 1rem;
+    padding: 2rem 0 0 2rem;
     
     .interactive-stars{
       line-height: 2rem;
       padding-left: 0.5rem;
     }
+
     h2 {
       display: inline-block;
       background: black;
@@ -329,9 +329,10 @@ main {
     ul{
 
       &>li{
-        margin: 20px auto;
+        margin: 15px auto;
         padding-bottom: 10px;
         border-bottom: 1px solid black;
+        
         .select_filter{
         display: flex;
         justify-content: space-between;
@@ -352,8 +353,9 @@ main {
         margin: 5px auto;
         max-height: 150px;
         overflow: auto;
+
         li{
-          line-height: 1.8rem;
+          line-height: 1.8em;
         }
       }
     }
@@ -382,7 +384,7 @@ main {
   .right {
     flex: 1 0;
     padding-top: 2em;
-    
+
     .total_villain{
       margin: 0 2em 1em 2em;
       display: flex;
@@ -401,19 +403,28 @@ main {
       cursor: pointer;
       transition: all 0.3s ease;
 
-      @media (min-width: 1680px) {
+      // Responsive for smaller screens
+      @media (min-width: 1500px) {
+        flex: 0 1 calc(100% / 5 - 2em);
+      }
+
+      @media (max-width: 1280px) {
         flex: 0 1 calc(100% / 4 - 2em);
       }
-      @media (max-width: 1680px) {
-        flex: 0 1 calc(100% / 3 - 2em);
+
+      @media (max-width: 1128px) {
+        flex: 0 1 calc(100% / 3 - 1em);
       }
-      @media (max-width: 1380px) {
-        flex: 0 1 calc(100% / 2 - 2em);
+
+      @media (max-width: 898px) {
+        flex: 0 1 calc(100% / 2 - 1em);
       }
-      @media (max-width: 980px) {
-        flex: 0 1 calc(100% / 1 - 3em);
+
+      @media (max-width: 898px) {
+        flex: 0 1 calc(100% / 2 - 1em);
       }
-      @media (max-width: 880px) {
+
+      @media (max-width: 450px) {
         flex: 0 1 calc(100% - 2em);
       }
     }
@@ -432,7 +443,7 @@ main {
 @media (max-width: 798px) {
   main {
     flex-direction: column;
-    
+
     aside {
       width: 95%;
       margin: auto;
@@ -489,7 +500,7 @@ main {
           }
 
         }
-        menu {
+        menu{
           max-height: 150px;
           overflow: auto
         }

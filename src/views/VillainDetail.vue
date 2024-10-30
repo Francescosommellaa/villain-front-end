@@ -24,6 +24,11 @@ export default {
             newReview: {},
         }
     },
+    computed: {
+    reversedRatings() {
+        return [...this.villain.ratings].reverse();
+        },
+    },
     methods: {
         getApiDetails(slug) {
             axios.get(store.urlApi + 'villain/' + slug)
@@ -90,14 +95,14 @@ export default {
     </div>
     <div v-else>
         <div class="cont-detail">
+            <h2 class="mb-20">{{ villain.name }}</h2>
             <div class="cont-left">
-                <h2 class="mb-20">{{ villain.name }}</h2>
                 <div class="cont-img mb-30">
                     <img :src="'http://localhost:8000' + villain.image" alt="prova">
                 </div>
 
                 <div class="cont-reviews">
-                    <h4 class="mb-20"><strong>Contact {{ villain.name }}:</strong></h4>
+                    <h4 class="mb-20"><strong>Contact:</strong></h4>
                     <h4 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h4>
                     <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{ villain.phone }}</h4>
                     <h4 class="mb-10">
@@ -105,26 +110,32 @@ export default {
                             villain.universe.name : 'Loading universe...' }}
                     </h4>
                 </div>
+                <div class="call-to-action">
+                    <a href="#contact-villain" class="btn btn-primary">Message</a>
+                    <a href="#review-villain" class="btn btn-primary">Review</a>
+                </div>
             </div>
 
             <div class="cont-text">
                 <h2 class="mb-20">{{ villain.name }}</h2>
-                <div class="mb-30">
-                    <h3>Skills:</h3>
-                    <ul class="mt-15">
-                        <li v-for="skill in villain.skills"> <i
-                               class="fa-solid fa-hand-sparkles mb-10 m-icon"></i>{{ skill.name }}
-                        </li>
-                    </ul>
-                </div>
-                <div class="mb-30">
-                    <h3>Services:</h3>
-                    <ul class="mt-15">
-                        <li v-for="service in villain.services"><i
-                               class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{ service.name
-                            }}
-                        </li>
-                    </ul>
+                <div class="wrapper-text">
+                    <div class="mb-30">
+                        <h3>Skills:</h3>
+                        <ul class="mt-15">
+                            <li v-for="skill in villain.skills"> <i
+                                   class="fa-solid fa-hand-sparkles mb-10 m-icon"></i>{{ skill.name }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mb-30">
+                        <h3>Services:</h3>
+                        <ul class="mt-15">
+                            <li v-for="service in villain.services"><i
+                                   class="fa-solid fa-bell-concierge mb-10 m-icon"></i>{{ service.name
+                                }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- villain cv -->
@@ -173,14 +184,13 @@ export default {
                             <hr class="mb-10">
                         </div>
                     </div>
-                    <div class="review" v-for="review in villain.ratings">
+                    <div class="review" v-for="review in reversedRatings">
                         <div><strong>{{ review.pivot.full_name }}</strong></div>
-                        <div><em>{{ formatDate(review.created_at) }}</em></div>
+                        <div><em>{{ formatDate(review.pivot.created_at) }}</em></div>
                         <div class="villain-reviews mb-10" v-if="review.value">
                             <span v-for="star in 5" :key="star" class="star">
                                 {{ star <= review.value ? '★' : '☆' }} </span>
                         </div>
-
                         <p class="mb-10">
                             {{ review.pivot.content }}
                         </p>
@@ -189,8 +199,8 @@ export default {
                 </div>
             </div>
         </div>
-        <ContactForm :villainData="villain" />
-        <ReviewForm :villainData="villain" @review-sent="handleReviewSent" />
+        <ContactForm :villainData="villain" id="contact-villain" />
+        <ReviewForm :villainData="villain" @review-sent="handleReviewSent" id="review-villain"/>
     </div>
 
 </template>
@@ -202,7 +212,12 @@ export default {
     gap: 80px;
     width: 80%;
     margin: 120px auto 40px;
-
+    &>h2{
+        display: none;
+    }
+    .call-to-action{
+        display: none
+    }
     li {
         list-style-type: none;
         padding: 0;
@@ -217,6 +232,8 @@ export default {
 
     .cont-img {
         width: 100%;
+        max-width: 560px;
+        margin: 0 auto;
         height: auto;
         padding: 20px;
         border-radius: 20px;
@@ -241,6 +258,12 @@ export default {
     .cont-text {
         flex-grow: 1;
 
+        h2 {
+        font-size: 50px;
+        @include text-clipping;
+        margin-bottom: 5px;
+    }
+
         .cont-reviews {
             height: 200px;
             overflow-y: auto;
@@ -252,11 +275,7 @@ export default {
         margin-right: 20px;
     }
 
-    h2 {
-        font-size: 50px;
-        color: $clr-brand-primary;
-        margin-bottom: 5px;
-    }
+
 
     h4,
     h5 {
@@ -372,11 +391,29 @@ export default {
 @media screen and (max-width:786px) {
     .cont-detail {
         display: block;
-
+        width: 95%;
+        &>h2{
+            @include text-clipping;
+            width: 100%;
+            text-align: center;
+            font-size: 3rem;
+            @media screen and (max-width:560px){
+                    font-size: 2rem;
+                }
+        }
+        .call-to-action{
+            margin: 2em auto;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid purple;
+        }
         .cont-left {
-            max-width: 80%;
+            width: 90%;
             margin: 0 auto;
             text-align: center;
+            padding: 0;
 
             .cont-img {
                 padding: 10px;
@@ -386,10 +423,19 @@ export default {
 
 
         .cont-text {
-            margin-top: 25px;
-
+            margin: 25px auto 0px auto;
+            width: 90%;
             h2 {
                 display: none;
+            }
+
+            .wrapper-text{
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                @media screen and (max-width:560px){
+                    flex-wrap: wrap;
+                }
             }
         }
     }
