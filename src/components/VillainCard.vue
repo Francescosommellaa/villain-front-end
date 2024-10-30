@@ -40,7 +40,7 @@ export default {
         </span>
       </div>
     </div>
-    <div class="under">
+    <div>
       <router-link :to="{ name: 'VillainDetail', params: { slug: villain.slug } }"><button
                 class="btn btn-primary">Contact Now</button></router-link>
     </div>
@@ -55,132 +55,81 @@ export default {
 .villain-card {
   background-color: $clr-neutral-ltst;
   padding: 20px;
-  border: 2px solid $clr-brand-primary;
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
-  transition: transform 0.8s ease-in-out;
   max-height: 580px;
+  border: 5px solid $clr-brand-primary;
   
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-    
-    .over {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgb(53, 0, 95, 0.6);
-      transition: filter 0.8s ease-in-out;
-      z-index: 1;
-    }
 
-    .villain-name {
-      opacity: 1;
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translateX(-50%);
-      color: $clr-neutral-ltst;
-      font-size: 1.5rem;
-      transition: opacity 0.8s ease-in-out, color 0.4s ease-in-out;
-      z-index: 2;
-      text-align: center;
-    }
-
-    .villain-info {
-      color: white;
-      z-index: 3; // In primo piano sopra l'immagine
-
-      .villain-service {
-        color: white;
-      }
-
-      .star .fa-star {
-        color: white; // Colore bianco per le stelle
-      }
-    }
-  }
-
-  &.highlight {
-    &:hover {
-      .over {
-        background-color: rgb(250, 204, 0, 0.4);
-        transition: background-color 0.4s ease-in-out
-      }
-
-      .villain-name,
-      .villain-info,
-      .villain-service,
-      .review-count,
-      .star .fa-star {
-        color: $clr-brand-primary;
-        transition: color 0.4s ease-in-out;
-      }
-    }
-  }
   .villain-img {
     width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    object-position: top;
     border-radius: 8px;
     margin-bottom: 15px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgb(53, 0, 95, 0.2);
   }
 
+  &.highlight {
+
+    .villain-name {
+      @include text-clipping-gold;
+  }
+
+    &:hover {
+      box-shadow: inset 0 0 30px $clr-brand-gold-light;
+    }
+  }
+
+  &:hover {
+    box-shadow: inset 0 0 25px $clr-brand-primary; 
+  }
+}
+
   .villain-name {
-    padding: 10px 0;
-    text-align: center;
+      font-size: $font-size-l;
+      color: $clr-brand-primary;
+      padding-bottom: 0.1rem;
+      @include text-clipping
   }
 
   .villain-info {
     text-align: center;
     margin-bottom: 15px;
     position: relative;
-    z-index: 2;
-    font-weight: 900;
+    font-weight: 700;
 
     .villain-service {
-      font-size: 1rem;
-      color: $clr-neutral-dkst;
-      padding-bottom: 0.2rem;
-      transition: color 0.4s ease-in-out;
+      font-size: $font-size-m;
+      color: $clr-neutral-dk;
+      padding: 0.2rem 0;
     }
 
     .villain-reviews {
-      font-size: 1.2rem;
+      font-size: $font-size-l;
       padding-top: 0.5rem;
 
       .fa-star {
         color: $clr-brand-primary;
-        font-size: 1rem;
+        font-size: $font-size-m;
         padding: 0 0.1rem;
-        transition: color 0.4s ease-in-out;
+        padding-bottom: 0.2em;
       }
 
       .review-count {
+        color: $clr-neutral-dk;
         margin-top: 0.5rem;
-        font-size: 1rem;
-        transition: color 0.4s ease-in-out;
+        font-size: $font-size-m;
         display: block;
       }
     }
   }
-
-  .under {
-    margin-top: auto;
-    display: flex;
-    justify-content: center;
-  }
-}
 
 </style>
