@@ -359,6 +359,26 @@ main {
     }
   }
 
+  .villains-flex{
+    @media (min-width: 1500px) {
+        gap: 2em;
+      }
+
+      @media (max-width: 1280px) {
+        gap: 1em;
+        margin: 0 1em;
+      }
+
+      @media (max-width: 900px) {
+        gap: 1em;
+        margin: 0 1em;
+      }
+
+      @media (max-width: 700px) {
+        gap: 1em;
+      }
+  }
+
   .right {
     flex: 1 0;
     padding-top: 2em;
@@ -423,14 +443,18 @@ main {
         flex-wrap: wrap;
         gap: 1rem;
         justify-content: center;
-        > li {
+        &>li{
           margin: 1rem auto;
-          :nth-child(-n+2) {
+          &:nth-child(1),
+          &:nth-child(2){
             flex: 0 0 calc(100% / 2 - 0.5rem);
           }
-          &:nth-child(n+3) {
-            flex: 0 0 calc(100% / 3 - 0.66rem);
+          &:nth-child(3),
+          &:nth-child(4),
+          &:nth-child(5){
+            flex: 0 0 calc(100% / 3 - 2rem / 3);
           }
+
         }
         menu{
           max-height: 150px;
@@ -458,7 +482,7 @@ main {
         flex-wrap: wrap;
         gap: 5px;
         justify-content: center;
-        > li {
+        &>li{
           margin: 15px auto;
           &:nth-child(n){
             flex: 0 0 100%;
