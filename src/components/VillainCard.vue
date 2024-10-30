@@ -65,7 +65,7 @@ export default {
   position: relative;
   overflow: hidden;
   transition: transform 0.8s ease-in-out;
-  height: 580px;
+  max-height: 580px;
   
   &:hover {
     transform: translateY(-5px);
