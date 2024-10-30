@@ -180,7 +180,6 @@ export default {
                             <span v-for="star in 5" :key="star" class="star">
                                 {{ star <= review.value ? '★' : '☆' }} </span>
                         </div>
-
                         <p class="mb-10">
                             {{ review.pivot.content }}
                         </p>

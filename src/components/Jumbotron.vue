@@ -34,7 +34,7 @@ export default {
         </div>
         <div class="cont-what">
             <div class="under">
-                <button class="btn btn-primary"><a class="rule" href="#">HOW TO HIRE A
+                <button class="btn btn-primary"><a class="rule" href="#how-to">HOW TO HIRE A
                         VILLAIN</a></button>
             </div>
             <!-- Search bar -->

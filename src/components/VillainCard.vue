@@ -84,10 +84,10 @@ export default {
 
     .villain-name {
       opacity: 1;
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translateX(-50%);
+      // position: absolute;
+      // top: 40%;
+      // left: 50%;
+      // transform: translateX(-50%);
       color: $clr-neutral-ltst;
       font-size: 1.5rem;
       transition: opacity 0.8s ease-in-out, color 0.4s ease-in-out;
@@ -131,6 +131,7 @@ export default {
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    object-position: top;
     border-radius: 8px;
     margin-bottom: 15px;
     overflow: hidden;
