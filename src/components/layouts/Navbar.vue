@@ -126,4 +126,14 @@ export default {
     padding: 0.4rem 0.6rem;
   }
 }
+
+@media (max-width: 420px){
+  .navbar{
+    padding: 0.8em 1em;
+
+    .navbar-center{
+      gap: 0.5em;
+    }
+  }
+}
 </style>

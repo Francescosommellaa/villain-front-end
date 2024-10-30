@@ -188,11 +188,13 @@ export default {
 }
 
 .review_sent {
+  @include text-clipping;
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   text-align: center;
-  background: $grd-brand-dk;
-  background-clip: text;
-  color: transparent;
-  margin: 70px 0;
 }
 
 .review_error {
@@ -201,5 +203,11 @@ export default {
   background-clip: text;
   color: transparent;
   margin: 70px 0;
+}
+
+@media screen and (max-width:786px){
+  .reviews-container {
+    padding: 0 0.5em;
+  }
 }
 </style>

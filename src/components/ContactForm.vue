@@ -174,11 +174,18 @@ export default {
 }
 
 .message_sent {
+  @include text-clipping;
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   text-align: center;
-  background: $grd-brand-lt;
-  background-clip: text;
-  color: transparent;
-  min-height: 30vh;
-  margin: 30px auto;
+}
+
+@media screen and (max-width:786px){
+  .contact-form {
+    padding: 0 0.5em;
+  }
 }
 </style>
