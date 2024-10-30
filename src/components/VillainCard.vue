@@ -66,23 +66,6 @@ export default {
   overflow: hidden;
   transition: transform 0.8s ease-in-out;
   height: 580px;
-
-  &.highlight {
-    &:hover {
-      .over {
-        background-color: rgb(250, 204, 0, 0.4);
-        transition: background-color 0.4s ease-in-out
-      }
-
-      .villain-name,
-      .villain-service,
-      .review-count,
-      .villain-reviews .fa-star {
-        color: $clr-brand-primary;
-        transition: color 0.4s ease-in-out;
-      }
-    }
-  }
   
   &:hover {
     transform: translateY(-5px);
@@ -114,10 +97,35 @@ export default {
 
     .villain-info {
       color: white;
-      z-index: 3;
+      z-index: 3; // In primo piano sopra l'immagine
+
+      .villain-service {
+        color: white;
+      }
+
+      .star .fa-star {
+        color: white; // Colore bianco per le stelle
+      }
     }
   }
 
+  &.highlight {
+    &:hover {
+      .over {
+        background-color: rgb(250, 204, 0, 0.4);
+        transition: background-color 0.4s ease-in-out
+      }
+
+      .villain-name,
+      .villain-info,
+      .villain-service,
+      .review-count,
+      .star .fa-star {
+        color: $clr-brand-primary;
+        transition: color 0.4s ease-in-out;
+      }
+    }
+  }
   .villain-img {
     width: 100%;
     height: auto;
