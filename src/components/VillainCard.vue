@@ -52,25 +52,20 @@ export default {
 @use '../assets/style/generals/variables' as *;
 @import '../assets/style/main.scss';
 
-
 .villain-card {
   background-color: $clr-neutral-ltst;
   padding: 20px;
   border: 2px solid $clr-brand-primary;
   border-radius: 10px;
   display: flex;
-  max-height: 580px;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
   transition: transform 0.8s ease-in-out;
-
-  // Lascia invariata questa parte come richiesto
-  img {
-    object-position: top;
-  }
+  height: 580px;
 
   &.highlight {
     &:hover {
@@ -88,30 +83,11 @@ export default {
       }
     }
   }
-
-  &:hover {
-
-    .villain-service,
-    .review-count {
-      color: white;
-
-    }
-
-    .villain-reviews .fa-star {
-      color: white;
-    }
-  }
-
-  .under {
-    margin-top: auto;
-    display: flex;
-    justify-content: center;
-  }
-
+  
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-
+    
     .over {
       position: absolute;
       top: 0;
@@ -125,11 +101,10 @@ export default {
 
     .villain-name {
       opacity: 1;
-      width: 100%;
       position: absolute;
-      top: 50%;
+      top: 40%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       color: $clr-neutral-ltst;
       font-size: 1.5rem;
       transition: opacity 0.8s ease-in-out, color 0.4s ease-in-out;
@@ -137,64 +112,67 @@ export default {
       text-align: center;
     }
 
-    .villain-service {
+    .villain-info {
       color: white;
-      transition: color 0.4s ease-in-out;
+      z-index: 3;
     }
   }
-}
 
-.villain-name {
-  padding: 10px 0;
-}
-
-h3{
-  text-align: center
-}
-
-.villain-img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgb(53, 0, 95, 0.2);
-}
-
-.villain-info {
-  text-align: center;
-  margin-bottom: 15px;
-  position: relative;
-  z-index: 2;
-  font-weight: 900;
-
-  .villain-service {
-    font-size: 1rem;
-    color: $clr-neutral-dkst;
-    padding-bottom: 0.2rem;
-    transition: color 0.4s ease-in-out;
+  .villain-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgb(53, 0, 95, 0.2);
   }
 
-  .villain-reviews {
-    font-size: 1.2rem;
-    padding-top: 0.5rem;
+  .villain-name {
+    padding: 10px 0;
+    text-align: center;
+  }
 
-    .fa-star {
-      color: $clr-brand-primary;
+  .villain-info {
+    text-align: center;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 2;
+    font-weight: 900;
+
+    .villain-service {
       font-size: 1rem;
-      padding: 0 0.1rem;
+      color: $clr-neutral-dkst;
+      padding-bottom: 0.2rem;
       transition: color 0.4s ease-in-out;
     }
 
-    .review-count {
-      margin-top: 0.5rem;
-      font-size: 1rem;
-      transition: color 0.4s ease-in-out;
-      display: block;
-    }
+    .villain-reviews {
+      font-size: 1.2rem;
+      padding-top: 0.5rem;
 
+      .fa-star {
+        color: $clr-brand-primary;
+        font-size: 1rem;
+        padding: 0 0.1rem;
+        transition: color 0.4s ease-in-out;
+      }
+
+      .review-count {
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        transition: color 0.4s ease-in-out;
+        display: block;
+      }
+    }
+  }
+
+  .under {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
   }
 }
+
 </style>

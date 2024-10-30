@@ -359,26 +359,6 @@ main {
     }
   }
 
-  .villains-flex{
-    @media (min-width: 1500px) {
-        gap: 2em;
-      }
-
-      @media (max-width: 1280px) {
-        gap: 1em;
-        margin: 0 1em;
-      }
-
-      @media (max-width: 900px) {
-        gap: 1em;
-        margin: 0 1em;
-      }
-
-      @media (max-width: 700px) {
-        gap: 1em;
-      }
-  }
-
   .right {
     flex: 1 0;
     padding-top: 2em;
@@ -401,28 +381,19 @@ main {
       cursor: pointer;
       transition: all 0.3s ease;
 
-      // Responsive for smaller screens
-      @media (min-width: 1500px) {
-        flex: 0 1 calc(100% / 5 - 2em);
-      }
-
-      @media (max-width: 1280px) {
+      @media (min-width: 1680px) {
         flex: 0 1 calc(100% / 4 - 2em);
       }
-
-      @media (max-width: 1128px) {
-        flex: 0 1 calc(100% / 3 - 1em);
+      @media (max-width: 1680px) {
+        flex: 0 1 calc(100% / 3 - 2em);
       }
-
-      @media (max-width: 898px) {
-        flex: 0 1 calc(100% / 2 - 1em);
+      @media (max-width: 1380px) {
+        flex: 0 1 calc(100% / 2 - 2em);
       }
-
-      @media (max-width: 898px) {
-        flex: 0 1 calc(100% / 2 - 1em);
+      @media (max-width: 980px) {
+        flex: 0 1 calc(100% / 1 - 3em);
       }
-
-      @media (max-width: 450px) {
+      @media (max-width: 880px) {
         flex: 0 1 calc(100% - 2em);
       }
     }
@@ -452,18 +423,14 @@ main {
         flex-wrap: wrap;
         gap: 1rem;
         justify-content: center;
-        &>li{
+        > li {
           margin: 1rem auto;
-          &:nth-child(1),
-          &:nth-child(2){
+          :nth-child(-n+2) {
             flex: 0 0 calc(100% / 2 - 0.5rem);
           }
-          &:nth-child(3),
-          &:nth-child(4),
-          &:nth-child(5){
-            flex: 0 0 calc(100% / 3 - 2rem / 3);
+          &:nth-child(n+3) {
+            flex: 0 0 calc(100% / 3 - 0.66rem);
           }
-
         }
         menu{
           max-height: 150px;
@@ -491,14 +458,14 @@ main {
         flex-wrap: wrap;
         gap: 5px;
         justify-content: center;
-        &>li{
+        > li {
           margin: 15px auto;
           &:nth-child(n){
             flex: 0 0 100%;
           }
 
         }
-        menu{
+        menu {
           max-height: 150px;
           overflow: auto
         }
