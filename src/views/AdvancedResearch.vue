@@ -312,7 +312,7 @@ main {
 
   aside {
     flex: 0 0 15rem;
-    position: sticky;
+    // position: sticky;
     top: 0;
     padding: 2rem 0 0 2rem;
 
@@ -345,6 +345,8 @@ main {
       }
       menu{
         margin: 5px auto;
+        max-height: 150px;
+        overflow: auto;
         li{
           line-height: 22px;
         }
