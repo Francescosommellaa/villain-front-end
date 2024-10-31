@@ -170,6 +170,8 @@ export default {
     },
 
     resetFilter() {
+      this.isLoadingVillains = true;
+
       Object.values(this.filters).forEach((filter) => {
         filter.temporalSelection = 0;
       });
@@ -177,14 +179,18 @@ export default {
       this.$router.push({
         name: this.$route.name,
         query: {}
+      }).then(() => {
+        this.$nextTick(() => {
+          this.$refs.serviceFilter.reset();
+          this.$refs.universeFilter.reset();
+          this.$refs.skillFilter.reset();
+
+          this.getApiResearch().finally(() => {
+            this.isLoadingVillains = false;
+          });
+        });
       });
-
-      this.$refs.serviceFilter.reset();
-      this.$refs.universeFilter.reset();
-      this.$refs.skillFilter.reset();
-
-      this.getApiResearch();
-    },
+    }
   },
 
   watch: {
