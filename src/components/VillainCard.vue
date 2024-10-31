@@ -65,6 +65,7 @@ export default {
   max-height: 580px;
   border: 5px solid $clr-brand-primary;
   transition: box-shadow 0.8s ease-in-out;
+  text-align: center;
   
 
   .villain-img {
@@ -81,8 +82,12 @@ export default {
 
   &.highlight {
 
-    .villain-name {
-      @include text-clipping-gold;
+  .villain-name {
+    @include text-clipping-gold;
+  }
+
+  .villain-reviews .fa-star {
+    color: $clr-brand-gold-light;
   }
 
     &:hover {
