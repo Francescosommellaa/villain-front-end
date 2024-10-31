@@ -515,7 +515,7 @@ main {
 
     // TO DELETE OR NOT TO DELETE THAT'S THE DILEMMA
     .sponsored-villain {
-      border: solid #fbce00 4px;
+      border: solid $clr-brand-gold-light 4px;
     }
 
     .no-villains {

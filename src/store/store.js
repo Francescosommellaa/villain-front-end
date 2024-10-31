@@ -39,7 +39,7 @@ export const store = reactive({
     howToHireDiscover: [
         {
             title: 'Discover Premium Villains',
-            text: "Welcome to our exclusive selection of sponsored villains! Our antagonists are fearsome and iconic, part of a chosen group offering unique services and top- rated reviews.Take your time to explore their profiles, review their specialties, and check out their top - rated reviews from past clients!"
+            text: "Welcome to our exclusive selection of sponsored villains! Our antagonists are fearsome and iconic, part of a chosen group offering unique services and top-rated reviews. You can't go wrong with our premium villains!"
         }
     ],
     howToHirePresentation: [

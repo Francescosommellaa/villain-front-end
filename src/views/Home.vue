@@ -6,51 +6,23 @@ import Jumbotron from '../components/Jumbotron.vue';
 import Loader from "@/components/common/Loader.vue";
 
 export default {
-
   name: 'Home',
+
   components: {
     VillainCard,
     Jumbotron,
     Loader
   },
+
   data() {
     return {
       store,
       villains: [],
-      skills: [],
       paginatorLink: [],
-      villanPerSkill: [],
-      reserched: false,
-      selectSkill: '',
-      selectService: '',
-      selectUniverse: '',
-      isLoading: true,
-      currentPage: 1,
-      villainsPerPage: 10,
     };
   },
+
   methods: {
-    // Chiamta alle api
-    getApi(urlApi, type = 'villains', search = '') {
-      this.isLoading = true;
-      if (search) {
-        urlApi += search = { search };
-      }
-      axios.get(urlApi)
-        .then(response => {
-          console.log('chiamta:', urlApi)
-          if (type === 'villains') {
-            this.villains = response.data.villains.data
-            this.paginatorLink = response.data.villains.links
-          } else {
-            this[type] = response.data[type]
-            console.log(this[type])
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
     getSponsoredVillains() {
       const urlApi = store.urlApi + 'active-sponsorship';
       axios.get(urlApi)
@@ -64,21 +36,9 @@ export default {
           this.isLoading = false;
         });
     },
-    filterBySkill() {
-      const params = {};
-
-      if (this.selectSkill) {
-        params.skill_id = this.selectSkill;
-      }
-    },
-
   },
+
   mounted() {
-    // Chiamte axios
-    // this.getApi(store.urlApi + 'villains', 'villains');
-    // this.getApi(store.urlApi + 'universes', 'universes');
-    this.getApi(store.urlApi + 'skills', 'skills');
-    // this.getApi(store.urlApi + 'services', 'services');
     this.getSponsoredVillains();
   },
 };
@@ -86,7 +46,7 @@ export default {
 </script>
 
 <template>
-  <Jumbotron :skills="skills" />
+  <Jumbotron />
   <main>
     <div class="content">
       <div class="text-container" v-for="data in store.howToHireDiscover">
@@ -130,15 +90,18 @@ export default {
 <style scoped lang="scss">
 main {
   padding-top: 9em;
-    @media (max-width: 1200px) {
-      padding-top: 12em;
-    }
-    @media (max-width: 840px) {
-      padding-top: 15em;
-    }
-    @media (max-width: 550px) {
-      padding-top: 11em;
-    }
+
+  @media (max-width: 1200px) {
+    padding-top: 12em;
+  }
+
+  @media (max-width: 840px) {
+    padding-top: 15em;
+  }
+
+  @media (max-width: 550px) {
+    padding-top: 11em;
+  }
 }
 
 .text-container {
@@ -192,8 +155,7 @@ ul {
 }
 
 .section-card {
-  // background: linear-gradient(0deg, $clr-neutral-ltst, rgb(53, 0, 95, 0.8), $clr-neutral-ltst);
-  background: linear-gradient(transparent, rgba($clr-brand-primary, .2), rgba($clr-brand-secondary, .5), rgba($clr-brand-primary, .2), transparent);
+  background: linear-gradient(transparent, rgba($clr-brand-gold-light, .1), rgba($clr-brand-gold, .4), rgba($clr-brand-gold-light, .1), transparent);
   padding: 6rem 0;
   display: flex;
   justify-content: center;
@@ -204,7 +166,7 @@ ul {
   box-sizing: border-box;
   margin-bottom: 1em;
   cursor: pointer;
-  border: solid #fbce00 5px;
+  border: solid $clr-brand-gold-light 5px;
   transition: all 0.3s ease;
 
   // Responsive for smaller screens
@@ -273,11 +235,12 @@ ul {
   }
 
 }
-@media screen and (max-width:550px){
-  .hire{
-        p{
-            font-size: 0.9rem;
-        }
-      }
+
+@media screen and (max-width:550px) {
+  .hire {
+    p {
+      font-size: 0.9rem;
+    }
+  }
 }
 </style>
