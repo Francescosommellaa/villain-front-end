@@ -125,7 +125,7 @@ export default {
 .reviews-container {
   padding: 0 2em;
   max-width: 90%;
-  margin: 4em auto;
+  margin: 6em auto;
   background-color: $clr-neutral-ltst;
   border-radius: 10px;
 

@@ -128,7 +128,7 @@ export default {
   padding: 2em;
   border-radius: $btn-border-radius;
   max-width: 90%;
-  margin: 0 auto;
+  margin: 4em auto;
 
   button {
     float: right;
