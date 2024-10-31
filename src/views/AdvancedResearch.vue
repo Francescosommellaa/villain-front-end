@@ -171,7 +171,7 @@ export default {
 
     resetFilter() {
       Object.values(this.filters).forEach((filter) => {
-        filter.temporalSelection = null;
+        filter.temporalSelection = 0;
       });
 
       this.$router.push({
@@ -179,11 +179,11 @@ export default {
         query: {}
       });
 
+      this.$refs.serviceFilter.reset();
+      this.$refs.universeFilter.reset();
+      this.$refs.skillFilter.reset();
+
       this.getApiResearch();
-    },
-    toggleMenu(menu) {
-      console.log('clicked')
-      this[menu] = !this[menu];
     },
   },
 
@@ -241,21 +241,24 @@ export default {
         <li class="filter-section">
           <h3>Services:</h3>
 
-          <FilterSelector :filter="filters.services" @update-filter="updateServiceFilter" />
+          <FilterSelector ref="serviceFilter" :filter="filters.services"
+                          @update-filter="updateServiceFilter" />
         </li>
 
         <!-- UNIVERSE FILTER -->
         <li class="filter-section">
           <h3>Universes:</h3>
 
-          <FilterSelector :filter="filters.universes" @update-filter="updateUniverseFilter" />
+          <FilterSelector ref="universeFilter" :filter="filters.universes"
+                          @update-filter="updateUniverseFilter" />
         </li>
 
         <!-- SKILL FILTER -->
         <li class="filter-section">
           <h3>Skills:</h3>
 
-          <FilterSelector :filter="filters.skills" @update-filter="updateSkillFilter" />
+          <FilterSelector ref="skillFilter" :filter="filters.skills"
+                          @update-filter="updateSkillFilter" />
         </li>
 
         <!-- CLEAR FILTERS -->

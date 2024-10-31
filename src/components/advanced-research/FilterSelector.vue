@@ -32,6 +32,12 @@ export default {
             }
 
             this.$emit('update-filter', filter);
+        },
+
+
+        reset() {
+            this.searchInFilter = '';
+            this.filter.temporalSelection = null;
         }
     },
 
