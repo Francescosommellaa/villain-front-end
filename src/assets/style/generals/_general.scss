@@ -6,6 +6,26 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    // scrollbar
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: $clr-brand-primary $clr-neutral-ltst;
+
+    &::-webkit-scrollbar {
+        width: 5px; 
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $clr-brand-primary;
+        border-radius: 40px;
+        transition: background-color 0.6s ease, opacity 0.6s ease;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: $clr-neutral-ltst;
+        border-radius: 40px;
+    }
 }
 
 

@@ -89,12 +89,9 @@ export default {
   <Jumbotron :skills="skills" />
   <main>
     <div class="content">
-      <div class="text-container">
-        <h2 class="title">Discover Premium Villains</h2>
-        <p class="presentation">Welcome to our exclusive selection of sponsored villains! Our
-          antagonists are fearsome and iconic, part of a chosen group offering unique services and
-          top-rated reviews. Take your time to explore their profiles, review their specialties, and
-          check out their top-rated reviews from past clients!</p>
+      <div class="text-container" v-for="data in store.howToHireDiscover">
+        <h2 class="title">{{ data.title }}</h2>
+        <p class="presentation">{{ data.text }}</p>
       </div>
       <div class="loader" v-if="isLoading">
         <Loader />
@@ -133,6 +130,15 @@ export default {
 <style scoped lang="scss">
 main {
   padding-top: 9em;
+    @media (max-width: 1200px) {
+      padding-top: 12em;
+    }
+    @media (max-width: 840px) {
+      padding-top: 15em;
+    }
+    @media (max-width: 550px) {
+      padding-top: 11em;
+    }
 }
 
 .text-container {
@@ -266,5 +272,12 @@ ul {
     padding: 20px 0 0 35px;
   }
 
+}
+@media screen and (max-width:550px){
+  .hire{
+        p{
+            font-size: 0.9rem;
+        }
+      }
 }
 </style>

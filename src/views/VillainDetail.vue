@@ -24,11 +24,6 @@ export default {
             newReview: {},
         }
     },
-    computed: {
-    reversedRatings() {
-        return [...this.villain.ratings].reverse();
-        },
-    },
     methods: {
         getApiDetails(slug) {
             axios.get(store.urlApi + 'villain/' + slug)
@@ -52,7 +47,9 @@ export default {
             const formattedDate = date.toLocaleDateString('it-IT', {
                 year: 'numeric',
                 month: '2-digit',
-                day: '2-digit'
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
             });
 
             return `${formattedDate}`;
@@ -112,7 +109,7 @@ export default {
                 </div>
                 <div class="call-to-action">
                     <a href="#contact-villain" class="btn btn-primary">Message</a>
-                    <a href="#review-villain" class="btn btn-primary">Review</a>
+                    <a href="#review-villain" class="btn btn-gold">Review</a>
                 </div>
             </div>
 
@@ -164,7 +161,7 @@ export default {
                     </div>
                 </div>
 
-
+                <span>{{ console.log(villain) }}</span>
                 <hr class="mb-20">
                 <h4 class="mb-20"><strong>{{ villain.name }}'s Reviews</strong></h4>
                 <hr class="mb-20">
@@ -184,7 +181,7 @@ export default {
                             <hr class="mb-10">
                         </div>
                     </div>
-                    <div class="review" v-for="review in reversedRatings">
+                    <div class="review" v-for="review in villain.ratings">
                         <div><strong>{{ review.pivot.full_name }}</strong></div>
                         <div><em>{{ formatDate(review.pivot.created_at) }}</em></div>
                         <div class="villain-reviews mb-10" v-if="review.value">
@@ -267,6 +264,10 @@ export default {
         .cont-reviews {
             height: 200px;
             overflow-y: auto;
+
+            span{
+                @include text-clipping-gold;
+            }
         }
     }
 

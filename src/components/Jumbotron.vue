@@ -11,6 +11,7 @@ export default {
     },
     data() {
         return {
+            store,
             selectSkill: ''
         };
     },
@@ -32,15 +33,15 @@ export default {
         <div class="cont-jumbo">
             <h1 class="main-title">FIND YOUR VILLAIN</h1>
         </div>
-        <div class="cont-what">
+        <div class="cont-what" v-for="data in store.howToHirePresentation">
             <div class="under">
-                <button class="btn btn-primary"><a class="rule" href="#how-to">HOW TO HIRE A
-                        VILLAIN</a></button>
+                <button class="btn btn-primary"><a class="rule" href="#how-to">{{ data.title }}</a></button>
             </div>
             <!-- Search bar -->
-            <p class="presentation">Use our search filter to find the perfect villain based on their
-                skills, from world domination strategies to doomsday device creation!</p>
-            <div class="select_bar">
+            <!-- <p class="presentation">Use our search filter to find the perfect villain based on their
+                skills, from world domination strategies to doomsday device creation!</p> -->
+                <p class="presentation">{{ data.text }}</p>
+            <!-- <div class="select_bar">
                 <select name="skills" id="skills" v-model="selectSkill" @change="filterBySkill()">
                     <option value="" disabled selected>Select by skills</option>
                     <option v-for="skill in skills" :key="skill.id" :value="skill.id">{{ skill.name
@@ -48,7 +49,7 @@ export default {
                 </select>
                 <router-link class="btn-primary search"
                              :to="{ name: 'AdvancedResearch', params: { skill: selectSkill } }">Search</router-link>
-            </div>
+            </div> -->
         </div>
     </section>
 </template>
@@ -81,7 +82,7 @@ export default {
             color: white;
             font-weight: bold;
             text-shadow: 1px 1px 10px $clr-brand-primary;
-            padding-bottom: 1.5rem;
+            padding-bottom: 6rem;
         }
 
 
@@ -92,14 +93,13 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 70%;
+        margin: 0 auto;
         background-color: white;
-        padding: 30px 60px;
         border-radius: 15px;
         color: black;
         position: absolute;
-        bottom: -25%;
-        left: 15%;
+        left: 50%;
+        transform: translate(-50%,-50%);
 
         .presentation {
             margin: 2rem auto;
@@ -107,13 +107,20 @@ export default {
             font-size: 1.1rem;
             line-height: 1.5rem;
             color: $clr-brand-primary;
+            padding: 0 4em;
+        }
+
+        .under{
+            padding: 2rem;
         }
 
         .rule {
             font-size: 1.5rem;
         }
     }
-
+    p{
+        text-align: center;
+    }
     .select_bar {
         display: flex;
         align-items: center;
@@ -146,5 +153,42 @@ export default {
             border: 2px solid $clr-brand-primary;
         }
     }
+}
+
+@media screen and (max-width:550px){
+  .jumbo{
+    .main-title{
+        font-size: 4rem;
+    }
+    .cont-what{
+        display: block;
+        max-height: 350px;
+        width: 90%;
+        .under{
+            margin: 0 auto;
+            padding: 2em 0;
+            .rule{
+                @media screen and (max-width:440px){
+                    font-size: 1.4rem;
+                }
+                @media screen and (max-width:360px){
+                    font-size: 1.2rem;
+                }
+            }
+        }
+        .presentation{
+            display: inline-block;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: 200px;
+            @media screen and (max-width:440px){
+                    font-size: 1.1rem;
+                    margin: 1em auto;
+                    padding: 0 2em;
+                }
+
+        }
+    }
+  }
 }
 </style>

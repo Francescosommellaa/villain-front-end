@@ -73,3 +73,7 @@
     background-clip: text;
     color: transparent;
 }
+
+@mixin gradient-background($gradient: $grd-brand-gold) {
+    background: $gradient;
+}
