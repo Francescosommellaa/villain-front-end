@@ -33,6 +33,8 @@
     font-family: 'Josefin Sans', sans-serif;
     font-size: $font-size-base;
     background-color: $clr-neutral-ltst;
+
+    scrollbar-color: $clr-brand-primary $clr-neutral-ltst;
 }
 
 h1,
@@ -53,14 +55,6 @@ ol {
 a {
     color: inherit;
     text-decoration: inherit;
-}
-
-.bg-white {
-    scrollbar-color: $clr-brand-primary;
-}
-
-.bg-dark {
-    scrollbar-color: $clr-neutral-dk $clr-neutral-dkst;
 }
 
 .rating {

@@ -171,7 +171,7 @@ export default {
 
     resetFilter() {
       Object.values(this.filters).forEach((filter) => {
-        filter.temporalSelection = null;
+        filter.temporalSelection = 0;
       });
 
       this.$router.push({
@@ -179,11 +179,11 @@ export default {
         query: {}
       });
 
+      this.$refs.serviceFilter.reset();
+      this.$refs.universeFilter.reset();
+      this.$refs.skillFilter.reset();
+
       this.getApiResearch();
-    },
-    toggleMenu(menu) {
-      console.log('clicked')
-      this[menu] = !this[menu];
     },
   },
 
@@ -241,25 +241,28 @@ export default {
         <li class="filter-section">
           <h3>Services:</h3>
 
-          <FilterSelector :filter="filters.services" @update-filter="updateServiceFilter" />
+          <FilterSelector ref="serviceFilter" :filter="filters.services"
+                          @update-filter="updateServiceFilter" />
         </li>
 
         <!-- UNIVERSE FILTER -->
         <li class="filter-section">
           <h3>Universes:</h3>
 
-          <FilterSelector :filter="filters.universes" @update-filter="updateUniverseFilter" />
+          <FilterSelector ref="universeFilter" :filter="filters.universes"
+                          @update-filter="updateUniverseFilter" />
         </li>
 
         <!-- SKILL FILTER -->
         <li class="filter-section">
           <h3>Skills:</h3>
 
-          <FilterSelector :filter="filters.skills" @update-filter="updateSkillFilter" />
+          <FilterSelector ref="skillFilter" :filter="filters.skills"
+                          @update-filter="updateSkillFilter" />
         </li>
 
-        <li>
-          <!-- CLEAR FILTERS -->
+        <!-- CLEAR FILTERS -->
+        <li class="filter-section">
           <button class="btn btn-primary" @click="resetFilter">
             Clear Filters
           </button>
@@ -271,18 +274,23 @@ export default {
       <div class="loader" v-if="isLoadingVillains">
         <Loader />
       </div>
-      <div v-else-if="villains.length">
-        <div class="total_villain">
+      <!-- if="villains.length" -->
+      <div v-else>
+        <div class="total-villain">
           <h2>Villains</h2>
-          <strong class="villains-count">{{ villains.length }} villains</strong>
+          <strong class="villains-count" v-if="villains.length">
+            {{ villains.length }} results
+          </strong>
         </div>
-        <div class="villains-flex">
+
+        <div class="villains-flex" v-if="villains.length">
           <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain"
                        :class="{ 'sponsored-villain highlight': villain.active_sponsorship }" />
         </div>
-      </div>
-      <div v-else class="no-villains">
-        <h2>NO VILLAIN FOUND</h2>
+
+        <div v-else class="no-villains">
+          <strong>NO VILLAIN FOUND</strong>
+        </div>
       </div>
     </div>
   </main>
@@ -308,19 +316,56 @@ main {
       margin-bottom: 1rem;
     }
 
-    &>ul {
+    .filters {
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
       margin-bottom: 1.75rem;
 
-      &>li {
+      .filter-section {
+        &:nth-child(3) :deep(.filter-selector) {
+          input {
+            z-index: 15;
+          }
+
+          .drop-down {
+            z-index: 14;
+          }
+        }
+
+        &:nth-child(4) :deep(.filter-selector) {
+          input {
+            z-index: 13;
+          }
+
+          .drop-down {
+            z-index: 12;
+          }
+        }
+
+        &:nth-child(5) :deep(.filter-selector) {
+          input {
+            z-index: 11;
+          }
+
+          .drop-down {
+            z-index: 10;
+          }
+        }
+
+        h3 {
+          font-size: $font-size-l;
+          color: $clr-brand-primary;
+          margin-bottom: .75rem;
+        }
 
         .interactive-stars {
           color: $clr-brand-primary;
+          @include display-flex('evenly');
 
           i {
             cursor: pointer;
+            font-size: 1.5rem;
           }
         }
 
@@ -385,33 +430,11 @@ main {
           }
         }
 
-        h3 {
-          font-size: $font-size-l;
-          color: $clr-brand-primary;
-          margin-bottom: .75rem;
+        button.btn.btn-primary {
+          width: 100%;
+          margin-top: .5rem;
         }
       }
-    }
-  }
-
-  .villains-flex {
-    @media (min-width: 1500px) {
-      position: static;
-      gap: 2em;
-    }
-
-    @media (max-width: 1280px) {
-      gap: 1em;
-      margin: 0 1em;
-    }
-
-    @media (max-width: 900px) {
-      gap: 1em;
-      margin: 0 1em;
-    }
-
-    @media (max-width: 700px) {
-      gap: 1em;
     }
   }
 
@@ -419,11 +442,9 @@ main {
     flex: 1 0;
     padding-top: 1.75rem;
 
-    .total_villain {
+    .total-villain {
       margin: 0 1.75rem 1rem 1.75rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      @include display-flex('between', 'center');
 
       .villains-count {
         @include text-clipping;
@@ -431,44 +452,68 @@ main {
       }
     }
 
-    .villain-card {
-      flex: 0 1 calc(25% - 2em);
-      box-sizing: border-box;
-      margin-bottom: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    .villains-flex {
+      min-height: 80vh;
 
-      // Responsive for smaller screens
       @media (min-width: 1500px) {
-        flex: 0 1 calc(100% / 5 - 2em);
+        position: static;
+        gap: 2em;
       }
 
       @media (max-width: 1280px) {
-        flex: 0 1 calc(100% / 4 - 2em);
+        gap: 1em;
+        margin: 0 1em;
       }
 
-      @media (max-width: 1128px) {
-        flex: 0 1 calc(100% / 3 - 1em);
+      @media (max-width: 900px) {
+        gap: 1em;
+        margin: 0 1em;
       }
 
-      @media (max-width: 898px) {
-        flex: 0 1 calc(100% / 2 - 1em);
+      @media (max-width: 700px) {
+        gap: 1em;
       }
 
-      @media (max-width: 898px) {
-        flex: 0 1 calc(100% / 2 - 1em);
-      }
+      .villain-card {
+        flex: 0 1 calc(25% - 2em);
+        box-sizing: border-box;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
 
-      @media (max-width: 450px) {
-        flex: 0 1 calc(100% - 2em);
+        @media (min-width: 1500px) {
+          flex: 0 1 calc(100% / 5 - 2em);
+        }
+
+        @media (max-width: 1280px) {
+          flex: 0 1 calc(100% / 4 - 2em);
+        }
+
+        @media (max-width: 1128px) {
+          flex: 0 1 calc(100% / 3 - 1em);
+        }
+
+        @media (max-width: 898px) {
+          flex: 0 1 calc(100% / 2 - 1em);
+        }
+
+        @media (max-width: 898px) {
+          flex: 0 1 calc(100% / 2 - 1em);
+        }
+
+        @media (max-width: 450px) {
+          flex: 0 1 calc(100% - 2em);
+        }
       }
     }
 
+    // TO DELETE OR NOT TO DELETE THAT'S THE DILEMMA
     .pagination {
       text-align: center;
       margin-top: 20px;
     }
 
+    // TO DELETE OR NOT TO DELETE THAT'S THE DILEMMA
     .sponsored-villain {
       border: solid #fbce00 4px;
     }
@@ -476,6 +521,13 @@ main {
     .no-villains {
       @include display-flex(center, center);
       text-align: center;
+      height: auto;
+      min-height: 70vh;
+      font-size: $font-size-xxl;
+
+      strong {
+        @include text-clipping;
+      }
     }
   }
 }
@@ -491,12 +543,12 @@ main {
       padding: 10px;
       position: static;
 
-      ul {
+      .filters {
         flex-flow: row wrap;
         gap: 1rem;
         justify-content: center;
 
-        &>li {
+        .filter-section {
           margin: 1rem auto;
 
           &:nth-child(1),
@@ -512,22 +564,9 @@ main {
 
           &:nth-child(6) {
             flex: 0 0 100%;
-
-            button.btn.btn-primary {
-              width: 100%;
-            }
           }
         }
-
-        menu {
-          max-height: 150px;
-          overflow: auto
-        }
       }
-    }
-
-    .wrapper-filter-section {
-      display: flex;
     }
   }
 }
@@ -536,32 +575,18 @@ main {
 @media (max-width: 590px) {
   main {
     aside {
-      &>ul {
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
+      .filters {
+        gap: 1rem;
         justify-content: center;
 
-        &>li {
-          margin: 15px auto;
+        .filter-section {
+          margin: 1rem auto;
 
           &:nth-child(n) {
             flex: 0 0 100%;
           }
-
-        }
-
-        menu {
-          max-height: 150px;
-          overflow: auto
         }
       }
-    }
-
-    .wrapper-filter-section {
-      display: flex;
     }
   }
 }

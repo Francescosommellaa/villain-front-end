@@ -32,6 +32,12 @@ export default {
             }
 
             this.$emit('update-filter', filter);
+        },
+
+
+        reset() {
+            this.searchInFilter = '';
+            this.filter.temporalSelection = null;
         }
     },
 
@@ -90,6 +96,8 @@ export default {
         box-shadow: inset 0 0 calc($filterselector-fnt-size / 2) rgba($clr-brand-primary, .5);
         outline: none;
         background-color: $clr-neutral-ltst;
+        color: $clr-neutral-dkst;
+        font-weight: 700;
 
         &:focus {
             box-shadow: inset 0 0 calc($filterselector-fnt-size / 2) rgba($clr-brand-primary, 1);
@@ -104,6 +112,7 @@ export default {
         padding-top: calc(($filterselector-fnt-size * 3) / 2 + 3px);
         left: 0;
         scrollbar-color: $clr-brand-primary $clr-neutral-ltst;
+        scrollbar-width: calc($filterselector-fnt-size / 2);
         overflow: hidden;
 
         menu {
