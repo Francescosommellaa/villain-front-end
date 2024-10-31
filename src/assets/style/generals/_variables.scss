@@ -34,9 +34,9 @@ $margin-bottom-40: 40px;
 $margin-bottom-50: 50px;
 
 // Buttons
-$btn-padding-y: 0.6rem;
-$btn-padding-x: 1.5rem;
-$btn-font-size: 1rem;
-$btn-border-radius: 0.4rem;
+$btn-padding-y: 0.6em;
+$btn-padding-x: 1.5em;
+$btn-font-size: $font-size-m;
+$btn-border-radius: 0.4em;
 $btn-font-weight: 700;
 $btn-transition: background-color 0.8s, color 0.4s, border-color 0.4s;
