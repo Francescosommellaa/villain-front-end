@@ -100,7 +100,7 @@ export default {
 
                 <div class="cont-reviews">
                     <h4 class="mb-20"><strong>Contact:</strong></h4>
-                    <h4 class="mb-10"><i class="fa-solid fa-envelope"></i> email@email</h4>
+                    <h4 class="mb-10"><i class="fa-solid fa-envelope"></i>{{ villain.user.email }}</h4>
                     <h4 class="mb-10"><i class="fa-solid fa-phone"></i> {{ villain.phone }}</h4>
                     <h4 class="mb-10">
                         <i class="fa-solid fa-earth-americas"></i> {{ villain.universe ?
