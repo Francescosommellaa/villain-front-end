@@ -103,35 +103,31 @@ export default {
       if (this.$route.query.rating) {
         params.rating = this.$route.query.rating;
       }
-
       if (this.$route.query.reviews) {
         params.min_reviews = this.$route.query.reviews;
       }
-
       if (this.$route.query.skill) {
         params.skill_id = this.$route.query.skill;
       }
-
       if (this.$route.query.service) {
         params.service_id = this.$route.query.service;
       }
-
       if (this.$route.query.universe) {
         params.universe_id = this.$route.query.universe;
       }
 
       this.isLoadingVillains = true;
 
-      axios.get(`${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`)
+      return axios.get(`${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`)
         .then(response => {
           this.villains = response.data.villains;
           this.paginatorLink = response.data.villains.links;
-
           this.isLoadingVillains = false;
-        }).catch(error => {
-          this.isFailedVillains = false;
-
+        })
+        .catch(error => {
+          this.isFailedVillains = true;
           this.isLoadingVillains = false;
+          throw error;
         });
     },
 
@@ -185,7 +181,9 @@ export default {
           this.$refs.universeFilter.reset();
           this.$refs.skillFilter.reset();
 
-          this.getApiResearch().finally(() => {
+          this.getApiResearch().then(() => {
+            this.isLoadingVillains = false;
+          }).catch(() => {
             this.isLoadingVillains = false;
           });
         });
