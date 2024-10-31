@@ -45,7 +45,7 @@ export const store = reactive({
     howToHirePresentation: [
         {
             title: 'HOW TO HIRE A VILLAIN',
-            text: 'Welcome to VillFind, your ultimate portal for the most iconic villains from cartoons, movies, and anime! We celebrate the stories and motivations that make these characters unforgettable. Our mission is to explore the dark allure of each antagonist, offering fans unique insights and surprising details. Whether you’re looking for intense narratives or a fresh perspective on villains.'
+            text: 'At Villfind, we connect clients with the ideal villain for their bold ambitions. Our mission is to provide discreet and expertly matched villains, ensuring satisfaction and success in every engagement.'
         }
     ],
 });
