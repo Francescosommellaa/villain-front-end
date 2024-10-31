@@ -78,8 +78,8 @@ export default {
 
 <style lang="scss" scoped>
 footer {
-    background-color: black;
-    color: white;
+    background-color: $clr-neutral-dkst;
+    color: $clr-neutral-ltst;
     width: 100%;
     padding: 3rem 0;
 
@@ -125,27 +125,14 @@ footer {
 
                 .link-list {
                     flex-direction: column;
-                }
 
-                .link {
-                    color: $clr-neutral-ltst;
-                    text-decoration: none;
-                    position: relative;
-                    transition: color 0.3s;
+                    .link {
+                        transition: color 0.3s;
 
-                    &::after {
-                        content: '';
-                        position: absolute;
-                        width: 0;
-                        height: 2px;
-                        bottom: -2px;
-                        left: 0;
-                        transition: width 0.3s ease;
-                    }
+                        &:hover {
+                            color: $clr-brand-secondary;
 
-                    &:hover {
-                        color: $clr-brand-secondary;
-
+                        }
                     }
                 }
             }
@@ -165,13 +152,18 @@ footer {
 
                 .link-list {
                     color: $clr-neutral-ltst;
-                    transition: transform 0.3s ease, color 0.3s ease;
                     justify-content: flex-end;
-                        @media (max-width: 420px) {
-                            justify-content: flex-start;
+
+                    @media (max-width: 420px) {
+                        justify-content: flex-start;
+                    }
+
+                    .link {
+                        transition: color 0.3s;
+
+                        &:hover {
+                            color: $clr-brand-secondary;
                         }
-                    a:hover {
-                        color: $clr-brand-secondary;
                     }
                 }
             }
@@ -182,7 +174,7 @@ footer {
         width: 80%;
         border: none;
         height: 1px;
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: $clr-neutral-dk;
         margin: 2rem auto;
     }
 
