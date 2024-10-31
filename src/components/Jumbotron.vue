@@ -11,6 +11,7 @@ export default {
     },
     data() {
         return {
+            store,
             selectSkill: ''
         };
     },
@@ -32,15 +33,14 @@ export default {
         <div class="cont-jumbo">
             <h1 class="main-title">FIND YOUR VILLAIN</h1>
         </div>
-        <div class="cont-what">
+        <div class="cont-what" v-for="data in store.howToHirePresentation">
             <div class="under">
-                <button class="btn btn-primary"><a class="rule" href="#how-to">HOW TO HIRE A
-                        VILLAIN</a></button>
+                <button class="btn btn-primary"><a class="rule" href="#how-to">{{ data.title }}</a></button>
             </div>
             <!-- Search bar -->
             <!-- <p class="presentation">Use our search filter to find the perfect villain based on their
                 skills, from world domination strategies to doomsday device creation!</p> -->
-                <p class="presentation">Welcome to VillFind, your ultimate portal for the most iconic villains from cartoons, movies, and anime! We celebrate the stories and motivations that make these characters unforgettable. Our mission is to explore the dark allure of each antagonist, offering fans unique insights and surprising details. Whether you’re looking for intense narratives or a fresh perspective on villains.</p>
+                <p class="presentation">{{ data.text }}</p>
             <!-- <div class="select_bar">
                 <select name="skills" id="skills" v-model="selectSkill" @change="filterBySkill()">
                     <option value="" disabled selected>Select by skills</option>

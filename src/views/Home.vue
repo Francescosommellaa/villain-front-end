@@ -89,12 +89,9 @@ export default {
   <Jumbotron :skills="skills" />
   <main>
     <div class="content">
-      <div class="text-container">
-        <h2 class="title">Discover Premium Villains</h2>
-        <p class="presentation">Welcome to our exclusive selection of sponsored villains! Our
-          antagonists are fearsome and iconic, part of a chosen group offering unique services and
-          top-rated reviews. Take your time to explore their profiles, review their specialties, and
-          check out their top-rated reviews from past clients!</p>
+      <div class="text-container" v-for="data in store.howToHireDiscover">
+        <h2 class="title">{{ data.title }}</h2>
+        <p class="presentation">{{ data.text }}</p>
       </div>
       <div class="loader" v-if="isLoading">
         <Loader />
