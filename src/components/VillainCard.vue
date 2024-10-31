@@ -82,8 +82,12 @@ export default {
 
   &.highlight {
 
-    .villain-name {
-      @include text-clipping-gold;
+  .villain-name {
+    @include text-clipping-gold;
+  }
+
+  .villain-reviews .fa-star {
+    color: $clr-brand-gold-light;
   }
 
     &:hover {
