@@ -1,4 +1,5 @@
 @use '../variables' as *;
+@use '../mixins' as *;
 
 // Base Button Styling
 .btn {
@@ -74,6 +75,40 @@
         color: $clr-brand-secondary;
         background-color: rgba($clr-brand-secondary, .05);
         border-color: $clr-brand-secondary;
+    }
+}
+
+// Button Gold
+.btn-gold {
+    @include gradient-background;
+    color: #000;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    // transition: background 0.3s ease;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        z-index: -1;
+        transition: 0.3s ease-in-out;
+    }
+
+    &:hover {
+        background: $grd-brand-lt;
+        background-clip: text;
+        color: transparent;
+    }
+
+    &:hover:before {
+        left: 0;
     }
 }
 

@@ -116,7 +116,7 @@ export default {
         <small v-if="errorStars" class="error-message">Minimun stars 1</small>
       </div>
 
-      <button type="submit" class="btn btn-primary">Submit Review</button>
+      <button type="submit" class="btn btn-gold">Submit Review</button>
     </form>
   </div>
 </template>
@@ -135,7 +135,7 @@ export default {
   }
 
   h2 {
-    color: $clr-brand-primary;
+    @include text-clipping-gold;  
     font-size: 1.5rem;
     margin-bottom: 20px;
   }
@@ -144,7 +144,7 @@ export default {
 .review-form {
   border-radius: 8px;
   background-color: $clr-neutral-ltst;
-
+  
 
   .form-group {
     margin-bottom: 20px;
@@ -156,6 +156,8 @@ export default {
 
     label {
       font-weight: 700;
+      // ??????????????????????????????????
+      // color: $clr-brand-secondary;
       color: $clr-neutral-dk;
     }
 
@@ -178,17 +180,18 @@ export default {
     .star {
       cursor: pointer;
       transition: color 0.2s;
-      color: $clr-brand-primary;
+      @include text-clipping-gold;
 
       &:hover {
-        color: $clr-brand-primary;
+        @include text-clipping-gold;
+
       }
     }
   }
 }
 
 .review_sent {
-  @include text-clipping;
+  @include text-clipping-gold;
   min-height: 50vh;
   display: flex;
   justify-content: center;
