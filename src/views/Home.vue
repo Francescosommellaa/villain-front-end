@@ -19,6 +19,7 @@ export default {
       store,
       villains: [],
       paginatorLink: [],
+      isLoading: true
     };
   },
 
@@ -155,7 +156,7 @@ ul {
 }
 
 .section-card {
-  background: linear-gradient(transparent, rgba($clr-brand-gold-light, .1), rgba($clr-brand-gold, .4), rgba($clr-brand-gold-light, .1), transparent);
+  background: linear-gradient(transparent, rgba($clr-brand-primary, .2), rgba($clr-brand-secondary, .5), rgba($clr-brand-primary, .2), transparent);
   padding: 6rem 0;
   display: flex;
   justify-content: center;
