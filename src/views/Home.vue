@@ -94,7 +94,7 @@ export default {
         <p class="presentation">Welcome to our exclusive selection of sponsored villains! Our
           antagonists are fearsome and iconic, part of a chosen group offering unique services and
           top-rated reviews. Take your time to explore their profiles, review their specialties, and
-          check out their top-rated reviews from past clients</p>
+          check out their top-rated reviews from past clients!</p>
       </div>
       <div class="loader" v-if="isLoading">
         <Loader />
@@ -113,7 +113,7 @@ export default {
         </div>
       </div>
       <!-- Info How to hire a villain -->
-      <div class="text-container hire">
+      <div class="text-container hire" id="how-to">
         <div v-for="title in store.howToHireTitle">
           <h2 v-if="!isLoading" class="title">{{ title.title }}</h2>
           <h3 class="presentation"><strong>{{ title.intro }}</strong></h3>

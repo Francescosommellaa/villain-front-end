@@ -3,18 +3,26 @@ $clr-brand-primary: #35005f;
 $clr-brand-secondary: #6A0DAD;
 $clr-brand-tertiary: #008B8B;
 
+// gold
+$clr-brand-gold: rgb(170, 139, 1);
+$clr-brand-gold-light: lighten($clr-brand-gold, 20%);
+$clr-brand-gold-dark: darken($clr-brand-gold, 20%);
+
 $clr-utility-success: #198754;
 $clr-utility-danger: #DC3545;
 
 $clr-neutral-ltst: #F5F5F5;
 $clr-neutral-lt: #CCCCCC;
-$clr-neutral-dk: #444444;
+$clr-neutral-dk: #666666;
 $clr-neutral-dkst: #0D0D0D;
 
 $clr-rating-stars: #ffd000;
 
 $grd-brand-dk: linear-gradient(45deg, $clr-brand-primary, $clr-brand-secondary, $clr-brand-tertiary);
 $grd-brand-lt: linear-gradient(45deg, $clr-brand-primary, $clr-brand-secondary, $clr-brand-tertiary, $clr-brand-tertiary);
+
+// gold
+$grd-brand-gold: linear-gradient(45deg, $clr-brand-gold, $clr-brand-gold-light);
 
 // Font settings
 $font-size-base: 16px;

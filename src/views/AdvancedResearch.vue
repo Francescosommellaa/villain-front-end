@@ -288,8 +288,7 @@ export default {
   </main>
 </template>
 
-
-<style scoped lang="scss">
+<style lang="scss" scoped>
 main {
   @include display-flex('between', 'start');
   margin-top: 4rem;

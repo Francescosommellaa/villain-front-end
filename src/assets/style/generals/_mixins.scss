@@ -64,3 +64,12 @@
     background-clip: text;
     color: transparent;
 }
+
+
+@mixin text-clipping-gold($gradiant: $grd-brand-gold) {
+
+    display: inline-block;
+    background: $gradiant;
+    background-clip: text;
+    color: transparent;
+}
