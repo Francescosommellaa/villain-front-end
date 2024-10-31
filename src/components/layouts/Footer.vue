@@ -107,7 +107,7 @@ footer {
             .mission {
                 flex: 0 0 calc(50% - 1rem);
 
-                @media (max-width: 1260px) {
+                @media (max-width: 990px) {
                     flex-basis: 100%;
                 }
             }
@@ -115,11 +115,11 @@ footer {
             nav {
                 flex: 0 0 calc(25% - 2rem);
 
-                @media (max-width: 1260px) {
+                @media (max-width: 990px) {
                     flex-basis: calc(50% - 1rem);
                 }
 
-                @media (max-width: 880px) {
+                @media (max-width: 420px) {
                     flex-basis: 100%;
                 }
 
@@ -151,23 +151,26 @@ footer {
             }
 
             .socials {
+                text-align: right;
                 flex: 0 0 calc(25% - 1rem);
 
-                @media (max-width: 1260px) {
+                @media (max-width: 990px) {
                     flex-basis: calc(50% - 1rem);
                 }
 
-                @media (max-width: 880px) {
+                @media (max-width: 420px) {
                     flex-basis: 100%;
+                    text-align: left;
                 }
 
-                .link {
+                .link-list {
                     color: $clr-neutral-ltst;
-                    margin-right: 1rem;
                     transition: transform 0.3s ease, color 0.3s ease;
-
-                    &:hover {
-                        transform: scale(1.3);
+                    justify-content: flex-end;
+                        @media (max-width: 420px) {
+                            justify-content: flex-start;
+                        }
+                    a:hover {
                         color: $clr-brand-secondary;
                     }
                 }

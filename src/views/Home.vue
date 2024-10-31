@@ -267,4 +267,11 @@ ul {
   }
 
 }
+@media screen and (max-width:550px){
+  .hire{
+        p{
+            font-size: 0.9rem;
+        }
+      }
+}
 </style>
