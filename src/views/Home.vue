@@ -133,6 +133,15 @@ export default {
 <style scoped lang="scss">
 main {
   padding-top: 9em;
+    @media (max-width: 1200px) {
+      padding-top: 12em;
+    }
+    @media (max-width: 840px) {
+      padding-top: 15em;
+    }
+    @media (max-width: 550px) {
+      padding-top: 11em;
+    }
 }
 
 .text-container {
