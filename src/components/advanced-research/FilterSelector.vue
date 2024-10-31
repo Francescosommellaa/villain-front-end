@@ -14,7 +14,8 @@ export default {
     data() {
         return {
             isMenuOpen: false,
-            searchInFilter: ''
+            searchInFilter: '',
+            selectedFilter: ''
         }
     },
 
@@ -22,12 +23,13 @@ export default {
     methods: {
         selectAndUpdateFilter(filter, selectedId, selectedName) {
             this.isMenuOpen = false;
+            this.searchInFilter = '';
 
             if (filter.temporalSelection === selectedId) {
-                this.searchInFilter = '';
+                this.selectedFilter = '';
                 filter.temporalSelection = null;
             } else {
-                this.searchInFilter = selectedName;
+                this.selectedFilter = selectedName;
                 filter.temporalSelection = selectedId;
             }
 
@@ -36,8 +38,23 @@ export default {
 
 
         reset() {
-            this.searchInFilter = '';
+            this.selectedFilter = '';
             this.filter.temporalSelection = null;
+        },
+
+        handleClickOnButton() {
+            this.isMenuOpen = true;
+            this.$nextTick(() => {
+                this.$refs.searchInput.focus();
+            });
+        },
+
+        handleClickOutside(event) {
+            const targetElement = event.target;
+            if (!this.$el.contains(targetElement)) {
+                this.isMenuOpen = false;
+                this.searchInFilter = '';
+            }
         }
     },
 
@@ -49,9 +66,17 @@ export default {
                     return criteria.id === updatedFilter.temporalSelection
                 });
 
-                this.searchInFilter = selectedCriteria ? selectedCriteria.name : '';
+                this.selectedFilter = selectedCriteria ? selectedCriteria.name : '';
             }
         }
+    },
+
+    mounted() {
+        document.addEventListener('click', this.handleClickOutside);
+    },
+
+    beforeUnmount() {
+        document.removeEventListener('click', this.handleClickOutside);
     }
 }
 </script>
@@ -59,10 +84,16 @@ export default {
 <template>
 
     <div class="filter-selector">
-        <input type="text" class="" @focus="isMenuOpen = true" placeholder="Set a filter"
-               v-model="searchInFilter">
+        <button @focus="handleClickOnButton()" :class="{ set: selectedFilter }">
+            {{ selectedFilter ? selectedFilter : 'Set a filter' }}
+        </button>
 
         <div v-show="isMenuOpen" class="drop-down">
+            <div class="search">
+                <input type="text" class="" placeholder="Search" v-model="searchInFilter"
+                       ref="searchInput">
+            </div>
+
             <menu>
                 <li v-for="criteria in filter.criteria" :key="criteria.id"
                     v-show="criteria.name.toUpperCase().includes(searchInFilter.toUpperCase())"
@@ -89,18 +120,19 @@ export default {
         width: 100%;
     }
 
-    input {
+    button {
         position: relative;
         z-index: 11;
         padding: calc($filterselector-fnt-size / 4);
-        box-shadow: inset 0 0 calc($filterselector-fnt-size / 2) rgba($clr-brand-primary, .5);
         outline: none;
         background-color: $clr-neutral-ltst;
-        color: $clr-neutral-dkst;
         font-weight: 700;
+        color: $clr-neutral-dk;
+        box-shadow: inset 0 0 calc($filterselector-fnt-size / 2) rgba($clr-brand-primary, .25);
 
-        &:focus {
-            box-shadow: inset 0 0 calc($filterselector-fnt-size / 2) rgba($clr-brand-primary, 1);
+        &.set {
+            color: $clr-brand-primary;
+            box-shadow: inset 0 0 calc($filterselector-fnt-size / 2) $clr-brand-primary;
         }
     }
 
@@ -109,16 +141,35 @@ export default {
         z-index: 10;
         background-color: $clr-brand-primary;
         top: 0;
-        padding-top: calc(($filterselector-fnt-size * 3) / 2 + 3px);
+        padding-top: calc(($filterselector-fnt-size * 3) / 2);
         left: 0;
-        scrollbar-color: $clr-brand-primary $clr-neutral-ltst;
-        scrollbar-width: calc($filterselector-fnt-size / 2);
         overflow: hidden;
+
+        .search {
+            padding: calc($filterselector-fnt-size / 4);
+
+            input {
+                padding: calc($filterselector-fnt-size / 8) 0;
+                outline: 0;
+                border: 0;
+                border-bottom: 1px solid $clr-neutral-ltst;
+                font-size: $filterselector-fnt-size;
+                background-color: transparent;
+                color: $clr-neutral-ltst;
+                width: 100%;
+
+                &::placeholder {
+                    color: $clr-neutral-lt;
+                }
+            }
+        }
 
         menu {
             overflow-y: auto;
             width: 100%;
-            max-height: calc((($filterselector-fnt-size * 3) / 2) * 8);
+            max-height: calc((($filterselector-fnt-size * 3) / 2) * 9 + 9px);
+            scrollbar-color: $clr-neutral-ltst $clr-brand-primary;
+            scrollbar-width: calc($filterselector-fnt-size / 2);
 
             li {
                 line-height: 1;
@@ -126,16 +177,11 @@ export default {
                 cursor: pointer;
                 overflow-x: hidden;
                 text-wrap: nowrap;
-
-                &:nth-child(even) {
-                    background-color: $clr-neutral-ltst;
-                    color: $clr-neutral-dk;
-                }
-
-                &:nth-child(odd) {
-                    background-color: $clr-neutral-lt;
-                    color: $clr-neutral-ltst;
-                }
+                border-bottom: 0;
+                border: 1px 0;
+                background-color: $clr-neutral-ltst;
+                color: $clr-neutral-dk;
+                border-top: 1px solid $clr-brand-primary;
 
                 &:hover {
                     color: $clr-brand-primary;
@@ -148,6 +194,5 @@ export default {
             }
         }
     }
-
 }
 </style>

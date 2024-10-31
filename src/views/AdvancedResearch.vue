@@ -328,7 +328,7 @@ main {
 
       .filter-section {
         &:nth-child(3) :deep(.filter-selector) {
-          input {
+          button {
             z-index: 15;
           }
 
@@ -338,7 +338,7 @@ main {
         }
 
         &:nth-child(4) :deep(.filter-selector) {
-          input {
+          button {
             z-index: 13;
           }
 
