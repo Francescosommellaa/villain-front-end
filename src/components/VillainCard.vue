@@ -41,8 +41,8 @@ export default {
       </div>
     </div>
     <div>
-      <router-link :to="{ name: 'VillainDetail', params: { slug: villain.slug } }"><button
-                class="btn btn-primary">Contact Now</button></router-link>
+      <router-link :to="{ name: 'VillainDetail', params: { slug: villain.slug }, hash: '#contact-villain' }"><button
+                class="btn btn-primary-highlight btn-primary">Contact Now</button></router-link>
     </div>
   </router-link>
 
@@ -84,6 +84,15 @@ export default {
 
   .villain-name {
     @include text-clipping-gold;
+  }
+
+  .btn-primary-highlight {
+    color: black;
+    @include gradient-background;
+
+    &:hover {
+      background: whitesmoke;
+    }
   }
 
   .villain-reviews .fa-star {
