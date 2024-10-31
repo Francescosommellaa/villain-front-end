@@ -3,6 +3,7 @@ import { store } from "@/store/store";
 import VillainCard from "../components/VillainCard.vue";
 import axios from "axios";
 import Loader from "@/components/common/Loader.vue";
+import FilterSelector from "@/components/advanced-research/FilterSelector.vue";
 
 export default {
   name: 'AdvancedResearch',
@@ -10,7 +11,8 @@ export default {
 
   components: {
     VillainCard,
-    Loader
+    Loader,
+    FilterSelector
   },
 
 
@@ -18,9 +20,6 @@ export default {
     return {
       villains: [],
       paginatorLink: [],
-      isServiceMenu: true,
-      isUniverseMenu: true,
-      isSkillMenu: true,
 
       filters: {
         skills: {
@@ -123,8 +122,6 @@ export default {
 
       this.isLoadingVillains = true;
 
-      console.log(`${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`);
-
       axios.get(`${store.urlApi}list-by-filters?${new URLSearchParams(params).toString()}`)
         .then(response => {
           this.villains = response.data.villains;
@@ -154,6 +151,24 @@ export default {
       this.updateRouteQuery(filter.queryField, filter.temporalSelection);
     },
 
+    updateServiceFilter(filter) {
+      this.filters.services = filter;
+
+      this.updateRouteQuery(filter.queryField, filter.temporalSelection);
+    },
+
+    updateUniverseFilter(filter) {
+      this.filters.universes = filter;
+
+      this.updateRouteQuery(filter.queryField, filter.temporalSelection);
+    },
+
+    updateSkillFilter(filter) {
+      this.filters.skills = filter;
+
+      this.updateRouteQuery(filter.queryField, filter.temporalSelection);
+    },
+
     resetFilter() {
       Object.values(this.filters).forEach((filter) => {
         filter.temporalSelection = null;
@@ -171,6 +186,7 @@ export default {
       this[menu] = !this[menu];
     },
   },
+
   watch: {
     '$route.query': {
       immediate: true,
@@ -214,7 +230,7 @@ export default {
 
           <div class="progress-container">
             <span>0</span>
-            <input type="range" :min="0" :max="filters.reviews.criteria"
+            <input type="range" step="1" :min="0" :max="filters.reviews.criteria"
                    v-model="filters.reviews.temporalSelection"
                    @change="updateRouteQuery(filters.reviews.queryField, filters.reviews.temporalSelection)" />
             <span>{{ filters.reviews.criteria }}</span>
@@ -223,55 +239,32 @@ export default {
 
         <!-- SERVICE FILTER -->
         <li class="filter-section">
-          <div class="select_filter">
-            <h3>Services:</h3>
-            <i class="fa-solid fa-eye" @click="toggleMenu('isServiceMenu')"></i>
-          </div>
-          <menu v-show="isServiceMenu">
-            <li v-for="service in filters.services.criteria" :key="service.id"
-                :class="{ 'btn-primary': service.id == filters.services.temporalSelection }"
-                @click="selectFilterFromSelect(filters.services, service.id)">
-              {{ service.name }}
-            </li>
-          </menu>
+          <h3>Services:</h3>
+
+          <FilterSelector :filter="filters.services" @update-filter="updateServiceFilter" />
         </li>
 
         <!-- UNIVERSE FILTER -->
         <li class="filter-section">
-          <div class="select_filter">
-            <h3>Universes:</h3>
-            <i class="fa-solid fa-eye" @click="toggleMenu('isUniverseMenu')"></i>
-          </div>
+          <h3>Universes:</h3>
 
-          <menu v-show="isUniverseMenu">
-            <li v-for="universe in filters.universes.criteria" :key="universe.id"
-                :class="{ 'btn-primary': universe.id == filters.universes.temporalSelection }"
-                @click="selectFilterFromSelect(filters.universes, universe.id)">
-              {{ universe.name }}</li>
-          </menu>
+          <FilterSelector :filter="filters.universes" @update-filter="updateUniverseFilter" />
         </li>
 
         <!-- SKILL FILTER -->
         <li class="filter-section">
-          <div class="select_filter">
-            <h3>Skills:</h3>
-            <i class="fa-solid fa-eye" @click="toggleMenu('isSkillMenu')"></i>
-          </div>
+          <h3>Skills:</h3>
 
-          <menu v-show="isSkillMenu">
-          <li v-for="skill in filters.skills.criteria" :key="skill.id"
-          :class="{ 'btn-primary': skill.id == filters.skills.temporalSelection }"
-          @click="selectFilterFromSelect(filters.skills, skill.id)">
-              {{ skill.name }}
-            </li>
-          </menu>
+          <FilterSelector :filter="filters.skills" @update-filter="updateSkillFilter" />
         </li>
 
+        <li>
+          <!-- CLEAR FILTERS -->
+          <button class="btn btn-primary" @click="resetFilter">
+            Clear Filters
+          </button>
+        </li>
       </ul>
-      <!-- CLEAR FILTERS -->
-        <button class="btn btn-primary" @click="resetFilter">
-          Clear Filters
-        </button>
     </aside>
 
     <div class="right">
@@ -281,14 +274,14 @@ export default {
       <div v-else-if="villains.length">
         <div class="total_villain">
           <h2>Villains</h2>
-          <h5>Founded {{ villains.length }} villains</h5>
+          <strong class="villains-count">{{ villains.length }} villains</strong>
         </div>
         <div class="villains-flex">
           <VillainCard v-for="(villain, index) in villains" :key="index" :villain="villain"
                        :class="{ 'sponsored-villain highlight': villain.active_sponsorship }" />
         </div>
       </div>
-      <div v-else class="no_villains">
+      <div v-else class="no-villains">
         <h2>NO VILLAIN FOUND</h2>
       </div>
     </div>
@@ -299,93 +292,143 @@ export default {
 <style scoped lang="scss">
 main {
   @include display-flex('between', 'start');
-  margin-top: 6em;
-  .progress-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    input{
-      flex-grow: 1;
-    }
+  margin-top: 4rem;
+
+  h2 {
+    @include text-clipping;
+    font-size: $font-size-xl;
   }
 
   aside {
     flex: 0 0 15rem;
-    // position: sticky;
+    position: sticky;
     top: 0;
-    padding: 2rem 0 0 2rem;
+    padding: 1.75rem 0 0 1.75rem;
 
     h2 {
-      display: inline-block;
-      background: black;
-      background-clip: text;
-      color: transparent;
+      margin-bottom: 1rem;
     }
-    ul{
 
-      &>li{
-        margin: 10px auto;
+    &>ul {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
 
-        .select_filter{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .fa-solid.fa-eye{
-          display: inline;
-          @include text-clipping;
+      &>li {
 
+        .interactive-stars {
+          color: $clr-brand-primary;
+
+          i {
+            cursor: pointer;
+          }
         }
-      }
-        h3{
-          font-size: 1.4rem;
-          @include text-clipping;
 
+        .progress-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: .5rem;
+          color: $clr-neutral-dk;
+          line-height: 1;
+
+          input {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 2em;
+            background-color: transparent;
+
+            &::-webkit-slider-runnable-track {
+              height: .5em;
+              background-color: $clr-neutral-lt;
+              border-radius: .5em;
+            }
+
+            &::-moz-range-track {
+              height: .5em;
+              background-color: $clr-neutral-lt;
+              border-radius: .5em;
+            }
+
+            &::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              position: relative;
+              top: -50%;
+              width: 1em;
+              height: 1em;
+              background-color: $clr-brand-primary;
+              border-radius: 50%;
+              cursor: pointer;
+            }
+
+            &::-moz-range-thumb {
+              width: 1em;
+              height: 1em;
+              background-color: $clr-brand-primary;
+              border-radius: 100%;
+              cursor: pointer;
+            }
+
+            &:hover {
+              &::-webkit-slider-thumb {
+                top: -75%;
+                width: 1.25em;
+                height: 1.25em;
+              }
+
+              &::-moz-range-thumb {
+                width: 1.25em;
+                height: 1.25em;
+              }
+            }
+          }
         }
-      }
-      menu{
-        margin: 5px auto;
-        max-height: 150px;
-        overflow: auto;
-        li{
-          line-height: 22px;
+
+        h3 {
+          font-size: $font-size-l;
+          color: $clr-brand-primary;
+          margin-bottom: .75rem;
         }
       }
     }
   }
 
-  .villains-flex{
+  .villains-flex {
     @media (min-width: 1500px) {
-        gap: 2em;
-      }
+      position: static;
+      gap: 2em;
+    }
 
-      @media (max-width: 1280px) {
-        gap: 1em;
-        margin: 0 1em;
-      }
+    @media (max-width: 1280px) {
+      gap: 1em;
+      margin: 0 1em;
+    }
 
-      @media (max-width: 900px) {
-        gap: 1em;
-        margin: 0 1em;
-      }
+    @media (max-width: 900px) {
+      gap: 1em;
+      margin: 0 1em;
+    }
 
-      @media (max-width: 700px) {
-        gap: 1em;
-      }
+    @media (max-width: 700px) {
+      gap: 1em;
+    }
   }
 
   .right {
     flex: 1 0;
-    padding-top: 2em;
-    
-    .total_villain{
-      margin: 0 2em 1em 2em;
+    padding-top: 1.75rem;
+
+    .total_villain {
+      margin: 0 1.75rem 1rem 1.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      h2,
-      h5{
+
+      .villains-count {
         @include text-clipping;
+        text-align: right;
       }
     }
 
@@ -430,43 +473,57 @@ main {
     .sponsored-villain {
       border: solid #fbce00 4px;
     }
+
+    .no-villains {
+      @include display-flex(center, center);
+      text-align: center;
+    }
   }
 }
 
-@media (max-width: 798px) {
+
+@media (max-width: 790px) {
   main {
     flex-direction: column;
-    
+
     aside {
       width: 95%;
       margin: auto;
       padding: 10px;
       position: static;
-      ul{
-        display: flex;
-        flex-wrap: wrap;
+
+      ul {
+        flex-flow: row wrap;
         gap: 1rem;
         justify-content: center;
-        &>li{
+
+        &>li {
           margin: 1rem auto;
+
           &:nth-child(1),
-          &:nth-child(2){
+          &:nth-child(2) {
             flex: 0 0 calc(100% / 2 - 0.5rem);
           }
+
           &:nth-child(3),
           &:nth-child(4),
-          &:nth-child(5){
+          &:nth-child(5) {
             flex: 0 0 calc(100% / 3 - 2rem / 3);
           }
 
+          &:nth-child(6) {
+            flex: 0 0 100%;
+
+            button.btn.btn-primary {
+              width: 100%;
+            }
+          }
         }
-        menu{
+
+        menu {
           max-height: 150px;
           overflow: auto
         }
-      }
-      button.btn.btn-primary{
-        width: 100%;
       }
     }
 
@@ -476,24 +533,28 @@ main {
   }
 }
 
-@media (max-width: 520px) {
+
+@media (max-width: 590px) {
   main {
     aside {
-      ul{
+      &>ul {
         align-items: center;
         justify-content: center;
         display: flex;
         flex-wrap: wrap;
         gap: 5px;
         justify-content: center;
-        &>li{
+
+        &>li {
           margin: 15px auto;
-          &:nth-child(n){
+
+          &:nth-child(n) {
             flex: 0 0 100%;
           }
 
         }
-        menu{
+
+        menu {
           max-height: 150px;
           overflow: auto
         }
