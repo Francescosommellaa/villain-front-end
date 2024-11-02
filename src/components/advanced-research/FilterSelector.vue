@@ -36,7 +36,6 @@ export default {
             this.$emit('update-filter', filter);
         },
 
-
         reset() {
             this.selectedFilter = '';
             this.filter.temporalSelection = null;
@@ -82,7 +81,6 @@ export default {
 </script>
 
 <template>
-
     <div class="filter-selector">
         <button @focus="handleClickOnButton()" :class="{ set: selectedFilter }">
             {{ selectedFilter ? selectedFilter : 'Set a filter' }}
@@ -129,6 +127,7 @@ export default {
         font-weight: 700;
         color: $clr-neutral-dk;
         box-shadow: inset 0 0 calc($filterselector-fnt-size / 2) rgba($clr-brand-primary, .25);
+        cursor: pointer;
 
         &.set {
             color: $clr-brand-primary;
@@ -169,7 +168,7 @@ export default {
             width: 100%;
             max-height: calc((($filterselector-fnt-size * 3) / 2) * 9 + 9px);
             scrollbar-color: $clr-neutral-ltst $clr-brand-primary;
-            scrollbar-width: calc($filterselector-fnt-size / 2);
+            scrollbar-width: thin;
 
             li {
                 line-height: 1;
