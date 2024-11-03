@@ -28,7 +28,6 @@ export default {
       const urlApi = store.urlApi + 'active-sponsorship';
       axios.get(urlApi)
         .then(response => {
-          console.log('API Sponsorship:', urlApi);
           this.isLoading = false;
           this.villains = response.data.villains;
         })
