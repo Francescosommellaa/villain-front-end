@@ -50,19 +50,6 @@
     }
 }
 
-.under {
-    width: max-content;
-    z-index: 100;
-    font-size: $btn-font-size;
-    border-radius: $btn-border-radius;
-    border: none;
-    transition: 0.8s ease-in-out;
-
-    &:hover {
-        background-color: white;
-    }
-}
-
 // Secondary Button with Color Inversion Animation
 .btn-secondary {
     background-color: $clr-brand-secondary;
