@@ -49,8 +49,7 @@ export default {
         },
 
         handleClickOutside(event) {
-            const targetElement = event.target;
-            if (!this.$el.contains(targetElement)) {
+            if (!this.$el.contains(event.target)) {
                 this.isMenuOpen = false;
                 this.searchInFilter = '';
             }
