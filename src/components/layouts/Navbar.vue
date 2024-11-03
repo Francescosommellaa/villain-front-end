@@ -1,15 +1,12 @@
 <script>
 export default {
   name: 'Navbar',
+
+
   computed: {
     currentRoute() {
-      return this.$route.path;
+      return this.$route.name;
     }
-  },
-  data() {
-    return {
-      selectSkill: '',
-    };
   }
 }
 </script>
@@ -33,14 +30,14 @@ export default {
     <!-- Middle Section (Navigation Links) -->
     <menu class="navbar-center">
       <li>
-        <router-link class="nav-link" :class="{ active: currentRoute === '/' }" to="/">
+        <router-link class="nav-link" :class="{ active: currentRoute === 'Home' }" to="/">
           Home
         </router-link>
       </li>
 
       <li>
-        <router-link class="nav-link" :class="{ active: currentRoute === '/AdvancedResearch' }"
-                     :to="{ name: 'AdvancedResearch', params: { skill: selectSkill } }">
+        <router-link class="nav-link" :class="{ active: currentRoute === 'AdvancedResearch' }"
+                     :to="{ name: 'AdvancedResearch' }">
           Advanced Research
         </router-link>
       </li>
@@ -85,6 +82,10 @@ export default {
 .navbar-center {
   display: flex;
   gap: 2em;
+
+  @media screen and (max-width:420px) {
+    display: none;
+  }
 }
 
 .nav-link {
@@ -127,11 +128,11 @@ export default {
   }
 }
 
-@media (max-width: 420px){
-  .navbar{
+@media (max-width: 420px) {
+  .navbar {
     padding: 0.8em 1em;
 
-    .navbar-center{
+    .navbar-center {
       gap: 0.5em;
     }
   }

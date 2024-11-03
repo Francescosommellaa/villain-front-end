@@ -8,16 +8,16 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home
     },
     {
-      path: '/AdvancedResearch/:skill?',
+      path: '/advanced-research/',
       name: 'AdvancedResearch',
       component: AdvancedResearch,
     },
     {
-      path: '/VillainDetail/:slug',
+      path: '/villain-detail/:slug',
       name: 'VillainDetail',
       component: VillainDetail
     }
